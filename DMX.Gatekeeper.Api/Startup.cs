@@ -9,7 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 
-namespace DMX.Gatekeeper.API
+namespace DMX.Gatekeeper.Api
 {
     public class Startup
     {

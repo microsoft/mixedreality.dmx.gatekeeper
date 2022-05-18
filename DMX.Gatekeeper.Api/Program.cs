@@ -5,7 +5,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 
-namespace DMX.Gatekeeper.API
+namespace DMX.Gatekeeper.Api
 {
     public class Program
     {
