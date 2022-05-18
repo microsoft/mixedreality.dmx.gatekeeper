@@ -4,7 +4,7 @@
 
 using Microsoft.AspNetCore.Mvc;
 
-namespace DMX.Gatekeeper.API.Controllers
+namespace DMX.Gatekeeper.Api.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
