@@ -11,12 +11,12 @@ var githubPipeline = new GithubPipeline
     {
         Push = new PushEvent
         {
-            Branches = new string[] { "master" }
+            Branches = new string[] { "main" }
         },
 
         PullRequest = new PullRequestEvent
         {
-            Branches = new string[] { "maser" }
+            Branches = new string[] { "main" }
         }
     },
 
