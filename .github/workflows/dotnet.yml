@@ -2,10 +2,10 @@ name: Gatekeeper Build
 on:
   push:
     branches:
-    - master
+    - main
   pull_request:
     branches:
-    - maser
+    - main
 jobs:
   build:
     runs-on: windows-2022
