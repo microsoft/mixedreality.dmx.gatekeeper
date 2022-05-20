@@ -5,7 +5,9 @@ VisualStudioVersion = 17.2.32505.173
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DMX.Gatekeeper.Api", "DMX.Gatekeeper.API\DMX.Gatekeeper.Api.csproj", "{231F040A-E997-47EB-8CC2-B7869F0C2FEB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DMX.Gatekeeper.Api.Tests.Unit", "DMX.Gatekeeper.Api.Tests.Unit\DMX.Gatekeeper.Api.Tests.Unit.csproj", "{8F3E9990-98EA-4C70-A9AC-E6A4FB226FE8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DMX.Gatekeeper.Api.Tests.Unit", "DMX.Gatekeeper.Api.Tests.Unit\DMX.Gatekeeper.Api.Tests.Unit.csproj", "{8F3E9990-98EA-4C70-A9AC-E6A4FB226FE8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DMX.Gatekeeper.Api.Infrastructure.Build", "DMX.Gatekeeper.Api.Infrastructure.Build\DMX.Gatekeeper.Api.Infrastructure.Build.csproj", "{947703A2-08C3-496B-BDA6-FD49D84648DA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{8F3E9990-98EA-4C70-A9AC-E6A4FB226FE8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8F3E9990-98EA-4C70-A9AC-E6A4FB226FE8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8F3E9990-98EA-4C70-A9AC-E6A4FB226FE8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{947703A2-08C3-496B-BDA6-FD49D84648DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{947703A2-08C3-496B-BDA6-FD49D84648DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{947703A2-08C3-496B-BDA6-FD49D84648DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{947703A2-08C3-496B-BDA6-FD49D84648DA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
