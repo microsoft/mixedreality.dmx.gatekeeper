@@ -17,7 +17,7 @@ var githubPipeline = new GithubPipeline
         {
             Branches = new string[] { "maser" }
         }
-    }
+    },
 
     Jobs = new Jobs
     {
