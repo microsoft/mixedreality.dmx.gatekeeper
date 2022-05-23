@@ -18,15 +18,14 @@ namespace DMX.Gatekeeper.Api.Tests.Acceptance.APIs.Homes
     {
         private readonly DmxGatekeeperApiBroker dmxGatekeeperApiBroker;
 
-        public HomeApiTests(DmxGatekeeperApiBroker dmxGatekeeperApiBroker)
-        {
+        public HomeApiTests(DmxGatekeeperApiBroker dmxGatekeeperApiBroker) =>
             this.dmxGatekeeperApiBroker = dmxGatekeeperApiBroker;
-        }
 
         [Fact]
         public async Task ShouldReturnHomeMessageAsync()
         {
             string expectedMessage = "Hello, Goodbye";
+
             string actualMessage =
                 await this.dmxGatekeeperApiBroker.GetHomeMessageAsync();
 
