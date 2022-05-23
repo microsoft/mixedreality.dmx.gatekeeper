@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DMX.Gatekeeper.Api.Tests.Un
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DMX.Gatekeeper.Api.Infrastructure.Build", "DMX.Gatekeeper.Api.Infrastructure.Build\DMX.Gatekeeper.Api.Infrastructure.Build.csproj", "{947703A2-08C3-496B-BDA6-FD49D84648DA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DMX.Gatekeeper.Api.Tests.Acceptance", "DMX.Gatekeeper.Api.Tests.Acceptance\DMX.Gatekeeper.Api.Tests.Acceptance.csproj", "{93069A82-A0BA-49F1-ACB3-EC3C2B0B54E6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{947703A2-08C3-496B-BDA6-FD49D84648DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{947703A2-08C3-496B-BDA6-FD49D84648DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{947703A2-08C3-496B-BDA6-FD49D84648DA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{93069A82-A0BA-49F1-ACB3-EC3C2B0B54E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{93069A82-A0BA-49F1-ACB3-EC3C2B0B54E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{93069A82-A0BA-49F1-ACB3-EC3C2B0B54E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{93069A82-A0BA-49F1-ACB3-EC3C2B0B54E6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
