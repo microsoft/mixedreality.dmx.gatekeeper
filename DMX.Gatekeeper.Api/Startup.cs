@@ -22,6 +22,7 @@ namespace DMX.Gatekeeper.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddHttpClient();
             services.AddTransient<IDmxApiBroker, DmxApiBroker>();
 
             services.AddSwaggerGen(options =>
