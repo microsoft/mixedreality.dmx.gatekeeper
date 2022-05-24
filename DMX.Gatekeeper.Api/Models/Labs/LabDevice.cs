@@ -3,16 +3,15 @@
 // ---------------------------------------------------------------
 
 using System;
-using System.Collections.Generic;
 
 namespace DMX.Gatekeeper.Api.Models.Labs
 {
-    public class Lab
+    public class LabDevice
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
-        public string Description { get; set; }
-        public LabStatus Status { get; set; }
-        public List<LabDevice> Devices { get; set; }
+        public LabDeviceType Type { get; set; }
+        public LabDeviceStatus Status { get; set; }
+        public LabDeviceCategory Category { get; set; }
     }
 }
