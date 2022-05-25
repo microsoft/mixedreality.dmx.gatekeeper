@@ -10,7 +10,7 @@ using Microsoft.Azure.Management.ResourceManager.Fluent;
 
 namespace DMX.Gatekeeper.Api.Infrastructure.Provision.Services.Foundations.CloudManagements
 {
-    public class CloudManagementService
+    public class CloudManagementService : ICloudManagementService
     {
         private readonly ICloudBroker cloudBroker;
         private readonly ILoggingBroker loggingBroker;
@@ -60,7 +60,6 @@ namespace DMX.Gatekeeper.Api.Infrastructure.Provision.Services.Foundations.Cloud
         public async ValueTask<IWebApp> ProvisionWebAppAsync(
             string projectName,
             string environment,
-            string databaseConnectionString,
             IAppServicePlan appServicePlan,
             IResourceGroup resourceGroup)
         {
@@ -69,7 +68,6 @@ namespace DMX.Gatekeeper.Api.Infrastructure.Provision.Services.Foundations.Cloud
 
             IWebApp webApp = await this.cloudBroker.CreateWebAppAsync(
                 webAppName,
-                databaseConnectionString,
                 appServicePlan,
                 resourceGroup);
 

@@ -12,7 +12,6 @@ namespace DMX.Gatekeeper.Api.Infrastructure.Provision.Brokers.Clouds
     {
         public async ValueTask<IWebApp> CreateWebAppAsync(
             string webAppName,
-            string connectionString,
             IAppServicePlan appServicePlan,
             IResourceGroup resourceGroup)
         {

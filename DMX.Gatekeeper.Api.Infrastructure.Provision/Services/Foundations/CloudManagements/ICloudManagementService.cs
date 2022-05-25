@@ -22,7 +22,6 @@ namespace DMX.Gatekeeper.Api.Infrastructure.Provision.Services.Foundations.Cloud
         ValueTask<IWebApp> ProvisionWebAppAsync(
             string projectName,
             string environment,
-            string databaseConnectionString,
             IAppServicePlan appServicePlan,
             IResourceGroup resourceGroup);
 
