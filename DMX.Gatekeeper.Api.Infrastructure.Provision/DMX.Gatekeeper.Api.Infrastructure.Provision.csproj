@@ -15,8 +15,4 @@
 	  <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="6.0.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Services\Foundations\" />
-  </ItemGroup>
-
 </Project>
