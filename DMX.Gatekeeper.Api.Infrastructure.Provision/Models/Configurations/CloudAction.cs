@@ -2,15 +2,12 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // ---------------------------------------------------------------
 
-using System;
+using System.Collections.Generic;
 
-namespace DMX.Gatekeeper.Api.Infrastructure.Provision
+namespace DMX.Gatekeeper.Api.Infrastructure.Provision.Models.Configurations
 {
-    public class Program
+    public class CloudAction
     {
-        static void Main(string[] args)
-        {
-            Console.WriteLine("Hello, World!");
-        }
+        public List<string> Environments { get; set; }
     }
 }
