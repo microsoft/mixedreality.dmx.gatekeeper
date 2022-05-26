@@ -18,7 +18,7 @@ namespace DMX.Gatekeeper.Api.Infrastructure.Provision.Brokers.Clouds
         {
             return await this.azure.ResourceGroups
                 .Define(resourceGroupName)
-                .WithRegion(Region.USWest2)
+                .WithRegion(region: Region.USWest2)
                 .CreateAsync();
         }
 
