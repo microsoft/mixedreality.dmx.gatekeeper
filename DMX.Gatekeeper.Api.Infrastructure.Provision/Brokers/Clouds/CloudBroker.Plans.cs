@@ -17,10 +17,10 @@ namespace DMX.Gatekeeper.Api.Infrastructure.Provision.Brokers.Clouds
         {
             return await this.azure.AppServices.AppServicePlans
                 .Define(planName)
-                .WithRegion(Region.USEast2)
+                .WithRegion(region: Region.USEast2)
                 .WithExistingResourceGroup(resourceGroup)
-                .WithPricingTier(PricingTier.StandardS1)
-                .WithOperatingSystem(OperatingSystem.Windows)
+                .WithPricingTier(pricingTier: PricingTier.StandardS1)
+                .WithOperatingSystem(operatingSystem: OperatingSystem.Windows)
                 .CreateAsync();
         }
     }
