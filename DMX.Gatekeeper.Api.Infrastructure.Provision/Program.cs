@@ -11,7 +11,7 @@ namespace DMX.Gatekeeper.Api.Infrastructure.Provision
     {
         public static async Task Main(string[] args)
         {
-            ICloudManagementProcessingService cloudManagementProcessingService =
+            var cloudManagementProcessingService =
                new CloudManagementProcessingService();
 
             await cloudManagementProcessingService.ProcessAsync();
