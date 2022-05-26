@@ -20,11 +20,14 @@ namespace DMX.Gatekeeper.Api.Tests.Acceptance.APIs.Homes
         [Fact]
         public async Task ShouldReturnHomeMessageAsync()
         {
+            // given
             string expectedMessage = "Hello, Goodbye";
 
+            // when
             string actualMessage =
                 await this.dmxGatekeeperApiBroker.GetHomeMessageAsync();
 
+            // then
             actualMessage.Should().BeEquivalentTo(expectedMessage);
         }
     }
