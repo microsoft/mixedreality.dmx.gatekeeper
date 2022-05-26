@@ -37,7 +37,7 @@ namespace DMX.Gatekeeper.Api.Infrastructure.Provision.Services.Processings.Cloud
             string projectName = configuration.ProjectName;
 
             List<string> provisionEnvironments =
-                RetrieveEnvironments(configuration.Up);
+                RetrieveEnvironments(cloudAction: configuration.Up);
 
             foreach (string environment in provisionEnvironments)
             {
@@ -67,7 +67,7 @@ namespace DMX.Gatekeeper.Api.Infrastructure.Provision.Services.Processings.Cloud
             string projectName = configuration.ProjectName;
 
             List<string> deprovisionEnvironments =
-                RetrieveEnvironments(configuration.Down);
+                RetrieveEnvironments(cloudAction: configuration.Down);
 
             foreach (string environment in deprovisionEnvironments)
             {
