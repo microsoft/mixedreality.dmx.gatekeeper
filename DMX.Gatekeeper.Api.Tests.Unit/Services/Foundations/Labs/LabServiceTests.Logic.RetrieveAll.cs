@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using DMX.Gatekeeper.Api.Models.Labs;
 using FluentAssertions;
+using Force.DeepCloner;
 using Moq;
 using Xunit;
 
@@ -19,7 +20,7 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.Labs
             // given
             List<Lab> randomLabs = CreateRandomLabs();
             List<Lab> retrievedLabs = randomLabs;
-            List<Lab> expectedLabs = retrievedLabs;
+            List<Lab> expectedLabs = retrievedLabs.DeepClone();
 
             this.dmxApiBrokerMock.Setup(broker =>
                 broker.GetAllLabsAsync())
