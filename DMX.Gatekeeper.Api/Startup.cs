@@ -3,6 +3,7 @@
 // ---------------------------------------------------------------
 
 using DMX.Gatekeeper.Api.Brokers.DmxApis;
+using DMX.Gatekeeper.Api.Brokers.Loggings;
 using DMX.Gatekeeper.Api.Services.Foundations.Labs;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -63,6 +64,7 @@ namespace DMX.Gatekeeper.Api
 
         private static void AddBrokers(IServiceCollection services)
         {
+            services.AddTransient<ILoggingBroker, LoggingBroker>();
             services.AddTransient<IDmxApiBroker, DmxApiBroker>();
         }
 
