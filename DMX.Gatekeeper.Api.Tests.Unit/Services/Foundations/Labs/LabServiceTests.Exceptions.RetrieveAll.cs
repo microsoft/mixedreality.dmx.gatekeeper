@@ -2,6 +2,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // ---------------------------------------------------------------
 
+using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -77,6 +78,43 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.Labs
 
             // then
             await Assert.ThrowsAsync<LabDependencyException>(() =>
+                getAllLabsTask.AsTask());
+
+            this.dmxApiBrokerMock.Verify(broker =>
+                broker.GetAllLabsAsync(),
+                    Times.Once);
+
+            this.loggingBrokerMock.Verify(broker =>
+                broker.LogError(It.Is(SameExceptionAs(
+                    expectedLabDependencyException))),
+                        Times.Once);
+
+            this.dmxApiBrokerMock.VerifyNoOtherCalls();
+            this.loggingBrokerMock.VerifyNoOtherCalls();
+        }
+
+        [Fact]
+        public async Task ShouldThrowServiceExceptionOnRetrievalIfErrorOccursAndLogItAsync()
+        {
+            // given
+            var serviceException = new Exception();
+
+            var failedExternalLabServiceException =
+                new FailedLabServiceException(serviceException);
+
+            var expectedLabDependencyException =
+                new LabServiceException(failedExternalLabServiceException);
+
+            this.dmxApiBrokerMock.Setup(broker =>
+                broker.GetAllLabsAsync())
+                    .ThrowsAsync(serviceException);
+
+            // when
+            ValueTask<List<Lab>> getAllLabsTask =
+                this.labService.RetrieveAllLabsAsync();
+
+            // then
+            await Assert.ThrowsAsync<LabServiceException>(() =>
                 getAllLabsTask.AsTask());
 
             this.dmxApiBrokerMock.Verify(broker =>
