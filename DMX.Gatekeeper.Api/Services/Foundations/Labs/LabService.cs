@@ -1,0 +1,31 @@
+﻿// ---------------------------------------------------------------
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// ---------------------------------------------------------------
+
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using DMX.Gatekeeper.Api.Brokers.DmxApis;
+using DMX.Gatekeeper.Api.Brokers.Loggings;
+using DMX.Gatekeeper.Api.Models.Labs;
+
+namespace DMX.Gatekeeper.Api.Services.Foundations.Labs
+{
+    public partial class LabService : ILabService
+    {
+        private readonly IDmxApiBroker dmxApiBroker;
+        private readonly ILoggingBroker loggingBroker;
+
+        public LabService(
+            IDmxApiBroker dmxApiBroker,
+            ILoggingBroker loggingBroker)
+        {
+            this.dmxApiBroker = dmxApiBroker;
+            this.loggingBroker = loggingBroker;
+        }
+
+        public ValueTask<List<Lab>> RetrieveAllLabsAsync()
+        {
+            throw new System.NotImplementedException();
+        }
+    }
+}
