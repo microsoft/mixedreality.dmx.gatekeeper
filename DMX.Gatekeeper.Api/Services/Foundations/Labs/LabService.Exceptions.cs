@@ -19,18 +19,31 @@ namespace DMX.Gatekeeper.Api.Services.Foundations.Labs
             }
             catch (HttpResponseUrlNotFoundException httpResponseUrlNotFoundException)
             {
-                var failedLabDependencyException = new FailedLabDependencyException(httpResponseUrlNotFoundException);
+                var failedLabDependencyException = 
+                    new FailedLabDependencyException(httpResponseUrlNotFoundException);
+
                 throw this.CreateAndLogCriticalDependencyException(failedLabDependencyException);
             }
             catch (HttpResponseUnauthorizedException httpResponseUnauthorizedException)
             {
-                var failedLabDependencyException = new FailedLabDependencyException(httpResponseUnauthorizedException);
+                var failedLabDependencyException = 
+                    new FailedLabDependencyException(httpResponseUnauthorizedException);
+
                 throw this.CreateAndLogCriticalDependencyException(failedLabDependencyException);
             }
             catch (HttpResponseForbiddenException httpResponseForbiddenException)
             {
-                var failedLabDependencyException = new FailedLabDependencyException(httpResponseForbiddenException);
+                var failedLabDependencyException = 
+                    new FailedLabDependencyException(httpResponseForbiddenException);
+
                 throw this.CreateAndLogCriticalDependencyException(failedLabDependencyException);
+            }
+            catch (HttpResponseException httpResponseException)
+            {
+                var failedLabDependencyException = 
+                    new FailedLabDependencyException(httpResponseException);
+
+                throw this.CreateAndLogDependencyException(failedLabDependencyException);
             }
         }
 
@@ -38,6 +51,14 @@ namespace DMX.Gatekeeper.Api.Services.Foundations.Labs
         {
             var labDependencyException = new LabDependencyException(xeption);
             this.loggingBroker.LogCritical(labDependencyException);
+
+            return labDependencyException;
+        }
+
+        private LabDependencyException CreateAndLogDependencyException(Xeption xeption)
+        {
+            var labDependencyException = new LabDependencyException(xeption);
+            this.loggingBroker.LogError(labDependencyException);
 
             return labDependencyException;
         }

@@ -60,6 +60,7 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.Labs
             var someMessage = GetRandomString();
             var someResponseMessage = new HttpResponseMessage();
             var httpResponseException = new HttpResponseException(someResponseMessage, someMessage);
+
             var failedExternalLabDependencyException =
                 new FailedLabDependencyException(httpResponseException);
 
@@ -90,6 +91,5 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.Labs
             this.dmxApiBrokerMock.VerifyNoOtherCalls();
             this.loggingBrokerMock.VerifyNoOtherCalls();
         }
-
     }
 }
