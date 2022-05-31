@@ -23,7 +23,7 @@ namespace DMX.Gatekeeper.Api.Services.Foundations.Labs
             this.loggingBroker = loggingBroker;
         }
 
-        public async ValueTask<List<Lab>> RetrieveAllLabsAsync() =>
-            await this.dmxApiBroker.GetAllLabsAsync();
+        public ValueTask<List<Lab>> RetrieveAllLabsAsync() =>
+             this.TryCatch(async () => await this.dmxApiBroker.GetAllLabsAsync());
     }
 }
