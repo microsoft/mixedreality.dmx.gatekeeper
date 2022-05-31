@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using DMX.Gatekeeper.Api.Models.Labs;
 using DMX.Gatekeeper.Api.Models.Labs.Exceptions;
@@ -45,6 +46,11 @@ namespace DMX.Gatekeeper.Api.Services.Foundations.Labs
 
                 throw this.CreateAndLogDependencyException(failedLabDependencyException);
             }
+            catch (Exception exception)
+            {
+                var failedLabServiceException = new FailedLabServiceException(exception);
+                throw this.CreateAndLogServiceException(failedLabServiceException);
+            }
         }
 
         private LabDependencyException CreateAndLogCriticalDependencyException(Xeption xeption)
@@ -61,6 +67,14 @@ namespace DMX.Gatekeeper.Api.Services.Foundations.Labs
             this.loggingBroker.LogError(labDependencyException);
 
             return labDependencyException;
+        }
+
+        private LabServiceException CreateAndLogServiceException(Xeption xeption)
+        {
+            var labServiceException = new LabServiceException(xeption);
+            this.loggingBroker.LogError(labServiceException);
+
+            return labServiceException;
         }
     }
 

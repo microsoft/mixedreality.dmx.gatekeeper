@@ -102,7 +102,7 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.Labs
             var failedExternalLabServiceException =
                 new FailedLabServiceException(serviceException);
 
-            var expectedLabDependencyException =
+            var expectedLabServiceException =
                 new LabServiceException(failedExternalLabServiceException);
 
             this.dmxApiBrokerMock.Setup(broker =>
@@ -123,7 +123,7 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.Labs
 
             this.loggingBrokerMock.Verify(broker =>
                 broker.LogError(It.Is(SameExceptionAs(
-                    expectedLabDependencyException))),
+                    expectedLabServiceException))),
                         Times.Once);
 
             this.dmxApiBrokerMock.VerifyNoOtherCalls();
