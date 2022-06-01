@@ -50,10 +50,10 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.Labs
 
         private Expression<Func<Xeption, bool>> SameExceptionAs(Xeption expectedException)
         {
-            return actualExpectedAssertException =>
-                actualExpectedAssertException.Message == expectedException.Message &&
-                actualExpectedAssertException.InnerException.Message == expectedException.InnerException.Message &&
-                (actualExpectedAssertException.InnerException as Xeption).DataEquals(expectedException.InnerException.Data);
+            return actualException =>
+                actualException.Message == expectedException.Message &&
+                actualException.InnerException.Message == expectedException.InnerException.Message &&
+                (actualException.InnerException as Xeption).DataEquals(expectedException.InnerException.Data);
         }
 
         private static List<Lab> CreateRandomLabs() =>
@@ -65,11 +65,7 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.Labs
         private static int GetRandomNumber() =>
             new IntRange(min: 2, max: 10).GetValue();
 
-        private static Filler<Lab> CreateLabFiller()
-        {
-            var filler = new Filler<Lab>();
-
-            return filler;
-        }
+        private static Filler<Lab> CreateLabFiller() => 
+            new Filler<Lab>();
     }
 }
