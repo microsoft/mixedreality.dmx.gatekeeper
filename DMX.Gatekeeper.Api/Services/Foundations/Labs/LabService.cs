@@ -24,6 +24,6 @@ namespace DMX.Gatekeeper.Api.Services.Foundations.Labs
         }
 
         public ValueTask<List<Lab>> RetrieveAllLabsAsync() =>
-             this.TryCatch(async () => await this.dmxApiBroker.GetAllLabsAsync());
+        TryCatch(async () => await this.dmxApiBroker.GetAllLabsAsync());
     }
 }
