@@ -3,6 +3,8 @@
 // ---------------------------------------------------------------
 
 using DMX.Gatekeeper.Api.Brokers.DmxApis;
+using DMX.Gatekeeper.Api.Brokers.Loggings;
+using DMX.Gatekeeper.Api.Services.Foundations.Labs;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -23,7 +25,8 @@ namespace DMX.Gatekeeper.Api
         {
             services.AddControllers();
             services.AddHttpClient();
-            services.AddTransient<IDmxApiBroker, DmxApiBroker>();
+            AddBrokers(services);
+            AddServices(services);
 
             services.AddSwaggerGen(options =>
             {
@@ -57,6 +60,17 @@ namespace DMX.Gatekeeper.Api
             app.UseRouting();
             app.UseAuthorization();
             app.UseEndpoints(endpoints => endpoints.MapControllers());
+        }
+
+        private static void AddBrokers(IServiceCollection services)
+        {
+            services.AddTransient<ILoggingBroker, LoggingBroker>();
+            services.AddTransient<IDmxApiBroker, DmxApiBroker>();
+        }
+
+        private static void AddServices(IServiceCollection services)
+        {
+            services.AddTransient<ILabService, LabService>();
         }
     }
 }
