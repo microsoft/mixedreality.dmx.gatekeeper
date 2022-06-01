@@ -10,7 +10,7 @@ namespace DMX.Gatekeeper.Api.Models.Labs.Exceptions
     public class FailedLabDependencyException : Xeption
     {
         public FailedLabDependencyException(Exception innerException)
-            : base(message: "Failed lab dependency error occured, contact support.",
+            : base(message: "Failed lab dependency error occurred, contact support.",
                   innerException)
         { }
     }
