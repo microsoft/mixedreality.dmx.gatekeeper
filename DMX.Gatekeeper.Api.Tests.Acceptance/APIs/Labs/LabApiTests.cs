@@ -78,7 +78,6 @@ namespace DMX.Gatekeeper.Api.Tests.Acceptance.APIs.Labs
                 .Select(iterator => allCases)
                     .SelectMany(@case => @case)
                         .ToList();
-
         }
 
         private static List<LabDevice> GetRandomLabDevices()
