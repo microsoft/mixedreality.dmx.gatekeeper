@@ -35,6 +35,9 @@ namespace DMX.Gatekeeper.Api.Tests.Acceptance.APIs.Labs
 
         private static bool GetRandomBoolean() => new Random().Next(2) == 1;
 
+        private static int GetRandomPowerLevel() =>
+            new IntRange(min: 0, max: 101).GetValue();
+
         private static List<Lab> CreateRandomLabsData()
         {
             int randomCount = GetRandomNumber();
@@ -87,6 +90,8 @@ namespace DMX.Gatekeeper.Api.Tests.Acceptance.APIs.Labs
             bool randomHostConnectionStatus = GetRandomBoolean();
             bool randomPhoneConnectionStatus = GetRandomBoolean();
             bool randomHMDConnectionStatus = GetRandomBoolean();
+            int randomPhonePowerLevel = GetRandomPowerLevel();
+            int randomHMDPowerLevel = GetRandomPowerLevel();
 
             List<LabDevice> labDevices = new List<LabDevice>
             {
@@ -96,6 +101,7 @@ namespace DMX.Gatekeeper.Api.Tests.Acceptance.APIs.Labs
                     Name = null,
                     Type = LabDeviceType.PC,
                     Category = LabDeviceCategory.Host,
+                    PowerLevel = null,
 
                     Status = randomHostConnectionStatus
                         ? LabDeviceStatus.Online
@@ -108,6 +114,7 @@ namespace DMX.Gatekeeper.Api.Tests.Acceptance.APIs.Labs
                     Name = randomPhoneName,
                     Type = LabDeviceType.Phone,
                     Category = LabDeviceCategory.Attachment,
+                    PowerLevel = randomPhonePowerLevel,
 
                     Status = randomPhoneConnectionStatus
                         ? LabDeviceStatus.Online
@@ -120,6 +127,7 @@ namespace DMX.Gatekeeper.Api.Tests.Acceptance.APIs.Labs
                     Name = randomHMDName,
                     Type = LabDeviceType.HeadMountedDisplay,
                     Category = LabDeviceCategory.Attachment,
+                    PowerLevel = randomHMDPowerLevel,
 
                     Status = randomHMDConnectionStatus
                         ? LabDeviceStatus.Online
