@@ -27,7 +27,7 @@ namespace DMX.Gatekeeper.Api.Tests.Acceptance.APIs.Labs
             //given
             List<Lab> randomLabs = CreateRandomLabsData();
 
-            string randomLabCollectionBody =
+            string randomLabsCollectionBody =
                 JsonConvert.SerializeObject(randomLabs.ToArray());
 
             List<Lab> expectedRandomLabs = randomLabs.DeepClone();
@@ -38,7 +38,7 @@ namespace DMX.Gatekeeper.Api.Tests.Acceptance.APIs.Labs
                     .UsingGet())
                 .RespondWith(Response.Create()
                     .WithStatusCode(HttpStatusCode.OK)
-                    .WithBody(randomLabCollectionBody));
+                    .WithBody(randomLabsCollectionBody));
 
             //when
             List<Lab> actualLabs = await this.dmxGatekeeperApiBroker.GetAllLabs();
