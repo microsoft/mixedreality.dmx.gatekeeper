@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace DMX.Gatekeeper.Api.Models.Labs
+namespace DMX.Gatekeeper.Api.Tests.Acceptance.Models.Labs
 {
     public class Lab
     {
