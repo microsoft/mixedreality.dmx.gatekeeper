@@ -2,20 +2,15 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // ---------------------------------------------------------------
 
-using System;
-using System.Net;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Net;
 using System.Threading.Tasks;
 using DMX.Gatekeeper.Api.Tests.Acceptance.Models.Labs;
-using Force.DeepCloner;
-using Microsoft.Extensions.DependencyModel;
+using FluentAssertions;
+using Newtonsoft.Json;
 using WireMock.RequestBuilders;
 using WireMock.ResponseBuilders;
 using Xunit;
-using Newtonsoft.Json;
-using FluentAssertions;
 
 namespace DMX.Gatekeeper.Api.Tests.Acceptance.APIs.Labs
 {
@@ -25,12 +20,11 @@ namespace DMX.Gatekeeper.Api.Tests.Acceptance.APIs.Labs
         public async Task ShouldRetrieveAllLabsAsync()
         {
             //given
-            List<Lab> randomLabs = CreateRandomLabsData();
+            List<Lab> randomLabs = CreateRandomLabs();
+            List<Lab> expectedLabs = randomLabs;
 
             string randomLabsCollectionBody =
-                JsonConvert.SerializeObject(randomLabs.ToArray());
-
-            List<Lab> expectedRandomLabs = randomLabs.DeepClone();
+                JsonConvert.SerializeObject(randomLabs);
 
             this.wireMockServer
                 .Given(Request.Create()
@@ -41,10 +35,11 @@ namespace DMX.Gatekeeper.Api.Tests.Acceptance.APIs.Labs
                     .WithBody(randomLabsCollectionBody));
 
             //when
-            List<Lab> actualLabs = await this.dmxGatekeeperApiBroker.GetAllLabs();
+            List<Lab> actualLabs =
+                await this.dmxGatekeeperApiBroker.GetAllLabs();
 
             //then
-            actualLabs.Should().BeEquivalentTo(expectedRandomLabs);
+            actualLabs.Should().BeEquivalentTo(expectedLabs);
         }
     }
 }

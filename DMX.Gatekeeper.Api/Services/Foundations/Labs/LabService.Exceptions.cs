@@ -24,28 +24,28 @@ namespace DMX.Gatekeeper.Api.Services.Foundations.Labs
             }
             catch (HttpResponseUrlNotFoundException httpResponseUrlNotFoundException)
             {
-                var failedLabDependencyException = 
+                var failedLabDependencyException =
                     new FailedLabDependencyException(httpResponseUrlNotFoundException);
 
                 throw this.CreateAndLogCriticalDependencyException(failedLabDependencyException);
             }
             catch (HttpResponseUnauthorizedException httpResponseUnauthorizedException)
             {
-                var failedLabDependencyException = 
+                var failedLabDependencyException =
                     new FailedLabDependencyException(httpResponseUnauthorizedException);
 
                 throw this.CreateAndLogCriticalDependencyException(failedLabDependencyException);
             }
             catch (HttpResponseForbiddenException httpResponseForbiddenException)
             {
-                var failedLabDependencyException = 
+                var failedLabDependencyException =
                     new FailedLabDependencyException(httpResponseForbiddenException);
 
                 throw this.CreateAndLogCriticalDependencyException(failedLabDependencyException);
             }
             catch (HttpResponseException httpResponseException)
             {
-                var failedLabDependencyException = 
+                var failedLabDependencyException =
                     new FailedLabDependencyException(httpResponseException);
 
                 throw this.CreateAndLogDependencyException(failedLabDependencyException);

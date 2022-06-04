@@ -65,7 +65,7 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.Labs
         private static int GetRandomNumber() =>
             new IntRange(min: 2, max: 10).GetValue();
 
-        private static Filler<Lab> CreateLabFiller() => 
+        private static Filler<Lab> CreateLabFiller() =>
             new Filler<Lab>();
     }
 }
