@@ -19,7 +19,7 @@ namespace DMX.Gatekeeper.Api.Tests.Acceptance.APIs.Labs
         [Fact]
         public async Task ShouldRetrieveAllLabsAsync()
         {
-            //given
+            // given
             List<Lab> randomLabs = CreateRandomLabs();
             List<Lab> expectedLabs = randomLabs;
 
@@ -34,11 +34,11 @@ namespace DMX.Gatekeeper.Api.Tests.Acceptance.APIs.Labs
                     .WithStatusCode(HttpStatusCode.OK)
                     .WithBody(randomLabsCollectionBody));
 
-            //when
+            // when
             List<Lab> actualLabs =
                 await this.dmxGatekeeperApiBroker.GetAllLabs();
 
-            //then
+            // then
             actualLabs.Should().BeEquivalentTo(expectedLabs);
         }
     }
