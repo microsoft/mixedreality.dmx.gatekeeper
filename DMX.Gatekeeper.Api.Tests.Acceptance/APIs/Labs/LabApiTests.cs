@@ -2,7 +2,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // ---------------------------------------------------------------
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using DMX.Gatekeeper.Api.Tests.Acceptance.Brokers;
@@ -30,14 +29,6 @@ namespace DMX.Gatekeeper.Api.Tests.Acceptance.APIs.Labs
 
         private static int GetRandomNumber() =>
             new IntRange(min: 2, max: 10).GetValue();
-
-        private static string GetRandomString() =>
-            new MnemonicString().GetValue();
-
-        private static bool GetRandomBoolean() => new Random().Next(2) == 1;
-
-        private static int GetRandomPowerLevel() =>
-            new IntRange(min: 0, max: 101).GetValue();
 
         private static Filler<Lab> CreateLabFiller() =>
             new Filler<Lab>();
