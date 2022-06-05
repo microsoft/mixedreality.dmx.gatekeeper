@@ -27,34 +27,34 @@ namespace DMX.Gatekeeper.Api.Services.Foundations.Labs
                 var failedLabDependencyException =
                     new FailedLabDependencyException(httpResponseUrlNotFoundException);
 
-                throw this.CreateAndLogCriticalDependencyException(failedLabDependencyException);
+                throw CreateAndLogCriticalDependencyException(failedLabDependencyException);
             }
             catch (HttpResponseUnauthorizedException httpResponseUnauthorizedException)
             {
                 var failedLabDependencyException =
                     new FailedLabDependencyException(httpResponseUnauthorizedException);
 
-                throw this.CreateAndLogCriticalDependencyException(failedLabDependencyException);
+                throw CreateAndLogCriticalDependencyException(failedLabDependencyException);
             }
             catch (HttpResponseForbiddenException httpResponseForbiddenException)
             {
                 var failedLabDependencyException =
                     new FailedLabDependencyException(httpResponseForbiddenException);
 
-                throw this.CreateAndLogCriticalDependencyException(failedLabDependencyException);
+                throw CreateAndLogCriticalDependencyException(failedLabDependencyException);
             }
             catch (HttpResponseException httpResponseException)
             {
                 var failedLabDependencyException =
                     new FailedLabDependencyException(httpResponseException);
 
-                throw this.CreateAndLogDependencyException(failedLabDependencyException);
+                throw CreateAndLogDependencyException(failedLabDependencyException);
             }
             catch (Exception exception)
             {
                 var failedLabServiceException = new FailedLabServiceException(exception);
 
-                throw this.CreateAndLogServiceException(failedLabServiceException);
+                throw CreateAndLogServiceException(failedLabServiceException);
             }
         }
 
