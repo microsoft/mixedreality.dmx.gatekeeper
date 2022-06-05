@@ -19,9 +19,9 @@ namespace DMX.Gatekeeper.Api.Infrastructure.Provision.Brokers.Clouds
 
         public CloudBroker()
         {
-            this.clientId = Environment.GetEnvironmentVariable("AzureClientId");
-            this.clientSecret = Environment.GetEnvironmentVariable("AzureClientSecret");
-            this.tenantId = Environment.GetEnvironmentVariable("AzureTenantId");
+            this.clientId = Environment.GetEnvironmentVariable(variable: "AzureClientId");
+            this.clientSecret = Environment.GetEnvironmentVariable(variable: "AzureClientSecret");
+            this.tenantId = Environment.GetEnvironmentVariable(variable: "AzureTenantId");
             this.azure = AuthenticateAzure();
         }
 
@@ -35,7 +35,7 @@ namespace DMX.Gatekeeper.Api.Infrastructure.Provision.Brokers.Clouds
                     environment: AzureEnvironment.AzureGlobalCloud);
 
             return Azure.Configure()
-                .WithLogLevel(HttpLoggingDelegatingHandler.Level.Basic)
+                .WithLogLevel(level: HttpLoggingDelegatingHandler.Level.Basic)
                 .Authenticate(credentials)
                 .WithDefaultSubscription();
         }
