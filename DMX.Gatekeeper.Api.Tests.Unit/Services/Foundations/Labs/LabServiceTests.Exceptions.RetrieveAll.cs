@@ -122,9 +122,13 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.Labs
             ValueTask<List<Lab>> retrieveAllLabsTask =
                 this.labService.RetrieveAllLabsAsync();
 
+            LabServiceException actualLabServiceException =
+                await Assert.ThrowsAsync<LabServiceException>(() =>
+                    retrieveAllLabsTask.AsTask());
+
             // then
-            await Assert.ThrowsAsync<LabServiceException>(() =>
-                retrieveAllLabsTask.AsTask());
+            actualLabServiceException.Should().BeEquivalentTo(
+                expectedLabServiceException); 
 
             this.dmxApiBrokerMock.Verify(broker =>
                 broker.GetAllLabsAsync(),
