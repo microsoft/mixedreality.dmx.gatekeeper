@@ -17,10 +17,10 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.Labs
         public async Task ShouldAddLabsAsync()
         {
             // given
-            Lab randomLab = CreateLabFiller().Create();
+            Lab randomLab = CreateRandomLab();
             Lab inputLab = randomLab;
-            Lab postedLab = randomLab.DeepClone();
-            Lab expectedLab = inputLab.DeepClone();
+            Lab postedLab = inputLab;
+            Lab expectedLab = postedLab.DeepClone();
 
             this.dmxApiBrokerMock.Setup(broker =>
                 broker.PostLabAsync(inputLab))

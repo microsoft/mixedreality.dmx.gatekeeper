@@ -51,6 +51,9 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.Labs
         private static Expression<Func<Xeption, bool>> SameExceptionAs(Xeption expectedException) =>
             actualException => actualException.SameExceptionAs(expectedException);
 
+        private static Lab CreateRandomLab() =>
+            CreateLabFiller().Create();
+
         private static List<Lab> CreateRandomLabs() =>
             CreateLabFiller().Create(count: GetRandomNumber()).ToList();
 
