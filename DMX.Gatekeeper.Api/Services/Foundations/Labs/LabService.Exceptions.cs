@@ -56,6 +56,13 @@ namespace DMX.Gatekeeper.Api.Services.Foundations.Labs
 
                 throw CreateAndLogDependencyException(failedLabDependencyException);
             }
+            catch (Exception exception)
+            {
+                var failedLabServiceException =
+                    new FailedLabServiceException(exception);
+
+                throw CreateAndLogServiceException(failedLabServiceException);
+            }
         }
 
         private async ValueTask<List<Lab>> TryCatch(ReturningLabsFunction returningLabsFunction)
