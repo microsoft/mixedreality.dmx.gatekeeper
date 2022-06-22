@@ -14,7 +14,21 @@ namespace DMX.Gatekeeper.Api.Services.Foundations.Labs
 {
     public partial class LabService
     {
+        private delegate ValueTask<Lab> AddLabsFunction();
+
         private delegate ValueTask<List<Lab>> ReturningLabsFunction();
+
+        private async ValueTask<Lab> TryCatch(AddLabsFunction addLabsFunction)
+        {
+            try
+            {
+                return await addLabsFunction();
+            }
+            catch (NullLabException nullLabException)
+            {
+                throw CreateAndLogValidationException(nullLabException);
+            }
+        }
 
         private async ValueTask<List<Lab>> TryCatch(ReturningLabsFunction returningLabsFunction)
         {
@@ -56,6 +70,14 @@ namespace DMX.Gatekeeper.Api.Services.Foundations.Labs
 
                 throw CreateAndLogServiceException(failedLabServiceException);
             }
+        }
+
+        private LabValidationException CreateAndLogValidationException(Xeption xeption)
+        {
+            var labValidationException = new LabValidationException(xeption);
+            this.loggingBroker.LogError(labValidationException);
+
+            return labValidationException;
         }
 
         private LabDependencyException CreateAndLogCriticalDependencyException(Xeption xeption)
