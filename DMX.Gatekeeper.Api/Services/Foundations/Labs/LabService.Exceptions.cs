@@ -28,6 +28,27 @@ namespace DMX.Gatekeeper.Api.Services.Foundations.Labs
             {
                 throw CreateAndLogValidationException(nullLabException);
             }
+            catch (HttpResponseUrlNotFoundException httpResponseUrlNotFoundException)
+            {
+                var failedLabDependencyException =
+                    new FailedLabDependencyException(httpResponseUrlNotFoundException);
+
+                throw CreateAndLogCriticalDependencyException(failedLabDependencyException);
+            }
+            catch (HttpResponseUnauthorizedException httpResponseUnauthorizedException)
+            {
+                var failedLabDependencyException =
+                    new FailedLabDependencyException(httpResponseUnauthorizedException);
+
+                throw CreateAndLogCriticalDependencyException(failedLabDependencyException);
+            }
+            catch (HttpResponseForbiddenException httpResponseForbiddenException)
+            {
+                var failedLabDependencyException =
+                    new FailedLabDependencyException(httpResponseForbiddenException);
+
+                throw CreateAndLogCriticalDependencyException(failedLabDependencyException);
+            }
         }
 
         private async ValueTask<List<Lab>> TryCatch(ReturningLabsFunction returningLabsFunction)

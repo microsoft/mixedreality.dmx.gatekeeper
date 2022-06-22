@@ -48,7 +48,7 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.Labs
                     Times.Once);
 
             this.loggingBrokerMock.Verify(broker =>
-                broker.LogCritical(expectedLabDependencyException),
+                broker.LogCritical(It.Is(SameExceptionAs(expectedLabDependencyException))),
                     Times.Once);
 
             this.dmxApiBrokerMock.VerifyNoOtherCalls();
