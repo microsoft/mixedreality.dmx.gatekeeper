@@ -2,6 +2,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // ---------------------------------------------------------------
 
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using DMX.Gatekeeper.Api.Brokers.DmxApis;
@@ -21,6 +22,11 @@ namespace DMX.Gatekeeper.Api.Services.Foundations.Labs
         {
             this.dmxApiBroker = dmxApiBroker;
             this.loggingBroker = loggingBroker;
+        }
+
+        public ValueTask<Lab> AddLabAsync(Lab lab)
+        {
+            throw new NotImplementedException();
         }
 
         public ValueTask<List<Lab>> RetrieveAllLabsAsync() =>

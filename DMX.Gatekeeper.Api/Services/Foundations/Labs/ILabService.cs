@@ -10,6 +10,7 @@ namespace DMX.Gatekeeper.Api.Services.Foundations.Labs
 {
     public interface ILabService
     {
+        ValueTask<Lab> AddLabAsync(Lab lab);
         ValueTask<List<Lab>> RetrieveAllLabsAsync();
     }
 }
