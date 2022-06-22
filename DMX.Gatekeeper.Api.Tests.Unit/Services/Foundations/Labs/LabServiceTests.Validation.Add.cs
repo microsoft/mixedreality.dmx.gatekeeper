@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿// ---------------------------------------------------------------
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// ---------------------------------------------------------------
+
 using System.Threading.Tasks;
 using DMX.Gatekeeper.Api.Models.Labs;
 using DMX.Gatekeeper.Api.Models.Labs.Exceptions;
@@ -18,7 +18,6 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.Labs
         {
             // given
             Lab nullLab = null;
-
             var nullException = new NullLabException();
 
             var expectedValidationException = 
@@ -28,19 +27,21 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.Labs
             var addLabTask = 
                 this.labService.AddLabAsync(nullLab);
 
-            var actualValidationException =
-                await Assert.ThrowsAsync<LabValidationException>(addLabTask.AsTask);
+            LabValidationException actualValidationException =
+                await Assert.ThrowsAsync<LabValidationException>(
+                    addLabTask.AsTask);
 
             // then
             actualValidationException.Should().BeEquivalentTo(
                 expectedValidationException);
 
             this.loggingBrokerMock.Verify(broker =>
-                broker.LogError(It.Is(SameExceptionAs(expectedValidationException))),
-                    Times.Once);
+                broker.LogError(It.Is(
+                    SameExceptionAs(expectedValidationException))),
+                        Times.Once);
 
-            this.dmxApiBrokerMock.VerifyNoOtherCalls();
             this.loggingBrokerMock.VerifyNoOtherCalls();
+            this.dmxApiBrokerMock.VerifyNoOtherCalls();
         }
     }
 }
