@@ -7,6 +7,7 @@ using DMX.Gatekeeper.Api.Models.Labs.Exceptions;
 using FluentAssertions;
 using Moq;
 using RESTFulSense.Exceptions;
+using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Xeptions;
@@ -96,6 +97,47 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.Labs
             this.loggingBrokerMock.Verify(broker =>
                 broker.LogError(It.Is(
                     SameExceptionAs(expectedLabDependencyException))),
+                        Times.Once);
+
+            this.dmxApiBrokerMock.VerifyNoOtherCalls();
+            this.loggingBrokerMock.VerifyNoOtherCalls();
+        }
+
+        [Fact]
+        public async Task ShouldThrowServiceExceptionOnRetrieveIfErrorOccursAndLogItAsync()
+        {
+            // given
+            Lab randomLab = CreateRandomLab();
+            var serviceException = new Exception();
+
+            var failedlLabServiceException =
+                new FailedLabServiceException(serviceException);
+
+            var expectedLabServiceException =
+                new LabServiceException(failedlLabServiceException);
+
+            this.dmxApiBrokerMock.Setup(broker =>
+                broker.PostLabAsync(It.IsAny<Lab>()))
+                    .ThrowsAsync(serviceException);
+
+            // when
+            ValueTask<Lab> addLabTask =
+                this.labService.AddLabAsync(randomLab);
+
+            var actualLabServiceException =
+                await Assert.ThrowsAsync<LabServiceException>(addLabTask.AsTask);
+
+            // then
+            actualLabServiceException.Should()
+                .BeEquivalentTo(expectedLabServiceException);
+
+            this.dmxApiBrokerMock.Verify(broker =>
+                broker.PostLabAsync(It.IsAny<Lab>()),
+                    Times.Once);
+
+            this.loggingBrokerMock.Verify(broker =>
+                broker.LogError(It.Is(
+                    SameExceptionAs(expectedLabServiceException))),
                         Times.Once);
 
             this.dmxApiBrokerMock.VerifyNoOtherCalls();
