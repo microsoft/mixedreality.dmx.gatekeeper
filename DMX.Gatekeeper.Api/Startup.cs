@@ -71,9 +71,7 @@ namespace DMX.Gatekeeper.Api
             services.AddTransient<IDmxApiBroker, DmxApiBroker>();
         }
 
-        private static void AddServices(IServiceCollection services)
-        {
+        private static void AddServices(IServiceCollection services) =>
             services.AddTransient<ILabService, LabService>();
-        }
     }
 }
