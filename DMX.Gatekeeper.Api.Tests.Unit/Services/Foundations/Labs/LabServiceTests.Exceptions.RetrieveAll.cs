@@ -60,7 +60,7 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.Labs
         }
 
         [Fact]
-        public async Task ShouldThrowDependencyExceptionOnRetrievefErrorOccursAndLogItAsync()
+        public async Task ShouldThrowDependencyExceptionOnRetrieveIfErrorOccursAndLogItAsync()
         {
             // given
             string someMessage = GetRandomString();
