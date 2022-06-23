@@ -149,7 +149,7 @@ namespace DMX.Gatekeeper.Api.Services.Foundations.Labs
             return labDependencyException;
         }
 
-        private Exception CreateAndLogDependencyValidationException(Xeption xeption)
+        private LabDependencyValidationException CreateAndLogDependencyValidationException(Xeption xeption)
         {
             var labDependencyValidationException = new LabDependencyValidationException(xeption);
             this.loggingBroker.LogError(labDependencyValidationException);
