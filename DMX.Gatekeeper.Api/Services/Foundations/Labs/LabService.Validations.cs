@@ -2,15 +2,19 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // ---------------------------------------------------------------
 
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using DMX.Gatekeeper.Api.Models.Labs;
+using DMX.Gatekeeper.Api.Models.Labs.Exceptions;
 
 namespace DMX.Gatekeeper.Api.Services.Foundations.Labs
 {
-    public interface ILabService
+    public partial class LabService
     {
-        ValueTask<Lab> AddLabAsync(Lab lab);
-        ValueTask<List<Lab>> RetrieveAllLabsAsync();
+        private void ValidateLab(Lab lab)
+        {
+            if (lab is null)
+            {
+                throw new NullLabException();
+            }
+        }
     }
 }

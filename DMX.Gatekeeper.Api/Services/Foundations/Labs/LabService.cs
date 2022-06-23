@@ -23,6 +23,14 @@ namespace DMX.Gatekeeper.Api.Services.Foundations.Labs
             this.loggingBroker = loggingBroker;
         }
 
+        public ValueTask<Lab> AddLabAsync(Lab lab) =>
+        TryCatch(async () =>
+        {
+            ValidateLab(lab);
+
+            return await this.dmxApiBroker.PostLabAsync(lab);
+        });
+
         public ValueTask<List<Lab>> RetrieveAllLabsAsync() =>
         TryCatch(async () => await this.dmxApiBroker.GetAllLabsAsync());
     }

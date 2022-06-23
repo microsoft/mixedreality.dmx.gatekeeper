@@ -38,7 +38,7 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.Labs
             ValueTask<List<Lab>> retrieveAllLabsTask =
                 this.labService.RetrieveAllLabsAsync();
 
-            LabDependencyException actualLabDependencyException = 
+            LabDependencyException actualLabDependencyException =
                 await Assert.ThrowsAsync<LabDependencyException>(() =>
                     retrieveAllLabsTask.AsTask());
 
@@ -60,7 +60,7 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.Labs
         }
 
         [Fact]
-        public async Task ShouldThrowDependencyExceptionOnRetrievefErrorOccursAndLogItAsync()
+        public async Task ShouldThrowDependencyExceptionOnRetrieveIfErrorOccursAndLogItAsync()
         {
             // given
             string someMessage = GetRandomString();
@@ -128,7 +128,7 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.Labs
 
             // then
             actualLabServiceException.Should().BeEquivalentTo(
-                expectedLabServiceException); 
+                expectedLabServiceException);
 
             this.dmxApiBrokerMock.Verify(broker =>
                 broker.GetAllLabsAsync(),
