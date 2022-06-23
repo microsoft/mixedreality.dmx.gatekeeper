@@ -58,6 +58,15 @@ namespace DMX.Gatekeeper.Api.Services.Foundations.Labs
 
                 throw CreateAndLogDependencyValidationException(invalidLabException);
             }
+            catch (HttpResponseConflictException httpResponseConflictException)
+            {
+                var alreadyExistsException =
+                    new AlreadyExistsLabException(
+                        httpResponseConflictException,
+                        httpResponseConflictException.Data);
+
+                throw CreateAndLogDependencyValidationException(alreadyExistsException);
+            }
             catch (HttpResponseException httpResonseException)
             {
                 var failedLabDependencyException =
