@@ -40,7 +40,7 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.Labs
             ValueTask<Lab> addLabTask =
                 this.labService.AddLabAsync(randomLab);
 
-            LabDependencyException actualLabDependencyException =
+            var actualLabDependencyException =
                 await Assert.ThrowsAsync<LabDependencyException>(addLabTask.AsTask);
 
             // then
@@ -84,7 +84,7 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.Labs
             ValueTask<Lab> addLabTask =
                 this.labService.AddLabAsync(randomLab);
 
-            LabDependencyException actualLabDependencyException =
+            var actualLabDependencyException =
                 await Assert.ThrowsAsync<LabDependencyException>(addLabTask.AsTask);
 
             //then
@@ -220,7 +220,7 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.Labs
             // when
             ValueTask<Lab> addLabTask = this.labService.AddLabAsync(randomLab);
 
-            LabDependencyValidationException actualLabDependencyValidationException =
+            var actualLabDependencyValidationException =
                 await Assert.ThrowsAsync<LabDependencyValidationException>(addLabTask.AsTask);
 
             // then
