@@ -40,6 +40,10 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.Labs
                     SameExceptionAs(expectedValidationException))),
                         Times.Once);
 
+            this.dmxApiBrokerMock.Verify(broker =>
+                broker.PostLabAsync(It.IsAny<Lab>()),
+                Times.Never);
+
             this.loggingBrokerMock.VerifyNoOtherCalls();
             this.dmxApiBrokerMock.VerifyNoOtherCalls();
         }
