@@ -10,7 +10,7 @@ namespace DMX.Gatekeeper.Api.Models.Labs.Exceptions
 {
     public class InvalidLabException : Xeption
     {
-        public InvalidLabException(Exception innerException) 
+        public InvalidLabException(Exception innerException)
             : base(message: "Invalid lab error occured. Please fix and try again",
                   innerException)
         {

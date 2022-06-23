@@ -27,7 +27,7 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.Labs
                     .ReturnsAsync(postedLab);
 
             // when
-            Lab actualLab = 
+            Lab actualLab =
                 await this.labService.AddLabAsync(inputLab);
 
             // then

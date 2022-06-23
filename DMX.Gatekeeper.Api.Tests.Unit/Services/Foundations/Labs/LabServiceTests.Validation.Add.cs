@@ -7,7 +7,6 @@ using DMX.Gatekeeper.Api.Models.Labs;
 using DMX.Gatekeeper.Api.Models.Labs.Exceptions;
 using FluentAssertions;
 using Moq;
-using Xeptions;
 using Xunit;
 
 namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.Labs
@@ -21,11 +20,11 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.Labs
             Lab nullLab = null;
             var nullException = new NullLabException();
 
-            var expectedValidationException = 
+            var expectedValidationException =
                 new LabValidationException(nullException);
 
             // when
-            var addLabTask = 
+            var addLabTask =
                 this.labService.AddLabAsync(nullLab);
 
             LabValidationException actualValidationException =

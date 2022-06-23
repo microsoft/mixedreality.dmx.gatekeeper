@@ -2,16 +2,15 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // ---------------------------------------------------------------
 
+using System;
+using System.Collections.Generic;
+using System.Net.Http;
+using System.Threading.Tasks;
 using DMX.Gatekeeper.Api.Models.Labs;
 using DMX.Gatekeeper.Api.Models.Labs.Exceptions;
 using FluentAssertions;
 using Moq;
 using RESTFulSense.Exceptions;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Net.Http;
-using System.Threading.Tasks;
 using Xeptions;
 using Xunit;
 
@@ -68,7 +67,7 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.Labs
             string randomMessage = GetRandomString();
             var httpMessage = new HttpResponseMessage();
 
-            var httpResponseException = 
+            var httpResponseException =
                 new HttpResponseException(httpMessage, randomMessage);
 
             var failedLabDependencyException =
@@ -155,15 +154,15 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.Labs
             HttpResponseMessage httpMessage = new HttpResponseMessage();
             var randomDictionary = CreateRandomDictionary();
 
-            var httpBadRequestException = 
+            var httpBadRequestException =
                 new HttpResponseBadRequestException(httpMessage, randomMessage);
 
             httpBadRequestException.AddData(randomDictionary);
 
-            var invalidPostEception = 
+            var invalidPostEception =
                 new InvalidLabException(httpBadRequestException, randomDictionary);
 
-            var expectedPostValidationDependencyException = 
+            var expectedPostValidationDependencyException =
                 new LabDependencyValidationException(invalidPostEception);
 
             this.dmxApiBrokerMock.Setup(brokers =>
