@@ -2,6 +2,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // ---------------------------------------------------------------
 
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using DMX.Gatekeeper.Api.Models.Labs;
@@ -36,6 +37,39 @@ namespace DMX.Gatekeeper.Api.Controllers
                 return InternalServerError(labDependencyException);
             }
             catch (LabServiceException labServiceException)
+            {
+                return InternalServerError(labServiceException);
+            }
+        }
+
+        [HttpPost]
+        public async ValueTask<ActionResult<Lab>> PostLabAsync(Lab lab)
+        {
+            try
+            {
+                Lab addLab =
+                    await this.labService.AddLabAsync(lab);
+
+                return Created(addLab);
+            }
+            catch (LabValidationException labValidationException)
+            {
+                return BadRequest(labValidationException);
+            }
+            catch (LabDependencyException labDependencyException)
+            {
+                return InternalServerError(labDependencyException);
+            }
+            catch (LabDependencyValidationException labDependencyValidationException)
+                when (labDependencyValidationException.InnerException is AlreadyExistsLabException)
+            {
+                return Conflict(labDependencyValidationException);
+            }
+            catch (LabDependencyValidationException labDependencyValidationException)
+            {
+                return BadRequest(labDependencyValidationException);
+            }
+            catch(LabServiceException labServiceException)
             {
                 return InternalServerError(labServiceException);
             }
