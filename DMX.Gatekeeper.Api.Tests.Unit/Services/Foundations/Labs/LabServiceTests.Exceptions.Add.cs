@@ -41,7 +41,8 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.Labs
                 this.labService.AddLabAsync(randomLab);
 
             var actualLabDependencyException =
-                await Assert.ThrowsAsync<LabDependencyException>(addLabTask.AsTask);
+                await Assert.ThrowsAsync<LabDependencyException>(
+                    addLabTask.AsTask);
 
             // then
             actualLabDependencyException.Should()
@@ -52,8 +53,9 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.Labs
                     Times.Once);
 
             this.loggingBrokerMock.Verify(broker =>
-                broker.LogCritical(It.Is(SameExceptionAs(expectedLabDependencyException))),
-                    Times.Once);
+                broker.LogCritical(It.Is(SameExceptionAs(
+                    expectedLabDependencyException))),
+                        Times.Once);
 
             this.dmxApiBrokerMock.VerifyNoOtherCalls();
             this.loggingBrokerMock.VerifyNoOtherCalls();
@@ -85,7 +87,8 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.Labs
                 this.labService.AddLabAsync(randomLab);
 
             var actualLabDependencyException =
-                await Assert.ThrowsAsync<LabDependencyException>(addLabTask.AsTask);
+                await Assert.ThrowsAsync<LabDependencyException>(
+                    addLabTask.AsTask);
 
             //then
             actualLabDependencyException.Should()
@@ -96,8 +99,8 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.Labs
                     Times.Once);
 
             this.loggingBrokerMock.Verify(broker =>
-                broker.LogError(It.Is(
-                    SameExceptionAs(expectedLabDependencyException))),
+                broker.LogError(It.Is(SameExceptionAs(
+                    expectedLabDependencyException))),
                         Times.Once);
 
             this.dmxApiBrokerMock.VerifyNoOtherCalls();
@@ -126,7 +129,8 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.Labs
                 this.labService.AddLabAsync(randomLab);
 
             var actualLabServiceException =
-                await Assert.ThrowsAsync<LabServiceException>(addLabTask.AsTask);
+                await Assert.ThrowsAsync<LabServiceException>(
+                    addLabTask.AsTask);
 
             // then
             actualLabServiceException.Should()
@@ -137,8 +141,8 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.Labs
                     Times.Once);
 
             this.loggingBrokerMock.Verify(broker =>
-                broker.LogError(It.Is(
-                    SameExceptionAs(expectedLabServiceException))),
+                broker.LogError(It.Is(SameExceptionAs(
+                    expectedLabServiceException))),
                         Times.Once);
 
             this.dmxApiBrokerMock.VerifyNoOtherCalls();
@@ -155,12 +159,16 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.Labs
             var randomDictionary = CreateRandomDictionary();
 
             var httpBadRequestException =
-                new HttpResponseBadRequestException(httpMessage, randomMessage);
+                new HttpResponseBadRequestException(
+                    httpMessage,
+                    randomMessage);
 
             httpBadRequestException.AddData(randomDictionary);
 
             var invalidPostEception =
-                new InvalidLabException(httpBadRequestException, randomDictionary);
+                new InvalidLabException(
+                    httpBadRequestException,
+                    randomDictionary);
 
             var expectedPostValidationDependencyException =
                 new LabDependencyValidationException(invalidPostEception);
@@ -174,7 +182,8 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.Labs
                 this.labService.AddLabAsync(randomLab);
 
             var actualLabDependencyValidationException =
-                await Assert.ThrowsAsync<LabDependencyValidationException>(postLabTask.AsTask);
+                await Assert.ThrowsAsync<LabDependencyValidationException>(
+                    postLabTask.AsTask);
 
             // then
             actualLabDependencyValidationException.Should()
@@ -200,15 +209,19 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.Labs
             Lab randomLab = CreateRandomLab();
             string randomString = GetRandomString();
             Dictionary<string, List<string>> randomDictionary = CreateRandomDictionary();
-            HttpResponseMessage httpResponseMessage = new HttpResponseMessage();
+            var httpResponseMessage = new HttpResponseMessage();
 
-            HttpResponseConflictException httpResponseConflictException =
-                new HttpResponseConflictException(httpResponseMessage, randomString);
+            var httpResponseConflictException =
+                new HttpResponseConflictException(
+                    httpResponseMessage,
+                    randomString);
 
             httpResponseConflictException.AddData(randomDictionary);
 
             var alreadyExistsLabException =
-                new AlreadyExistsLabException(httpResponseConflictException, randomDictionary);
+                new AlreadyExistsLabException(
+                    httpResponseConflictException,
+                    randomDictionary);
 
             var expectedLabDependencyValidationException =
                 new LabDependencyValidationException(alreadyExistsLabException);
@@ -221,7 +234,8 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.Labs
             ValueTask<Lab> addLabTask = this.labService.AddLabAsync(randomLab);
 
             var actualLabDependencyValidationException =
-                await Assert.ThrowsAsync<LabDependencyValidationException>(addLabTask.AsTask);
+                await Assert.ThrowsAsync<LabDependencyValidationException>(
+                    addLabTask.AsTask);
 
             // then
             actualLabDependencyValidationException.Should()
@@ -232,8 +246,8 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.Labs
                     Times.Once);
 
             this.loggingBrokerMock.Verify(broker =>
-                broker.LogError(It.Is(
-                    SameExceptionAs(expectedLabDependencyValidationException))),
+                broker.LogError(It.Is(SameExceptionAs(
+                    expectedLabDependencyValidationException))),
                         Times.Once);
 
             this.dmxApiBrokerMock.VerifyNoOtherCalls();

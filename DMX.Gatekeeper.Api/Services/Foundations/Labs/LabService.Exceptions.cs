@@ -15,7 +15,6 @@ namespace DMX.Gatekeeper.Api.Services.Foundations.Labs
     public partial class LabService
     {
         private delegate ValueTask<Lab> ReturningLabFunction();
-
         private delegate ValueTask<List<Lab>> ReturningLabsFunction();
 
         private async ValueTask<Lab> TryCatch(ReturningLabFunction returningLabFunction)
@@ -49,6 +48,15 @@ namespace DMX.Gatekeeper.Api.Services.Foundations.Labs
 
                 throw CreateAndLogCriticalDependencyException(failedLabDependencyException);
             }
+            catch (HttpResponseConflictException httpResponseConflictException)
+            {
+                var alreadyExistsLabException =
+                    new AlreadyExistsLabException(
+                        httpResponseConflictException,
+                        httpResponseConflictException.Data);
+
+                throw CreateAndLogDependencyValidationException(alreadyExistsLabException);
+            }
             catch (HttpResponseBadRequestException httpResponseBadRequestException)
             {
                 var invalidLabException =
@@ -57,15 +65,6 @@ namespace DMX.Gatekeeper.Api.Services.Foundations.Labs
                         httpResponseBadRequestException.Data);
 
                 throw CreateAndLogDependencyValidationException(invalidLabException);
-            }
-            catch (HttpResponseConflictException httpResponseConflictException)
-            {
-                var alreadyExistsException =
-                    new AlreadyExistsLabException(
-                        httpResponseConflictException,
-                        httpResponseConflictException.Data);
-
-                throw CreateAndLogDependencyValidationException(alreadyExistsException);
             }
             catch (HttpResponseException httpResonseException)
             {
