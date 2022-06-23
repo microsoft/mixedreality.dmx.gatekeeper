@@ -14,15 +14,15 @@ namespace DMX.Gatekeeper.Api.Services.Foundations.Labs
 {
     public partial class LabService
     {
-        private delegate ValueTask<Lab> AddLabsFunction();
+        private delegate ValueTask<Lab> ReturningLabFunction();
 
         private delegate ValueTask<List<Lab>> ReturningLabsFunction();
 
-        private async ValueTask<Lab> TryCatch(AddLabsFunction addLabsFunction)
+        private async ValueTask<Lab> TryCatch(ReturningLabFunction returningLabFunction)
         {
             try
             {
-                return await addLabsFunction();
+                return await returningLabFunction();
             }
             catch (NullLabException nullLabException)
             {
