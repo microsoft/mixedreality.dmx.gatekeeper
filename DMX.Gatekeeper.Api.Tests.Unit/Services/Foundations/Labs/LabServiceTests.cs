@@ -69,7 +69,7 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.Labs
         private static Filler<Dictionary<string, List<string>>> CreateDictionaryFiller() =>
             new Filler<Dictionary<string, List<string>>>();
 
-        private static Dictionary<string, List<string>> GetRandomDictionary() =>
+        private static Dictionary<string, List<string>> CreateRandomDictionary() =>
             CreateDictionaryFiller().Create();
     }
 }

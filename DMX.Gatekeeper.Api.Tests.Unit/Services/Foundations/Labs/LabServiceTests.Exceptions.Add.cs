@@ -9,6 +9,7 @@ using Moq;
 using RESTFulSense.Exceptions;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Xeptions;
@@ -152,7 +153,7 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.Labs
             var randomLab = CreateRandomLab();
             var randomMessage = GetRandomString();
             HttpResponseMessage httpMessage = new HttpResponseMessage();
-            var randomDictionary = GetRandomDictionary();
+            var randomDictionary = CreateRandomDictionary();
 
             var httpBadRequestException = 
                 new HttpResponseBadRequestException(httpMessage, randomMessage);
@@ -187,6 +188,53 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.Labs
             this.loggingBrokerMock.Verify(broker =>
                 broker.LogError(It.Is(SameExceptionAs(
                     expectedPostValidationDependencyException))),
+                        Times.Once);
+
+            this.dmxApiBrokerMock.VerifyNoOtherCalls();
+            this.loggingBrokerMock.VerifyNoOtherCalls();
+        }
+
+        [Fact]
+        public async Task ShouldThrowDependencyValidationExceptionOnAddIfLabAlreadyExistsOccursAndLogItAsync()
+        {
+            // given
+            Lab randomLab = CreateRandomLab();
+            string randomString = GetRandomString();
+            Dictionary<string, List<string>> randomDictionary = CreateRandomDictionary();
+            HttpResponseMessage httpResponseMessage = new HttpResponseMessage();
+
+            HttpResponseConflictException httpResponseConflictException =
+                new HttpResponseConflictException(httpResponseMessage, randomString);
+
+            httpResponseConflictException.AddData(randomDictionary);
+
+            var alreadyExistsLabException =
+                new AlreadyExistsLabException(httpResponseConflictException, randomDictionary);
+
+            var expectedLabDependencyValidationException =
+                new LabDependencyValidationException(alreadyExistsLabException);
+
+            this.dmxApiBrokerMock.Setup(broker =>
+                broker.PostLabAsync(It.IsAny<Lab>()))
+                    .ThrowsAsync(httpResponseConflictException);
+
+            // when
+            ValueTask<Lab> addLabTask = this.labService.AddLabAsync(randomLab);
+
+            LabDependencyValidationException actualLabDependencyValidationException =
+                await Assert.ThrowsAsync<LabDependencyValidationException>(addLabTask.AsTask);
+
+            // then
+            actualLabDependencyValidationException.Should()
+                .BeEquivalentTo(expectedLabDependencyValidationException);
+
+            this.dmxApiBrokerMock.Verify(broker =>
+                broker.PostLabAsync(It.IsAny<Lab>()),
+                    Times.Once);
+
+            this.loggingBrokerMock.Verify(broker =>
+                broker.LogError(It.Is(
+                    SameExceptionAs(expectedLabDependencyValidationException))),
                         Times.Once);
 
             this.dmxApiBrokerMock.VerifyNoOtherCalls();
