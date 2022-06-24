@@ -67,7 +67,7 @@ namespace DMX.Gatekeeper.Api.Controllers
             }
             catch (LabDependencyValidationException labDependencyValidationException)
             {
-                return BadRequest(labDependencyValidationException);
+                return BadRequest(labDependencyValidationException.InnerException);
             }
             catch(LabServiceException labServiceException)
             {
