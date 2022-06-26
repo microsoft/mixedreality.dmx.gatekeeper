@@ -39,8 +39,8 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.Labs
                 this.labService.RetrieveAllLabsAsync();
 
             LabDependencyException actualLabDependencyException =
-                await Assert.ThrowsAsync<LabDependencyException>(() =>
-                    retrieveAllLabsTask.AsTask());
+                await Assert.ThrowsAsync<LabDependencyException>(
+                    retrieveAllLabsTask.AsTask);
 
             // then
             actualLabDependencyException.Should().BeEquivalentTo(
@@ -64,8 +64,13 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.Labs
         {
             // given
             string someMessage = GetRandomString();
+
             var someResponseMessage = new HttpResponseMessage();
-            var httpResponseException = new HttpResponseException(someResponseMessage, someMessage);
+
+            var httpResponseException =
+                new HttpResponseException(
+                    someResponseMessage,
+                    someMessage);
 
             var failedLabDependencyException =
                 new FailedLabDependencyException(httpResponseException);
@@ -82,8 +87,8 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.Labs
                 this.labService.RetrieveAllLabsAsync();
 
             LabDependencyException actualLabDependencyException =
-                await Assert.ThrowsAsync<LabDependencyException>(() =>
-                    retrieveAllLabsTask.AsTask());
+                await Assert.ThrowsAsync<LabDependencyException>(
+                    retrieveAllLabsTask.AsTask);
 
             // then
             actualLabDependencyException.Should().BeEquivalentTo(
@@ -123,8 +128,8 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.Labs
                 this.labService.RetrieveAllLabsAsync();
 
             LabServiceException actualLabServiceException =
-                await Assert.ThrowsAsync<LabServiceException>(() =>
-                    retrieveAllLabsTask.AsTask());
+                await Assert.ThrowsAsync<LabServiceException>(
+                    retrieveAllLabsTask.AsTask);
 
             // then
             actualLabServiceException.Should().BeEquivalentTo(
