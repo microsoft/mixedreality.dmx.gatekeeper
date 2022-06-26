@@ -24,7 +24,7 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.Labs
                 new LabValidationException(nullException);
 
             // when
-            var addLabTask =
+            ValueTask<Lab> addLabTask =
                 this.labService.AddLabAsync(nullLab);
 
             LabValidationException actualValidationException =
@@ -36,8 +36,8 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.Labs
                 expectedValidationException);
 
             this.loggingBrokerMock.Verify(broker =>
-                broker.LogError(It.Is(
-                    SameExceptionAs(expectedValidationException))),
+                broker.LogError(It.Is(SameExceptionAs(
+                    expectedValidationException))),
                         Times.Once);
 
             this.dmxApiBrokerMock.Verify(broker =>
