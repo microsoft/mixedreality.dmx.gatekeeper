@@ -2,6 +2,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // ---------------------------------------------------------------
 
+using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
@@ -15,7 +16,7 @@ using Xunit;
 
 namespace DMX.Gatekeeper.Api.Tests.Acceptance.APIs.Labs
 {
-    public partial class LabApiTests
+    public partial class LabApiTests : IDisposable
     {
         [Fact]
         public async Task ShouldPostLabsAsync()
@@ -26,7 +27,7 @@ namespace DMX.Gatekeeper.Api.Tests.Acceptance.APIs.Labs
 
             string randomLabBody =
                 JsonConvert.SerializeObject(randomLab);
-
+            
             this.wireMockServer
                 .Given(Request.Create()
                     .WithPath("/api/labs")
@@ -68,6 +69,11 @@ namespace DMX.Gatekeeper.Api.Tests.Acceptance.APIs.Labs
 
             // then
             actualLabs.Should().BeEquivalentTo(expectedLabs);
+        }
+
+        public void Dispose()
+        {
+            this.wireMockServer.Stop();
         }
     }
 }
