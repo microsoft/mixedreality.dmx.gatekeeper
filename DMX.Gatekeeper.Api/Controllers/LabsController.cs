@@ -54,7 +54,7 @@ namespace DMX.Gatekeeper.Api.Controllers
             }
             catch (LabValidationException labValidationException)
             {
-                return BadRequest(labValidationException);
+                return BadRequest(labValidationException.InnerException);
             }
             catch (LabDependencyException labDependencyException)
             {
@@ -63,11 +63,11 @@ namespace DMX.Gatekeeper.Api.Controllers
             catch (LabDependencyValidationException labDependencyValidationException)
                 when (labDependencyValidationException.InnerException is AlreadyExistsLabException)
             {
-                return Conflict(labDependencyValidationException);
+                return Conflict(labDependencyValidationException.InnerException);
             }
             catch (LabDependencyValidationException labDependencyValidationException)
             {
-                return BadRequest(labDependencyValidationException);
+                return BadRequest(labDependencyValidationException.InnerException);
             }
             catch(LabServiceException labServiceException)
             {
