@@ -7,6 +7,7 @@ using System.Net;
 using System.Threading.Tasks;
 using DMX.Gatekeeper.Api.Tests.Acceptance.Models.Labs;
 using FluentAssertions;
+using Force.DeepCloner;
 using Newtonsoft.Json;
 using WireMock.RequestBuilders;
 using WireMock.ResponseBuilders;
@@ -16,6 +17,33 @@ namespace DMX.Gatekeeper.Api.Tests.Acceptance.APIs.Labs
 {
     public partial class LabApiTests
     {
+        [Fact]
+        public async Task ShouldPostLabsAsync()
+        {
+            // given
+            Lab randomLab = CreateRandomLab();
+            Lab expectedLab = randomLab.DeepClone();
+
+            string randomLabBody =
+                JsonConvert.SerializeObject(randomLab);
+
+            this.wireMockServer
+                .Given(Request.Create()
+                    .WithPath("/api/labs")
+                    .WithBody(randomLabBody)
+                    .UsingPost())
+                .RespondWith(Response.Create()
+                    .WithStatusCode(HttpStatusCode.OK)
+                    .WithBody(randomLabBody));
+
+            // when
+            Lab actualLabs =
+                await this.dmxGatekeeperApiBroker.PostLab(randomLab);
+
+            // then
+            actualLabs.Should().BeEquivalentTo(expectedLab);
+        }
+
         [Fact]
         public async Task ShouldRetrieveAllLabsAsync()
         {

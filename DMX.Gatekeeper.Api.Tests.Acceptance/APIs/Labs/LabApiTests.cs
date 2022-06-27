@@ -27,6 +27,9 @@ namespace DMX.Gatekeeper.Api.Tests.Acceptance.APIs.Labs
         private static List<Lab> CreateRandomLabs() =>
             CreateLabFiller().Create(count: GetRandomNumber()).ToList();
 
+        private static Lab CreateRandomLab() =>
+            CreateLabFiller().Create();
+
         private static int GetRandomNumber() =>
             new IntRange(min: 2, max: 10).GetValue();
 
