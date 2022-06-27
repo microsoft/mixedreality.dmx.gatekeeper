@@ -40,7 +40,7 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.Labs
             ValueTask<Lab> addLabTask =
                 this.labService.AddLabAsync(randomLab);
 
-            var actualLabDependencyException =
+            LabDependencyException actualLabDependencyException =
                 await Assert.ThrowsAsync<LabDependencyException>(
                     addLabTask.AsTask);
 
@@ -86,7 +86,7 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.Labs
             ValueTask<Lab> addLabTask =
                 this.labService.AddLabAsync(randomLab);
 
-            var actualLabDependencyException =
+            LabDependencyException actualLabDependencyException =
                 await Assert.ThrowsAsync<LabDependencyException>(
                     addLabTask.AsTask);
 
@@ -128,7 +128,7 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.Labs
             ValueTask<Lab> addLabTask =
                 this.labService.AddLabAsync(randomLab);
 
-            var actualLabServiceException =
+            LabServiceException actualLabServiceException =
                 await Assert.ThrowsAsync<LabServiceException>(
                     addLabTask.AsTask);
 
@@ -153,10 +153,12 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.Labs
         public async Task ShouldThrowDependencyValidationExceptionOnAddIfBadRequestErrorOccursAndLogItAsync()
         {
             // given
-            var randomLab = CreateRandomLab();
-            var randomMessage = GetRandomString();
-            HttpResponseMessage httpMessage = new HttpResponseMessage();
-            var randomDictionary = CreateRandomDictionary();
+            Lab randomLab = CreateRandomLab();
+            string randomMessage = GetRandomString();
+            var httpMessage = new HttpResponseMessage();
+            
+            Dictionary<string, List<string>> randomDictionary = 
+                CreateRandomDictionary();
 
             var httpBadRequestException =
                 new HttpResponseBadRequestException(
@@ -181,7 +183,7 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.Labs
             ValueTask<Lab> postLabTask =
                 this.labService.AddLabAsync(randomLab);
 
-            var actualLabDependencyValidationException =
+            LabDependencyValidationException actualLabDependencyValidationException =
                 await Assert.ThrowsAsync<LabDependencyValidationException>(
                     postLabTask.AsTask);
 
@@ -208,7 +210,10 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.Labs
             // given
             Lab randomLab = CreateRandomLab();
             string randomString = GetRandomString();
-            Dictionary<string, List<string>> randomDictionary = CreateRandomDictionary();
+            
+            Dictionary<string, List<string>> randomDictionary = 
+                CreateRandomDictionary();
+            
             var httpResponseMessage = new HttpResponseMessage();
 
             var httpResponseConflictException =
@@ -233,7 +238,7 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.Labs
             // when
             ValueTask<Lab> addLabTask = this.labService.AddLabAsync(randomLab);
 
-            var actualLabDependencyValidationException =
+            LabDependencyValidationException actualLabDependencyValidationException =
                 await Assert.ThrowsAsync<LabDependencyValidationException>(
                     addLabTask.AsTask);
 
