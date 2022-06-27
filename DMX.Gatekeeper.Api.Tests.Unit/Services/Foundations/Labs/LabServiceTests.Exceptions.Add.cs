@@ -156,8 +156,8 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.Labs
             Lab randomLab = CreateRandomLab();
             string randomMessage = GetRandomString();
             var httpMessage = new HttpResponseMessage();
-            
-            Dictionary<string, List<string>> randomDictionary = 
+
+            Dictionary<string, List<string>> randomDictionary =
                 CreateRandomDictionary();
 
             var httpBadRequestException =
@@ -210,10 +210,10 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.Labs
             // given
             Lab randomLab = CreateRandomLab();
             string randomString = GetRandomString();
-            
-            Dictionary<string, List<string>> randomDictionary = 
+
+            Dictionary<string, List<string>> randomDictionary =
                 CreateRandomDictionary();
-            
+
             var httpResponseMessage = new HttpResponseMessage();
 
             var httpResponseConflictException =
