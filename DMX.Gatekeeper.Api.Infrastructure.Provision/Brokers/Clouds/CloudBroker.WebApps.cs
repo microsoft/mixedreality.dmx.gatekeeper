@@ -19,7 +19,7 @@ namespace DMX.Gatekeeper.Api.Infrastructure.Provision.Brokers.Clouds
                 .Define(webAppName)
                 .WithExistingWindowsPlan(appServicePlan)
                 .WithExistingResourceGroup(resourceGroup)
-                .WithNetFrameworkVersion(NetFrameworkVersion.Parse("v7.0"))
+                .WithNetFrameworkVersion(NetFrameworkVersion.Parse("v6.0"))
                 .CreateAsync();
         }
     }
