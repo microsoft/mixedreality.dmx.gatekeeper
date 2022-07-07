@@ -12,6 +12,13 @@ namespace DMX.Gatekeeper.Api.Tests.Acceptance.Brokers
     {
         private const string AllLabsApiRelativeUrl = "api/labs";
 
+        public async ValueTask<Lab> PostLab(Lab lab)
+        {
+            return await this.apiFactoryClient.PostContentAsync<Lab>(
+                relativeUrl: $"{AllLabsApiRelativeUrl}",
+                content: lab);
+        }
+
         public async ValueTask<List<Lab>> GetAllLabs()
         {
             return await this.apiFactoryClient.GetContentAsync<List<Lab>>(

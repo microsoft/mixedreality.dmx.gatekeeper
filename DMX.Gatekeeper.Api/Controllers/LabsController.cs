@@ -40,5 +40,38 @@ namespace DMX.Gatekeeper.Api.Controllers
                 return InternalServerError(labServiceException);
             }
         }
+
+        [HttpPost]
+        public async ValueTask<ActionResult<Lab>> PostLabAsync(Lab lab)
+        {
+            try
+            {
+                Lab addLab =
+                    await this.labService.AddLabAsync(lab);
+
+                return Created(addLab);
+            }
+            catch (LabValidationException labValidationException)
+            {
+                return BadRequest(labValidationException.InnerException);
+            }
+            catch (LabDependencyException labDependencyException)
+            {
+                return InternalServerError(labDependencyException);
+            }
+            catch (LabDependencyValidationException labDependencyValidationException)
+                when (labDependencyValidationException.InnerException is AlreadyExistsLabException)
+            {
+                return Conflict(labDependencyValidationException.InnerException);
+            }
+            catch (LabDependencyValidationException labDependencyValidationException)
+            {
+                return BadRequest(labDependencyValidationException.InnerException);
+            }
+            catch (LabServiceException labServiceException)
+            {
+                return InternalServerError(labServiceException);
+            }
+        }
     }
 }

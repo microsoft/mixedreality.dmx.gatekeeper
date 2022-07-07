@@ -24,7 +24,7 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.Labs
                 new LabValidationException(nullException);
 
             // when
-            var addLabTask =
+            ValueTask<Lab> addLabTask =
                 this.labService.AddLabAsync(nullLab);
 
             LabValidationException actualValidationException =

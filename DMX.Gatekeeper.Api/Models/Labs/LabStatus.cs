@@ -8,6 +8,7 @@ namespace DMX.Gatekeeper.Api.Models.Labs
     {
         Available,
         Reserved,
-        Offline
+        Offline,
+        Unregistered
     }
 }
