@@ -2,21 +2,18 @@ name: Provision DMX Gatekeeper
 on:
   push:
     branches:
-    - master
+    - main
   pull_request:
     branches:
-    - master
+    - main
 jobs:
   build:
     runs-on: windows-latest
     env:
       AzureClientId: ${{ secrets.AZURECLIENTID }}
       AzureTenantId: ${{ secrets.AZURETENANTID }}
+      AzureSubscriptionId: ${{ secrets.AZURESUBSCRIPTIONID }}
       AzureClientSecret: ${{ secrets.AZURECLIENTSECRET }}
-      AzureAdminName: ${{ secrets.AZUREADMINNAME }}
-      AzureAdminAccess: ${{ secrets.AZUREADMINACCESS }}
-      ExternalLabApiUrl: ${{ secrets.EXTERNALLABAPIURL }}
-      ExternalLabApiAccessKey: ${{ secrets.EXTERNALLABAPIACCESSKEY }}
     steps:
     - name: Check Out
       uses: actions/checkout@v2

@@ -95,12 +95,12 @@ namespace DMX.Gatekeeper.Api.Infrastructure.Build.Services.ScriptGenerations
                 {
                     Push = new PushEvent
                     {
-                        Branches = new string[] { "master" }
+                        Branches = new string[] { "main" }
                     },
 
                     PullRequest = new PullRequestEvent
                     {
-                        Branches = new string[] { "master" }
+                        Branches = new string[] { "main" }
                     }
                 },
 
@@ -114,11 +114,8 @@ namespace DMX.Gatekeeper.Api.Infrastructure.Build.Services.ScriptGenerations
                         {
                             { "AzureClientId", "${{ secrets.AZURECLIENTID }}" },
                             { "AzureTenantId", "${{ secrets.AZURETENANTID }}" },
-                            { "AzureClientSecret", "${{ secrets.AZURECLIENTSECRET }}" },
-                            { "AzureAdminName", "${{ secrets.AZUREADMINNAME }}" },
-                            { "AzureAdminAccess", "${{ secrets.AZUREADMINACCESS }}" },
-                            { "ExternalLabApiUrl", "${{ secrets.EXTERNALLABAPIURL }}" },
-                            { "ExternalLabApiAccessKey", "${{ secrets.EXTERNALLABAPIACCESSKEY }}" },
+                            { "AzureSubscriptionId", "${{ secrets.AZURESUBSCRIPTIONID }}" },
+                            { "AzureClientSecret", "${{ secrets.AZURECLIENTSECRET }}" }
                         },
 
                         Steps = new List<GithubTask>
