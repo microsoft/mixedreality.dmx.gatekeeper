@@ -114,8 +114,15 @@ namespace DMX.Gatekeeper.Api.Infrastructure.Build.Services.ScriptGenerations
                         {
                             { "AzureClientId", "${{ secrets.AZURECLIENTID }}" },
                             { "AzureTenantId", "${{ secrets.AZURETENANTID }}" },
-                            { "AzureSubscriptionId", "${{ secrets.AZURESUBSCRIPTIONID }}" },
-                            { "AzureClientSecret", "${{ secrets.AZURECLIENTSECRET }}" }
+                            { "AzureSubscriptionId", "${{ secrets.AZURESUBSCRIPTIONID }}"},
+                            { "AzureClientSecret", "${{ secrets.AZURECLIENTSECRET }}" },
+                            { "AzureAdInstance", "${{ secrets.AZUREADINSTANCE }}" },
+                            { "AzureAdDomain", "${{ secrets.AZUREADDOMAIN }}" },
+                            { "AzureAdCallbackPath", "${{ secrets.AZUREADCALLBACKPATH }}" },
+                            { "DmxCoreApiUrl", "${{ secrets.DMXCOREAPIURL }}" },
+                            { "DmxCoreApiAccessKey", "${{ secrets.DMXCOREAPIACCESSKEY }}" },
+                            { "DmxCoreAppIdUri", "${{ secrets.DMXCOREAPPIDURI }}" },
+                            { "DmxCoreAppScopes", "${{ secrets.DMXCOREAPPSCOPES }}" }
                         },
 
                         Steps = new List<GithubTask>

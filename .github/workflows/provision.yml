@@ -14,6 +14,13 @@ jobs:
       AzureTenantId: ${{ secrets.AZURETENANTID }}
       AzureSubscriptionId: ${{ secrets.AZURESUBSCRIPTIONID }}
       AzureClientSecret: ${{ secrets.AZURECLIENTSECRET }}
+      AzureAdInstance: ${{ secrets.AZUREADINSTANCE }}
+      AzureAdDomain: ${{ secrets.AZUREADDOMAIN }}
+      AzureAdCallbackPath: ${{ secrets.AZUREADCALLBACKPATH }}
+      DmxCoreApiUrl: ${{ secrets.DMXCOREAPIURL }}
+      DmxCoreApiAccessKey: ${{ secrets.DMXCOREAPIACCESSKEY }}
+      DmxCoreAppIdUri: ${{ secrets.DMXCOREAPPIDURI }}
+      DmxCoreAppScopes: ${{ secrets.DMXCOREAPPSCOPES }}
     steps:
     - name: Check Out
       uses: actions/checkout@v2
