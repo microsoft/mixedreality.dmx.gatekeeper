@@ -19,8 +19,8 @@ namespace DMX.Gatekeeper.Api.Infrastructure.Provision.Brokers.Clouds
 
         public CloudBroker()
         {
-            this.clientId = Environment.GetEnvironmentVariable(variable: "AzureClientId");
-            this.clientSecret = Environment.GetEnvironmentVariable(variable: "AzureClientSecret");
+            this.clientId = Environment.GetEnvironmentVariable(variable: "AzureAdAppProvisionClientId");
+            this.clientSecret = Environment.GetEnvironmentVariable(variable: "AzureAdAppProvisionClientSecret");
             this.tenantId = Environment.GetEnvironmentVariable(variable: "AzureTenantId");
             this.azure = AuthenticateAzure();
         }
