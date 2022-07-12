@@ -12,16 +12,34 @@ namespace DMX.Gatekeeper.Api.Infrastructure.Provision.Brokers.Clouds
 {
     public partial class CloudBroker : ICloudBroker
     {
-        private readonly string clientId;
-        private readonly string clientSecret;
         private readonly string tenantId;
+        private readonly string dmxGatekeeperClientId;
+        private readonly string dmxGatekeeperInstance;
+        private readonly string dmxGatekeeperDomain;
+        private readonly string dmxGatekeeperCallbackPath;
+        private readonly string dmxGatekeeperScopes;
+        private readonly string dmxCoreAppIdUri;
+        private readonly string dmxCoreAppScopes;
+        private readonly string provisionClientId;
+        private readonly string provisionClientSecret;
+        private readonly string configurationDmxCoreApiUrl;
+        private readonly string configurationDmxCoreApiAccessKey;
         private readonly IAzure azure;
 
         public CloudBroker()
         {
-            this.clientId = Environment.GetEnvironmentVariable(variable: "AzureAdAppProvisionClientId");
-            this.clientSecret = Environment.GetEnvironmentVariable(variable: "AzureAdAppProvisionClientSecret");
-            this.tenantId = Environment.GetEnvironmentVariable(variable: "AzureTenantId");
+            this.tenantId = Environment.GetEnvironmentVariable("AzureTenantId");
+            this.dmxGatekeeperClientId = Environment.GetEnvironmentVariable("AzureAdAppDmxGatekeeperClientId");
+            this.dmxGatekeeperInstance = Environment.GetEnvironmentVariable("AzureAdAppDmxGatekeeperInstance");
+            this.dmxGatekeeperDomain = Environment.GetEnvironmentVariable("AzureAdAppDmxGatekeeperDomain");
+            this.dmxGatekeeperCallbackPath = Environment.GetEnvironmentVariable("AzureAdAppDmxGatekeeperCallbackPath");
+            this.dmxGatekeeperScopes = Environment.GetEnvironmentVariable("AzureAdAppDmxGatekeeperScopes");
+            this.dmxCoreAppIdUri = Environment.GetEnvironmentVariable("AzureAdAppDmxCoreAppIdUri");
+            this.dmxCoreAppScopes = Environment.GetEnvironmentVariable("AzureAdAppDmxCoreAppScopes");
+            this.provisionClientId = Environment.GetEnvironmentVariable("AzureAdAppProvisionClientId");
+            this.provisionClientSecret = Environment.GetEnvironmentVariable("AzureAdAppProvisionClientSecret");
+            this.configurationDmxCoreApiUrl = Environment.GetEnvironmentVariable("AzureAppServiceDmxCoreApiUrl");
+            this.configurationDmxCoreApiAccessKey = Environment.GetEnvironmentVariable("AzureAppServiceDmxCoreApiAccessKey");
             this.azure = AuthenticateAzure();
         }
 
@@ -29,8 +47,8 @@ namespace DMX.Gatekeeper.Api.Infrastructure.Provision.Brokers.Clouds
         {
             AzureCredentials credentials =
                 SdkContext.AzureCredentialsFactory.FromServicePrincipal(
-                    clientId: this.clientId,
-                    clientSecret: this.clientSecret,
+                    clientId: this.provisionClientId,
+                    clientSecret: this.provisionClientSecret,
                     tenantId: this.tenantId,
                     environment: AzureEnvironment.AzureGlobalCloud);
 
