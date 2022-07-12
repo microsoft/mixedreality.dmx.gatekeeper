@@ -119,6 +119,7 @@ namespace DMX.Gatekeeper.Api.Infrastructure.Build.Services.ScriptGenerations
                             { "AzureAdInstance", "${{ secrets.AZUREADINSTANCE }}" },
                             { "AzureAdDomain", "${{ secrets.AZUREADDOMAIN }}" },
                             { "AzureAdCallbackPath", "${{ secrets.AZUREADCALLBACKPATH }}" },
+                            { "AzureAdScopes", "${{ secrets.AZUREADSCOPES }}" },
                             { "DmxCoreApiUrl", "${{ secrets.DMXCOREAPIURL }}" },
                             { "DmxCoreApiAccessKey", "${{ secrets.DMXCOREAPIACCESSKEY }}" },
                             { "DmxCoreAppIdUri", "${{ secrets.DMXCOREAPPIDURI }}" },
