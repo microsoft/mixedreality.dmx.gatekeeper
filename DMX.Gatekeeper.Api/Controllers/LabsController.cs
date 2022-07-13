@@ -8,12 +8,14 @@ using DMX.Gatekeeper.Api.Models.Labs;
 using DMX.Gatekeeper.Api.Models.Labs.Exceptions;
 using DMX.Gatekeeper.Api.Services.Foundations.Labs;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Identity.Web.Resource;
 using RESTFulSense.Controllers;
 
 namespace DMX.Gatekeeper.Api.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [RequiredScope(RequiredScopesConfigurationKey = "AzureAd:Scopes")]
     public class LabsController : RESTFulController
     {
         private readonly ILabService labService;
