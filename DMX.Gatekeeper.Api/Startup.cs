@@ -12,6 +12,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.Identity.Web;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace DMX.Gatekeeper.Api
 {
@@ -28,6 +31,7 @@ namespace DMX.Gatekeeper.Api
                 options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
 
             services.AddHttpClient();
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme);
             AddBrokers(services);
             AddServices(services);
 

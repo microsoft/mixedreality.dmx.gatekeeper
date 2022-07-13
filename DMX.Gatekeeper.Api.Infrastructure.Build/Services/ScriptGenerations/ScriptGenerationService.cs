@@ -112,10 +112,19 @@ namespace DMX.Gatekeeper.Api.Infrastructure.Build.Services.ScriptGenerations
 
                         EnvironmentVariables = new Dictionary<string, string>
                         {
-                            { "AzureClientId", "${{ secrets.AZURECLIENTID }}" },
-                            { "AzureTenantId", "${{ secrets.AZURETENANTID }}" },
-                            { "AzureSubscriptionId", "${{ secrets.AZURESUBSCRIPTIONID }}" },
-                            { "AzureClientSecret", "${{ secrets.AZURECLIENTSECRET }}" }
+                            { "AzureSubscriptionId", "${{ secrets.AZURE_SUBSCRIPTIONID }}"},
+                            { "AzureTenantId", "${{ secrets.AZURE_TENANTID }}" },
+                            { "AzureAdAppProvisionClientId", "${{ secrets.AZURE_ADAPP_PROVISION_CLIENTID }}" },
+                            { "AzureAdAppProvisionClientSecret", "${{ secrets.AZURE_ADAPP_PROVISION_CLIENTSECRET }}" },
+                            { "AzureAdAppDmxGatekeeperClientId", "${{ secrets.AZURE_ADAPP_DMXGATEKEEPER_CLIENTID }}" },
+                            { "AzureAdAppDmxGatekeeperInstance", "${{ secrets.AZURE_ADAPP_DMXGATEKEEPER_INSTANCE }}" },
+                            { "AzureAdAppDmxGatekeeperDomain", "${{ secrets.AZURE_ADAPP_DMXGATEKEEPER_DOMAIN }}" },
+                            { "AzureAdAppDmxGatekeeperCallbackPath", "${{ secrets.AZURE_ADAPP_DMXGATEKEEPER_CALLBACKPATH }}" },
+                            { "AzureAdAppDmxGatekeeperScopes", "${{ secrets.AZURE_ADAPP_DMXGATEKEEPER_SCOPES }}" },
+                            { "AzureAdAppDmxCoreAppIdUri", "${{ secrets.AZURE_ADAPP_DMXCORE_APPIDURI }}" },
+                            { "AzureAdAppDmxCoreAppScopes", "${{ secrets.AZURE_ADAPP_DMXCORE_APPSCOPES }}" },
+                            { "AzureAppServiceDmxCoreApiUrl", "${{ secrets.AZURE_APPSERVICE_DMXCOREAPI_URL }}" },
+                            { "AzureAppServiceDmxCoreApiAccessKey", "${{ secrets.AZURE_APPSERVICE_DMXCOREAPI_ACCESSKEY }}" },
                         },
 
                         Steps = new List<GithubTask>

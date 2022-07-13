@@ -2,6 +2,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // ---------------------------------------------------------------
 
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.Azure.Management.AppService.Fluent;
 using Microsoft.Azure.Management.ResourceManager.Fluent;
@@ -15,11 +16,26 @@ namespace DMX.Gatekeeper.Api.Infrastructure.Provision.Brokers.Clouds
             IAppServicePlan appServicePlan,
             IResourceGroup resourceGroup)
         {
+            var webAppSettings = new Dictionary<string, string>
+                {
+                    { "ApiConfigurations:Url", this.configurationDmxCoreApiUrl },
+                    { "ApiConfigurations:AccessKey", this.configurationDmxCoreApiAccessKey },
+                    { "AzureAd:TenantId", this.tenantId },
+                    { "AzureAd:Instance", this.dmxGatekeeperInstance },
+                    { "AzureAd:Domain", this.dmxGatekeeperDomain },
+                    { "AzureAd:ClientId", this.dmxGatekeeperClientId },
+                    { "AzureAd:CallbackPath", this.dmxGatekeeperCallbackPath },
+                    { "AzureAd:Scopes", this.dmxGatekeeperScopes },
+                    { "DownstreamApi:BaseUrl", this.dmxCoreAppIdUri },
+                    { "DownstreamApi:Scopes", this.dmxCoreAppScopes },
+                };
+
             return await this.azure.AppServices.WebApps
                 .Define(webAppName)
                 .WithExistingWindowsPlan(appServicePlan)
                 .WithExistingResourceGroup(resourceGroup)
                 .WithNetFrameworkVersion(NetFrameworkVersion.Parse("v6.0"))
+                .WithAppSettings(settings: webAppSettings)
                 .CreateAsync();
         }
     }
