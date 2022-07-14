@@ -27,7 +27,7 @@ namespace DMX.Gatekeeper.Api.Tests.Acceptance.APIs.Labs
 
             string randomLabBody =
                 JsonConvert.SerializeObject(randomLab);
-            
+
             this.wireMockServer
                 .Given(Request.Create()
                     .WithPath("/api/labs")
