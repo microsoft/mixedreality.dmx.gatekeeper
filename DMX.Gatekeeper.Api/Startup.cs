@@ -32,7 +32,7 @@ namespace DMX.Gatekeeper.Api
 
             services.AddHttpClient();
 
-            AddAuthentication(services, Configuration);
+            AddAuthentication(services, this.Configuration);
             AddBrokers(services);
             AddServices(services);
 
@@ -85,10 +85,10 @@ namespace DMX.Gatekeeper.Api
         {
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddMicrosoftIdentityWebApi(configuration.GetSection("AzureAd"))
-                    .EnableTokenAcquisitionToCallDownstreamApi()
-                        .AddDownstreamWebApi(
-                            "DownstreamApi", configuration.GetSection("DownstreamApi"))
-                                .AddInMemoryTokenCaches();
+                .EnableTokenAcquisitionToCallDownstreamApi()
+                    .AddDownstreamWebApi(
+                        "DownstreamApi", configuration.GetSection("DownstreamApi"))
+                            .AddInMemoryTokenCaches();
         }
     }
 }
