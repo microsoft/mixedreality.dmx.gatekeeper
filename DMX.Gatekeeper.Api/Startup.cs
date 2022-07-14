@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Identity.Web;
 using Microsoft.OpenApi.Models;
 
 namespace DMX.Gatekeeper.Api
@@ -82,11 +83,11 @@ namespace DMX.Gatekeeper.Api
             IServiceCollection services, IConfiguration configuration)
         {
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-            .AddMicrosoftIdentityWebApi(configuration.GetSection("AzureAd"))
-                .EnableTokenAcquisitionToCallDownstreamApi()
-                    .AddDownstreamWebApi(
-                        "DownstreamApi", configuration.GetSection("DownstreamApi"))
-                            .AddInMemoryTokenCaches();
+                .AddMicrosoftIdentityWebApi(configuration.GetSection("AzureAd"))
+                    .EnableTokenAcquisitionToCallDownstreamApi()
+                        .AddDownstreamWebApi(
+                            "DownstreamApi", configuration.GetSection("DownstreamApi"))
+                                .AddInMemoryTokenCaches();
         }
     }
 }
