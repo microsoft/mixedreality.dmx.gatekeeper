@@ -31,7 +31,8 @@ namespace DMX.Gatekeeper.Api
                 options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
 
             services.AddHttpClient();
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme);
+
+            AddAuthentication(services, Configuration);
             AddBrokers(services);
             AddServices(services);
 
@@ -65,6 +66,7 @@ namespace DMX.Gatekeeper.Api
 
             app.UseHttpsRedirection();
             app.UseRouting();
+            app.UseAuthentication();
             app.UseAuthorization();
             app.UseEndpoints(endpoints => endpoints.MapControllers());
         }
@@ -77,5 +79,16 @@ namespace DMX.Gatekeeper.Api
 
         private static void AddServices(IServiceCollection services) =>
             services.AddTransient<ILabService, LabService>();
+        
+        private static void AddAuthentication(
+            IServiceCollection services, IConfiguration configuration)
+        {
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            .AddMicrosoftIdentityWebApi(configuration.GetSection("AzureAd"))
+                    .EnableTokenAcquisitionToCallDownstreamApi()
+                        .AddDownstreamWebApi(
+                            "DownstreamApi", configuration.GetSection("DownstreamApi"))
+                                .AddInMemoryTokenCaches();
+        }
     }
 }
