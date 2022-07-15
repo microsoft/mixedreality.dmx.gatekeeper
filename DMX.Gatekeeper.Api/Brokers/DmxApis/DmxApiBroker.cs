@@ -7,6 +7,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using DMX.Gatekeeper.Api.Models.Configurations;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Identity.Web;
 using RESTFulSense.Clients;
 
 namespace DMX.Gatekeeper.Api.Brokers.DmxApis
@@ -15,15 +16,23 @@ namespace DMX.Gatekeeper.Api.Brokers.DmxApis
     {
         private readonly IRESTFulApiFactoryClient apiClient;
         private readonly HttpClient httpClient;
+        private readonly ITokenAcquisition tokenAcquisition;
+        private readonly IConfiguration configuration;
 
-        public DmxApiBroker(HttpClient httpClient, IConfiguration configuration)
+        public DmxApiBroker(
+            HttpClient httpClient, 
+            IConfiguration configuration, 
+            ITokenAcquisition tokenAcquisition)
         {
             this.httpClient = httpClient;
+            this.tokenAcquisition = tokenAcquisition;
             this.apiClient = GetApiClient(configuration);
         }
 
-        private async ValueTask<T> GetAsync<T>(string relativeUrl) =>
-            await this.apiClient.GetContentAsync<T>(relativeUrl);
+        private async ValueTask<T> GetAsync<T>(string relativeUrl)
+        {
+            return await this.apiClient.GetContentAsync<T>(relativeUrl);
+        }
 
         private async ValueTask<T> PostAsync<T>(string relativeUrl, T content) =>
             await this.apiClient.PostContentAsync<T>(relativeUrl, content);
