@@ -21,14 +21,11 @@ namespace DMX.Gatekeeper.Api.Brokers.DmxApis
 
         public async ValueTask<List<Lab>> GetAllLabsAsync()
         {
-            LocalConfiguration localConfiguration =
-                this.configuration.Get<LocalConfiguration>();
-
-            localConfiguration.DownstreamApi.Scopes.TryGetValue(
-                "GetAllLabs", out string scopes);
+            string[] requiredScopes = GetScopesFromConfiguration("GetAllLabs");
             
             string accessToken =
-                await this.tokenAcquisition.GetAccessTokenForUserAsync(scopes.Split());
+                await this.tokenAcquisition.GetAccessTokenForUserAsync(
+                    requiredScopes);
 
             this.httpClient.DefaultRequestHeaders.Authorization = 
                 new AuthenticationHeaderValue("Bearer", accessToken);

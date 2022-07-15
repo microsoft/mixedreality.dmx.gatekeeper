@@ -48,5 +48,16 @@ namespace DMX.Gatekeeper.Api.Brokers.DmxApis
 
             return new RESTFulApiFactoryClient(this.httpClient);
         }
+
+        private string[] GetScopesFromConfiguration(string scopeName)
+        {
+            LocalConfiguration localConfiguration =
+                this.configuration.Get<LocalConfiguration>();
+
+            localConfiguration.DownstreamApi.Scopes.TryGetValue(
+                scopeName, out string scopes);
+
+            return scopes.Split();
+        }
     }
 }

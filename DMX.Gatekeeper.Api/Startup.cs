@@ -14,6 +14,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Identity.Web;
 using Microsoft.OpenApi.Models;
+using Microsoft.AspNetCore.Authentication;
 
 namespace DMX.Gatekeeper.Api
 {
