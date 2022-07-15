@@ -14,7 +14,7 @@ namespace DMX.Gatekeeper.Api.Brokers.DmxApis
 {
     public partial class DmxApiBroker : IDmxApiBroker
     {
-        private readonly IRESTFulApiFactoryClient apiClient;
+        private IRESTFulApiFactoryClient apiClient;
         private readonly HttpClient httpClient;
         private readonly ITokenAcquisition tokenAcquisition;
         private readonly IConfiguration configuration;
@@ -25,6 +25,7 @@ namespace DMX.Gatekeeper.Api.Brokers.DmxApis
             ITokenAcquisition tokenAcquisition)
         {
             this.httpClient = httpClient;
+            this.configuration = configuration;
             this.tokenAcquisition = tokenAcquisition;
             this.apiClient = GetApiClient(configuration);
         }

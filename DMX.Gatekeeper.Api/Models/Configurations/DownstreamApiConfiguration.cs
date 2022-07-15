@@ -2,12 +2,14 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // ---------------------------------------------------------------
 
+using System.Collections;
+using System.Collections.Generic;
+
 namespace DMX.Gatekeeper.Api.Models.Configurations
 {
-    public class LocalConfiguration
+    public class DownstreamApiConfiguration
     {
-        public ApiConfiguration ApiConfiguration { get; set; }
-        
-        public DownstreamApiConfiguration DownstreamApi { get; set; }
+        public string BaseUrl { get; set; }
+        public Dictionary<string, string> Scopes { get; set; }
     }
 }
