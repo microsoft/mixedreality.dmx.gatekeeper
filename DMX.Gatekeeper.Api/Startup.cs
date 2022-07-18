@@ -68,7 +68,7 @@ namespace DMX.Gatekeeper.Api
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
-            app.UseEndpoints(endpoints => endpoints.MapControllers());
+            MapControllersForEnvironments(app, env);
         }
 
         private static void AddBrokers(IServiceCollection services)
@@ -79,7 +79,7 @@ namespace DMX.Gatekeeper.Api
 
         private static void AddServices(IServiceCollection services) =>
             services.AddTransient<ILabService, LabService>();
-        
+
         private static void AddAuthentication(
             IServiceCollection services, IConfiguration configuration)
         {
@@ -89,6 +89,23 @@ namespace DMX.Gatekeeper.Api
                         .AddDownstreamWebApi(
                             "DownstreamApi", configuration.GetSection("DownstreamApi"))
                                 .AddInMemoryTokenCaches();
+        }
+
+        private static void MapControllersForEnvironments(
+            IApplicationBuilder app,
+            IWebHostEnvironment env)
+        {
+            app.UseEndpoints(endpoints =>
+            {
+                if (env.IsDevelopment())
+                {
+                    endpoints.MapControllers().AllowAnonymous();
+                }
+                else
+                {
+                    endpoints.MapControllers();
+                }
+            });
         }
     }
 }
