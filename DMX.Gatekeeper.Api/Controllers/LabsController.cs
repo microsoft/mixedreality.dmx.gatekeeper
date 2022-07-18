@@ -14,7 +14,7 @@ using RESTFulSense.Controllers;
 
 namespace DMX.Gatekeeper.Api.Controllers
 {
-#if !DEBUG
+#if ASPNETCORE_ENVIRONMENT != Development
     [Authorize]
 #endif
     [ApiController]
@@ -27,7 +27,7 @@ namespace DMX.Gatekeeper.Api.Controllers
             this.labService = labService;
 
         [HttpGet]
-#if !DEBUG
+#if ASPNETCORE_ENVIRONMENT != Development
         [RequiredScope(RequiredScopesConfigurationKey = "AzureAd:Scopes:GetAllLabs")]
 #endif
         public async ValueTask<ActionResult<List<Lab>>> GetAllLabsAsync()
@@ -50,7 +50,7 @@ namespace DMX.Gatekeeper.Api.Controllers
         }
 
         [HttpPost]
-#if !DEBUG
+#if ASPNETCORE_ENVIRONMENT != Development
         [RequiredScope(RequiredScopesConfigurationKey = "AzureAd:Scopes:PostLab")]
 #endif
         public async ValueTask<ActionResult<Lab>> PostLabAsync(Lab lab)
