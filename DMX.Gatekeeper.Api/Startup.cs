@@ -12,7 +12,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Identity.Web;
 using Microsoft.OpenApi.Models;
+using Microsoft.AspNetCore.Authentication;
 
 namespace DMX.Gatekeeper.Api
 {
@@ -29,7 +31,8 @@ namespace DMX.Gatekeeper.Api
                 options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
 
             services.AddHttpClient();
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme);
+
+            AddAuthentication(services, this.Configuration);
             AddBrokers(services);
             AddServices(services);
 
@@ -63,8 +66,9 @@ namespace DMX.Gatekeeper.Api
 
             app.UseHttpsRedirection();
             app.UseRouting();
+            app.UseAuthentication();
             app.UseAuthorization();
-            app.UseEndpoints(endpoints => endpoints.MapControllers());
+            MapControllersForEnvironments(app, env);
         }
 
         private static void AddBrokers(IServiceCollection services)
@@ -75,5 +79,33 @@ namespace DMX.Gatekeeper.Api
 
         private static void AddServices(IServiceCollection services) =>
             services.AddTransient<ILabService, LabService>();
+
+        private static void AddAuthentication(
+            IServiceCollection services, IConfiguration configuration)
+        {
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddMicrosoftIdentityWebApi(configuration.GetSection("AzureAd"))
+                    .EnableTokenAcquisitionToCallDownstreamApi()
+                        .AddDownstreamWebApi(
+                            "DownstreamApi", configuration.GetSection("DownstreamApi"))
+                                .AddInMemoryTokenCaches();
+        }
+
+        private static void MapControllersForEnvironments(
+            IApplicationBuilder app,
+            IWebHostEnvironment env)
+        {
+            app.UseEndpoints(endpoints =>
+            {
+                if (env.IsDevelopment())
+                {
+                    endpoints.MapControllers().AllowAnonymous();
+                }
+                else
+                {
+                    endpoints.MapControllers();
+                }
+            });
+        }
     }
 }
