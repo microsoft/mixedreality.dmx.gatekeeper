@@ -12,7 +12,7 @@ namespace DMX.Gatekeeper.Api.Infrastructure.Provision.Brokers.Clouds
 {
     public partial class CloudBroker : ICloudBroker
     {
-        private const string ENVIRONMENT = "Production";
+        private const string ProjectEnvironment = "Production";
         private readonly string tenantId;
         private readonly string dmxGatekeeperClientId;
         private readonly string dmxGatekeeperInstance;
