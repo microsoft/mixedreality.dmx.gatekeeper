@@ -8,6 +8,6 @@ namespace DMX.Gatekeeper.Api.Brokers.Tokens
 {
     public partial interface ITokenAcquisitionBroker
     {
-        ValueTask<string> GetAccessTokenForUserAsync(string[] scopes);
+        ValueTask<string> GetAccessTokenForUserByScopeCategoryAsync(string scopeCategory);
     }
 }
