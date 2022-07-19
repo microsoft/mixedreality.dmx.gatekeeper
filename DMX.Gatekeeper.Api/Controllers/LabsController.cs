@@ -7,11 +7,16 @@ using System.Threading.Tasks;
 using DMX.Gatekeeper.Api.Models.Labs;
 using DMX.Gatekeeper.Api.Models.Labs.Exceptions;
 using DMX.Gatekeeper.Api.Services.Foundations.Labs;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Identity.Web.Resource;
 using RESTFulSense.Controllers;
 
 namespace DMX.Gatekeeper.Api.Controllers
 {
+#if ASPNETCORE_ENVIRONMENT != Development
+    [Authorize]
+#endif
     [ApiController]
     [Route("api/[controller]")]
     public class LabsController : RESTFulController
@@ -22,6 +27,9 @@ namespace DMX.Gatekeeper.Api.Controllers
             this.labService = labService;
 
         [HttpGet]
+#if ASPNETCORE_ENVIRONMENT != Development
+        [RequiredScope(RequiredScopesConfigurationKey = "AzureAd:Scopes:GetAllLabs")]
+#endif
         public async ValueTask<ActionResult<List<Lab>>> GetAllLabsAsync()
         {
             try
@@ -42,6 +50,9 @@ namespace DMX.Gatekeeper.Api.Controllers
         }
 
         [HttpPost]
+#if ASPNETCORE_ENVIRONMENT != Development
+        [RequiredScope(RequiredScopesConfigurationKey = "AzureAd:Scopes:PostLab")]
+#endif
         public async ValueTask<ActionResult<Lab>> PostLabAsync(Lab lab)
         {
             try

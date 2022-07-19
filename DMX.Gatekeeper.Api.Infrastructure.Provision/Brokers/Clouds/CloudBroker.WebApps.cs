@@ -26,9 +26,11 @@ namespace DMX.Gatekeeper.Api.Infrastructure.Provision.Brokers.Clouds
                     { "AzureAd:Domain", this.dmxGatekeeperDomain },
                     { "AzureAd:ClientId", this.dmxGatekeeperClientId },
                     { "AzureAd:CallbackPath", this.dmxGatekeeperCallbackPath },
-                    { "AzureAd:Scopes", this.dmxGatekeeperScopes },
+                    { "AzureAd:Scopes:GetAllLabs", this.dmxGatekeeperScopesGetAllLabs },
+                    { "AzureAd:Scopes:PostLab", this.dmxGatekeeperScopesPostLab },
                     { "DownstreamApi:BaseUrl", this.dmxCoreAppIdUri },
-                    { "DownstreamApi:Scopes", this.dmxCoreAppScopes },
+                    { "DownstreamApi:Scopes:GetAllLabs", this.dmxCoreAppScopesGetAllLabs },
+                    { "DownstreamApi:Scopes:PostLab", this.dmxCoreAppScopesPostLab },
                 };
 
             return await this.azure.AppServices.WebApps
