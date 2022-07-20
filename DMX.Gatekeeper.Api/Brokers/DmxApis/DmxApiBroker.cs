@@ -7,6 +7,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using DMX.Gatekeeper.Api.Models.Configurations;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Identity.Web;
 using RESTFulSense.Clients;
 
 namespace DMX.Gatekeeper.Api.Brokers.DmxApis
@@ -14,11 +15,18 @@ namespace DMX.Gatekeeper.Api.Brokers.DmxApis
     public partial class DmxApiBroker : IDmxApiBroker
     {
         private readonly IRESTFulApiFactoryClient apiClient;
-        private readonly HttpClient httpClient;
+        private HttpClient httpClient;
+        private readonly IConfiguration configuration;
+        private readonly ITokenAcquisition tokenAcquisition;
 
-        public DmxApiBroker(HttpClient httpClient, IConfiguration configuration)
+        public DmxApiBroker(
+            HttpClient httpClient, 
+            IConfiguration configuration,
+            ITokenAcquisition tokenAcquisition)
         {
             this.httpClient = httpClient;
+            this.configuration = configuration;
+            this.tokenAcquisition = tokenAcquisition;
             this.apiClient = GetApiClient(configuration);
         }
 
@@ -37,6 +45,17 @@ namespace DMX.Gatekeeper.Api.Brokers.DmxApis
             this.httpClient.BaseAddress = new Uri(apiBaseUrl);
 
             return new RESTFulApiFactoryClient(this.httpClient);
+        }
+        
+        private string[] GetScopesFromConfiguration(string scopeCategory)
+        {
+            LocalConfiguration localConfiguration =
+                this.configuration.Get<LocalConfiguration>();
+
+            localConfiguration.DownstreamApi.Scopes.TryGetValue(
+                scopeCategory, out string scopes);
+
+            return scopes.Split();
         }
     }
 }

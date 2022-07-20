@@ -3,6 +3,7 @@
 // ---------------------------------------------------------------
 
 using System.Collections.Generic;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using DMX.Gatekeeper.Api.Models.Labs;
 
@@ -12,10 +13,32 @@ namespace DMX.Gatekeeper.Api.Brokers.DmxApis
     {
         private const string LabsRelativeUrl = "api/labs";
 
-        public async ValueTask<Lab> PostLabAsync(Lab lab) =>
-            await PostAsync<Lab>(LabsRelativeUrl, lab);
+        public async ValueTask<Lab> PostLabAsync(Lab lab)
+        {
+            string[] requiredScopes = this.GetScopesFromConfiguration(
+                scopeCategory: "PostLab");
 
-        public async ValueTask<List<Lab>> GetAllLabsAsync() =>
-            await GetAsync<List<Lab>>(LabsRelativeUrl);
+            string accessToken =
+                await this.tokenAcquisition.GetAccessTokenForUserAsync(requiredScopes);
+
+            this.httpClient.DefaultRequestHeaders.Authorization =
+                new AuthenticationHeaderValue("Bearer", accessToken);
+
+            return await PostAsync<Lab>(LabsRelativeUrl, lab);
+        }
+
+        public async ValueTask<List<Lab>> GetAllLabsAsync()
+        {
+            string[] requiredScopes = this.GetScopesFromConfiguration(
+                scopeCategory: "GetAllLabs");
+
+            string accessToken =
+                await this.tokenAcquisition.GetAccessTokenForUserAsync(requiredScopes);
+
+            this.httpClient.DefaultRequestHeaders.Authorization =
+                new AuthenticationHeaderValue("Bearer", accessToken);
+
+            return await GetAsync<List<Lab>>(LabsRelativeUrl);
+        }
     }
 }
