@@ -19,8 +19,7 @@ namespace DMX.Gatekeeper.Api.Infrastructure.Provision.Brokers.Clouds
             var webAppSettings = new Dictionary<string, string>
                 {
                     { "ASPNETCORE_ENVIRONMENT", ProjectEnvironment },
-                    { "ApiConfigurations:Url", this.configurationDmxCoreApiUrl },
-                    { "ApiConfigurations:AccessKey", this.configurationDmxCoreApiAccessKey },
+                    { "ApiConfiguration:Url", this.configurationDmxCoreApiUrl },
                     { "AzureAd:TenantId", this.tenantId },
                     { "AzureAd:Instance", this.dmxGatekeeperInstance },
                     { "AzureAd:Domain", this.dmxGatekeeperDomain },
