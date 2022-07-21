@@ -4,9 +4,12 @@
 
 using System;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using DMX.Gatekeeper.Api.Models.Configurations;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Identity.Web;
 using RESTFulSense.Clients;
 
@@ -18,15 +21,18 @@ namespace DMX.Gatekeeper.Api.Brokers.DmxApis
         private HttpClient httpClient;
         private readonly IConfiguration configuration;
         private readonly ITokenAcquisition tokenAcquisition;
+        private readonly IWebHostEnvironment env;
 
         public DmxApiBroker(
-            HttpClient httpClient, 
+            HttpClient httpClient,
             IConfiguration configuration,
-            ITokenAcquisition tokenAcquisition)
+            ITokenAcquisition tokenAcquisition,
+            IWebHostEnvironment env)
         {
             this.httpClient = httpClient;
             this.configuration = configuration;
             this.tokenAcquisition = tokenAcquisition;
+            this.env = env;
             this.apiClient = GetApiClient(configuration);
         }
 
@@ -46,7 +52,7 @@ namespace DMX.Gatekeeper.Api.Brokers.DmxApis
 
             return new RESTFulApiFactoryClient(this.httpClient);
         }
-        
+
         private string[] GetScopesFromConfiguration(string scopeCategory)
         {
             LocalConfiguration localConfiguration =
@@ -56,6 +62,20 @@ namespace DMX.Gatekeeper.Api.Brokers.DmxApis
                 scopeCategory, out string scopes);
 
             return scopes.Split();
+        }
+
+        private async Task GetAccessTokenForScope(string scope)
+        {
+            if (env.IsProduction())
+            {
+                string[] scopes = GetScopesFromConfiguration(scope);
+
+                string accessToken =
+                    await this.tokenAcquisition.GetAccessTokenForUserAsync(scopes);
+
+                this.httpClient.DefaultRequestHeaders.Authorization =
+                    new AuthenticationHeaderValue("Bearer", accessToken);
+            }
         }
     }
 }
