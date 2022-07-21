@@ -26,7 +26,6 @@ namespace DMX.Gatekeeper.Api.Infrastructure.Provision.Brokers.Clouds
         private readonly string provisionClientId;
         private readonly string provisionClientSecret;
         private readonly string configurationDmxCoreApiUrl;
-        private readonly string configurationDmxCoreApiAccessKey;
         private readonly IAzure azure;
 
         public CloudBroker()
@@ -44,7 +43,6 @@ namespace DMX.Gatekeeper.Api.Infrastructure.Provision.Brokers.Clouds
             this.provisionClientId = Environment.GetEnvironmentVariable("AzureAdAppProvisionClientId");
             this.provisionClientSecret = Environment.GetEnvironmentVariable("AzureAdAppProvisionClientSecret");
             this.configurationDmxCoreApiUrl = Environment.GetEnvironmentVariable("AzureAppServiceDmxCoreApiUrl");
-            this.configurationDmxCoreApiAccessKey = Environment.GetEnvironmentVariable("AzureAppServiceDmxCoreApiAccessKey");
             this.azure = AuthenticateAzure();
         }
 
