@@ -7,7 +7,9 @@ using System.Threading.Tasks;
 using DMX.Gatekeeper.Api.Models.Labs;
 using DMX.Gatekeeper.Api.Models.Labs.Exceptions;
 using DMX.Gatekeeper.Api.Services.Foundations.Labs;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Identity.Web.Resource;
 using RESTFulSense.Controllers;
 
 namespace DMX.Gatekeeper.Api.Controllers
