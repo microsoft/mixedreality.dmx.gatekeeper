@@ -20,7 +20,6 @@ namespace DMX.Gatekeeper.Api.Infrastructure.Provision.Brokers.Clouds
                 {
                     { "ASPNETCORE_ENVIRONMENT", ProjectEnvironment },
                     { "ApiConfiguration:Url", this.configurationDmxCoreApiUrl },
-                    { "ApiConfiguration:AccessKey", this.configurationDmxCoreApiAccessKey },
                     { "AzureAd:TenantId", this.tenantId },
                     { "AzureAd:Instance", this.dmxGatekeeperInstance },
                     { "AzureAd:Domain", this.dmxGatekeeperDomain },

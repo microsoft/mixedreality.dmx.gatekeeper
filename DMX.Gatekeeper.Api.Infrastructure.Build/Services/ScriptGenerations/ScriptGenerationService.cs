@@ -126,7 +126,6 @@ namespace DMX.Gatekeeper.Api.Infrastructure.Build.Services.ScriptGenerations
                             { "AzureAdAppDmxCoreAppScopesGetAllLabs", "${{ secrets.AZURE_ADAPP_DMXCORE_APPSCOPES_GETALLLABS }}" },
                             { "AzureAdAppDmxCoreAppScopesPostLab", "${{ secrets.AZURE_ADAPP_DMXCORE_APPSCOPES_POSTLAB }}" },
                             { "AzureAppServiceDmxCoreApiUrl", "${{ secrets.AZURE_APPSERVICE_DMXCOREAPI_URL }}" },
-                            { "AzureAppServiceDmxCoreApiAccessKey", "${{ secrets.AZURE_APPSERVICE_DMXCOREAPI_ACCESSKEY }}" },
                         },
 
                         Steps = new List<GithubTask>
