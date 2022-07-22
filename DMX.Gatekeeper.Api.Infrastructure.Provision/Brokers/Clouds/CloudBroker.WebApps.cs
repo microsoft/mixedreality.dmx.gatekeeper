@@ -24,6 +24,7 @@ namespace DMX.Gatekeeper.Api.Infrastructure.Provision.Brokers.Clouds
                     { "AzureAd:Instance", this.dmxGatekeeperInstance },
                     { "AzureAd:Domain", this.dmxGatekeeperDomain },
                     { "AzureAd:ClientId", this.dmxGatekeeperClientId },
+                    { "AzureAd:ClientSecret", this.dmxGatekeeperClientSecret },
                     { "AzureAd:CallbackPath", this.dmxGatekeeperCallbackPath },
                     { "AzureAd:Scopes:GetAllLabs", this.dmxGatekeeperScopesGetAllLabs },
                     { "AzureAd:Scopes:PostLab", this.dmxGatekeeperScopesPostLab },
