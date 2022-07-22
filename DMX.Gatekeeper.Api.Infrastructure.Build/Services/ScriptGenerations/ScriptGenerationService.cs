@@ -117,6 +117,7 @@ namespace DMX.Gatekeeper.Api.Infrastructure.Build.Services.ScriptGenerations
                             { "AzureAdAppProvisionClientId", "${{ secrets.AZURE_ADAPP_PROVISION_CLIENTID }}" },
                             { "AzureAdAppProvisionClientSecret", "${{ secrets.AZURE_ADAPP_PROVISION_CLIENTSECRET }}" },
                             { "AzureAdAppDmxGatekeeperClientId", "${{ secrets.AZURE_ADAPP_DMXGATEKEEPER_CLIENTID }}" },
+                            { "AzureAdAppDmxGatekeeperClientSecret", "${{ secrets.AZURE_ADAPP_DMXGATEKEEPER_CLIENTSECRET }}" },
                             { "AzureAdAppDmxGatekeeperInstance", "${{ secrets.AZURE_ADAPP_DMXGATEKEEPER_INSTANCE }}" },
                             { "AzureAdAppDmxGatekeeperDomain", "${{ secrets.AZURE_ADAPP_DMXGATEKEEPER_DOMAIN }}" },
                             { "AzureAdAppDmxGatekeeperCallbackPath", "${{ secrets.AZURE_ADAPP_DMXGATEKEEPER_CALLBACKPATH }}" },
