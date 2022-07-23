@@ -15,6 +15,7 @@ namespace DMX.Gatekeeper.Api.Infrastructure.Provision.Brokers.Clouds
         private const string ProjectEnvironment = "Production";
         private readonly string tenantId;
         private readonly string dmxGatekeeperClientId;
+        private readonly string dmxGatekeeperClientSecret;
         private readonly string dmxGatekeeperInstance;
         private readonly string dmxGatekeeperDomain;
         private readonly string dmxGatekeeperCallbackPath;
@@ -32,6 +33,7 @@ namespace DMX.Gatekeeper.Api.Infrastructure.Provision.Brokers.Clouds
         {
             this.tenantId = Environment.GetEnvironmentVariable("AzureTenantId");
             this.dmxGatekeeperClientId = Environment.GetEnvironmentVariable("AzureAdAppDmxGatekeeperClientId");
+            this.dmxGatekeeperClientSecret = Environment.GetEnvironmentVariable("AzureAdAppDmxGatekeeperClientSecret");
             this.dmxGatekeeperInstance = Environment.GetEnvironmentVariable("AzureAdAppDmxGatekeeperInstance");
             this.dmxGatekeeperDomain = Environment.GetEnvironmentVariable("AzureAdAppDmxGatekeeperDomain");
             this.dmxGatekeeperCallbackPath = Environment.GetEnvironmentVariable("AzureAdAppDmxGatekeeperCallbackPath");
