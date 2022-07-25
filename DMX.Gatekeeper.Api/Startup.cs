@@ -5,8 +5,11 @@
 using System.Text.Json.Serialization;
 using DMX.Gatekeeper.Api.Brokers.DmxApis;
 using DMX.Gatekeeper.Api.Brokers.Loggings;
+using DMX.Gatekeeper.Api.Models.Configurations;
+using DMX.Gatekeeper.Api.Securities.Policies;
 using DMX.Gatekeeper.Api.Services.Foundations.Labs;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -31,6 +34,7 @@ namespace DMX.Gatekeeper.Api
 
             services.AddHttpClient();
 
+            AddAuthorization(services, this.Configuration);
             AddAuthentication(services, this.Configuration);
             AddBrokers(services);
             AddServices(services);
@@ -78,6 +82,24 @@ namespace DMX.Gatekeeper.Api
 
         private static void AddServices(IServiceCollection services) =>
             services.AddTransient<ILabService, LabService>();
+        
+        private static void AddAuthorization(
+            IServiceCollection services, IConfiguration configuration)
+        {
+            string[] readOnlyScopes = GetScopesFromConfiguration("AzureAd:Scopes:GetAllLabs", configuration);
+            string[] readWriteScopes = GetScopesFromConfiguration("AzureAd:Scopes:PostLab", configuration);
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("ReadOnly", policy => policy.AddRequirements(
+                    new HasScopeRequirement(readOnlyScopes)));
+
+                options.AddPolicy("ReadWrite", policy => policy.AddRequirements(
+                    new HasScopeRequirement(readWriteScopes)));
+            });
+
+            services.AddSingleton<IAuthorizationHandler, HasScopeRequirementHandler>();
+        }
 
         private static void AddAuthentication(
             IServiceCollection services, IConfiguration configuration)
@@ -106,5 +128,8 @@ namespace DMX.Gatekeeper.Api
                 }
             });
         }
+        private static string[] GetScopesFromConfiguration(
+            string scopeConfigurationKey, IConfiguration configuration) =>
+                configuration.GetValue<string>(scopeConfigurationKey)?.Split(' ');
     }
 }
