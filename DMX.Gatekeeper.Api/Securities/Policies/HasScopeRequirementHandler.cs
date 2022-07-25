@@ -7,18 +7,19 @@ namespace DMX.Gatekeeper.Api.Securities.Policies
 {
     public class HasScopeRequirementHandler : AuthorizationHandler<HasScopeRequirement>
     {
-        protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, HasScopeRequirement requirement)
+        protected override Task HandleRequirementAsync(
+            AuthorizationHandlerContext context, HasScopeRequirement requirement)
         {
             var scopeClaims = context.User.FindAll(ClaimConstants.Scp)
               .Union(context.User.FindAll(ClaimConstants.Scope))
-              .ToList();
+                .ToList();
 
             if (!scopeClaims.Any())
             {
                 return Task.CompletedTask;
             }
 
-            var hasScope = scopeClaims.SelectMany(
+            bool hasScope = scopeClaims.SelectMany(
                 s => s.Value.Split(' '))
                     .Intersect(requirement.AccessScopes)
                         .Any();
