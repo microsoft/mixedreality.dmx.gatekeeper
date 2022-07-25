@@ -4,9 +4,9 @@ namespace DMX.Gatekeeper.Api.Securities.Policies
 {
     public class HasScopeRequirement : IAuthorizationRequirement
     {
-        public HasScopeRequirement(string[] accessScope)
+        public HasScopeRequirement(string[] accessScopes)
         {
-            AccessScopes = accessScope;
+            AccessScopes = accessScopes;
         }
 
         public string[] AccessScopes { get; }
