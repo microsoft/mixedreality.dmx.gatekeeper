@@ -7,6 +7,7 @@ using DMX.Gatekeeper.Api.Brokers.DmxApis;
 using DMX.Gatekeeper.Api.Brokers.Loggings;
 using DMX.Gatekeeper.Api.Services.Foundations.Labs;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -17,6 +18,17 @@ using Microsoft.OpenApi.Models;
 
 namespace DMX.Gatekeeper.Api
 {
+
+    public class HasScopeRequirement : IAuthorizationRequirement
+    {
+        public HasScopeRequirement(string accessScope)
+        {
+            AccessScope = accessScope;
+        }
+
+        public string AccessScope { get; }
+    }
+
     public class Startup
     {
         public Startup(IConfiguration configuration) =>
@@ -30,6 +42,12 @@ namespace DMX.Gatekeeper.Api
                 options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
 
             services.AddHttpClient();
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("ReadOnly", policy => policy.AddRequirements(new HasScopeRequirement("AzureAd:Scopes:GetAllLabs")));
+                options.AddPolicy("ReadWrite", policy => policy.AddRequirements(new HasScopeRequirement("AzureAd:Scopes:PostLab")));
+            });
 
             AddAuthentication(services, this.Configuration);
             AddBrokers(services);

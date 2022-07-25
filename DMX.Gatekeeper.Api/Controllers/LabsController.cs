@@ -14,9 +14,7 @@ using RESTFulSense.Controllers;
 
 namespace DMX.Gatekeeper.Api.Controllers
 {
-#if RELEASE
     [Authorize]
-#endif
     [ApiController]
     [Route("api/[controller]")]
     public class LabsController : RESTFulController
@@ -27,9 +25,7 @@ namespace DMX.Gatekeeper.Api.Controllers
             this.labService = labService;
 
         [HttpGet]
-#if RELEASE
-        [RequiredScope(RequiredScopesConfigurationKey = "AzureAd:Scopes:GetAllLabs")]
-#endif
+        [Authorize(Policy = "ReadOnly")]
         public async ValueTask<ActionResult<List<Lab>>> GetAllLabsAsync()
         {
             try
@@ -50,9 +46,7 @@ namespace DMX.Gatekeeper.Api.Controllers
         }
 
         [HttpPost]
-#if RELEASE
-        [RequiredScope(RequiredScopesConfigurationKey = "AzureAd:Scopes:PostLab")]
-#endif
+        [Authorize(Policy = "ReadWrite")]
         public async ValueTask<ActionResult<Lab>> PostLabAsync(Lab lab)
         {
             try
