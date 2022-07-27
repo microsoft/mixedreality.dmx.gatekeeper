@@ -7,6 +7,6 @@ namespace DMX.Gatekeeper.Api.Models.Configurations
     public class LocalConfiguration
     {
         public ApiConfiguration ApiConfiguration { get; set; }
-        public DownstreamApiConfiguration DownstreamApi{ get; set; }
+        public DownstreamApiConfiguration DownstreamApi { get; set; }
     }
 }
