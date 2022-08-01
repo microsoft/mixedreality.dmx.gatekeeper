@@ -9,7 +9,7 @@ using DMX.Gatekeeper.Api.Models.LabCommands;
 
 namespace DMX.Gatekeeper.Api.Services.Foundations.LabCommands
 {
-    public class LabCommandService : ILabCommandService
+    public partial class LabCommandService : ILabCommandService
     {
         private readonly IDmxApiBroker dmxApiBroker;
         private readonly ILoggingBroker loggingBroker;
@@ -23,6 +23,11 @@ namespace DMX.Gatekeeper.Api.Services.Foundations.LabCommands
         }
 
         public ValueTask<LabCommand> AddLabCommandAsync(LabCommand labCommand) =>
-            this.dmxApiBroker.PostLabCommandAsync(labCommand);
+        TryCatch(async () =>
+        {
+            ValidateLabCommand(labCommand);
+
+            return await this.dmxApiBroker.PostLabCommandAsync(labCommand);
+        });
     }
 }
