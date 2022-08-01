@@ -7,6 +7,6 @@ namespace DMX.Gatekeeper.Api.Models.LabCommands
     public enum CommandType
     {
         Execute,
-        Download,
+        Download
     }
 }
