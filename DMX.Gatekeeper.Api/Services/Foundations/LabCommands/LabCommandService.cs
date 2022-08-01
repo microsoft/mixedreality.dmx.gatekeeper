@@ -22,9 +22,7 @@ namespace DMX.Gatekeeper.Api.Services.Foundations.LabCommands
             this.loggingBroker = loggingBroker;
         }
 
-        public ValueTask<LabCommand> AddLabCommandAsync(LabCommand labCommand)
-        {
-            throw new System.NotImplementedException();
-        }
+        public ValueTask<LabCommand> AddLabCommandAsync(LabCommand labCommand) =>
+            this.dmxApiBroker.PostLabCommandAsync(labCommand);
     }
 }
