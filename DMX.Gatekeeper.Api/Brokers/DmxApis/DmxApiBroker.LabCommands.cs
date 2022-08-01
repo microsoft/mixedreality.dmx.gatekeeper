@@ -3,7 +3,7 @@
 // ---------------------------------------------------------------
 
 using System.Threading.Tasks;
-using DMX.Gatekeeper.Api.Models.Commands;
+using DMX.Gatekeeper.Api.Models.LabCommands;
 
 namespace DMX.Gatekeeper.Api.Brokers.DmxApis
 {
@@ -11,7 +11,7 @@ namespace DMX.Gatekeeper.Api.Brokers.DmxApis
     {
         private const string LabCommandsRelativeUrl = "api/labcommands";
 
-        async ValueTask PostCommand(LabCommand labCommand) =>
-            await PostAsync<LabCommand>(LabCommandsRelativeUrl, labCommand);
+        public async ValueTask<LabCommand> PostLabCommandAsync(LabCommand labCommand) =>
+            await PostAsync(LabCommandsRelativeUrl, labCommand);
     }
 }
