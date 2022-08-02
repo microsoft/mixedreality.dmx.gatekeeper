@@ -22,7 +22,7 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.LabCommands
 
             var expectedLabCommandValidationException =
                 new LabCommandValidationException(nullLabCommandException);
-            
+
             // when
             ValueTask<LabCommand> addLabCommandTask =
                 this.labCommandService.AddLabCommandAsync(nullLabCommand);

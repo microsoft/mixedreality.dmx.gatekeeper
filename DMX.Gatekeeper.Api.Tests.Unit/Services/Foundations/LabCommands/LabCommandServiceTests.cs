@@ -4,13 +4,16 @@
 
 using System;
 using System.Linq.Expressions;
+using System.Net.Http;
 using DMX.Gatekeeper.Api.Brokers.DmxApis;
 using DMX.Gatekeeper.Api.Brokers.Loggings;
 using DMX.Gatekeeper.Api.Models.LabCommands;
 using DMX.Gatekeeper.Api.Services.Foundations.LabCommands;
 using Moq;
+using RESTFulSense.Exceptions;
 using Tynamix.ObjectFiller;
 using Xeptions;
+using Xunit;
 
 namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.LabCommands
 {
@@ -30,8 +33,24 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.LabCommands
                 loggingBroker: this.loggingBrokerMock.Object);
         }
 
+        public static TheoryData CriticalDependencyException()
+        {
+            string someMessage = GetRandomString();
+            var someResponseMessage = new HttpResponseMessage();
+
+            return new TheoryData<Xeption>()
+            {
+                new HttpResponseUrlNotFoundException(someResponseMessage, someMessage),
+                new HttpResponseUnauthorizedException(someResponseMessage, someMessage),
+                new HttpResponseForbiddenException(someResponseMessage, someMessage),
+            };
+        }
+
         private static Expression<Func<Xeption, bool>> SameExceptionAs(Xeption expectedException) =>
             actualException => actualException.SameExceptionAs(expectedException);
+
+        private static string GetRandomString() =>
+            new MnemonicString().GetValue();
 
         private static LabCommand CreateRandomLabCommand() =>
             CreateLabCommandFiller().Create();
