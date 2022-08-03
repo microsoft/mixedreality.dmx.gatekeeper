@@ -53,6 +53,13 @@ namespace DMX.Gatekeeper.Api.Services.Foundations.LabCommands
             {
                 throw CreateAndLogValidationException(nullLabCommandException);
             }
+            catch (Exception exception)
+            {
+                var failedLabCommandServiceException =
+                    new FailedLabCommandServiceException(exception);
+
+                throw CreateAndLogServiceException(failedLabCommandServiceException);
+            }
         }
 
         private LabCommandDependencyException CreateAndLogDependencyExcepton(FailedLabCommandDependencyException failedLabCommandDependencyException)
@@ -79,6 +86,16 @@ namespace DMX.Gatekeeper.Api.Services.Foundations.LabCommands
             this.loggingBroker.LogError(labCommandValidationException);
 
             return labCommandValidationException;
+        }
+
+        private LabCommandServiceException CreateAndLogServiceException(FailedLabCommandServiceException failedLabCommandServiceException)
+        {
+            var labCommandServiceException =
+                new LabCommandServiceException(failedLabCommandServiceException);
+
+            this.loggingBroker.LogError(labCommandServiceException);
+
+            return labCommandServiceException;
         }
     }
 }
