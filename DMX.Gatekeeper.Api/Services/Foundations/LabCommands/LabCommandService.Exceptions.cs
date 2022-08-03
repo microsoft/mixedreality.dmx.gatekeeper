@@ -42,6 +42,14 @@ namespace DMX.Gatekeeper.Api.Services.Foundations.LabCommands
 
                 throw CreateAndLogCriticalDependencyException(faliedLabCommandDependencyException);
             }
+            catch (HttpResponseBadRequestException httpResponseBadRequestException)
+            {
+                var invalidLabCommandException = new InvalidLabCommandException(
+                    httpResponseBadRequestException,
+                    httpResponseBadRequestException.Data);
+
+                throw CreateAndLogDependencyValidationException(invalidLabCommandException);
+            }
             catch (HttpResponseException httpResponseException)
             {
                 var failedLabCommandDependencyException =
@@ -60,6 +68,16 @@ namespace DMX.Gatekeeper.Api.Services.Foundations.LabCommands
 
                 throw CreateAndLogServiceException(failedLabCommandServiceException);
             }
+        }
+
+        private LabCommandDependencyValidationException CreateAndLogDependencyValidationException(InvalidLabCommandException invalidLabCommandException)
+        {
+            var labCommandDependencyValidationException = 
+                new LabCommandDependencyValidationException(invalidLabCommandException);
+
+            this.loggingBroker.LogError(labCommandDependencyValidationException);
+
+            return labCommandDependencyValidationException;
         }
 
         private LabCommandDependencyException CreateAndLogDependencyExcepton(FailedLabCommandDependencyException failedLabCommandDependencyException)
