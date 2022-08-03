@@ -3,6 +3,7 @@
 // ---------------------------------------------------------------
 
 using System;
+using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Net.Http;
 using DMX.Gatekeeper.Api.Brokers.DmxApis;
@@ -67,5 +68,11 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.LabCommands
 
             return filler;
         }
+
+        private static Filler<Dictionary<string, List<string>>> CreateDictionaryFiller() =>
+            new Filler<Dictionary<string, List<string>>>();
+
+        private static Dictionary<string, List<string>> CreateRandomDictionary() =>
+            CreateDictionaryFiller().Create();
     }
 }
