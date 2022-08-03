@@ -7,14 +7,17 @@ using System.Threading.Tasks;
 using DMX.Gatekeeper.Api.Models.Labs;
 using DMX.Gatekeeper.Api.Models.Labs.Exceptions;
 using DMX.Gatekeeper.Api.Services.Foundations.Labs;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RESTFulSense.Controllers;
 
+#if RELEASE
+using Microsoft.Identity.Web.Resource;
+#endif
+
 namespace DMX.Gatekeeper.Api.Controllers
 {
-#if RELEASE
     [Authorize]
-#endif
     [ApiController]
     [Route("api/[controller]")]
     public class LabsController : RESTFulController
