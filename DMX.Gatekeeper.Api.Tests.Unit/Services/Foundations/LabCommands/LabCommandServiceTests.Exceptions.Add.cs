@@ -178,8 +178,12 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.LabCommands
                 httpResponseMessage,
                 randomString);
 
+            httpResponseConflictException.AddData(randomDictionary);
+
             var alreadyExistsLabCommandException =
-                new AlreadyExistsLabCommandException(httpResponseConflictException);
+                new AlreadyExistsLabCommandException(
+                    httpResponseConflictException,
+                    randomDictionary);
 
             var expectedLabCommandDependencyValidationException =
                 new LabCommandDependencyValidationException(alreadyExistsLabCommandException);

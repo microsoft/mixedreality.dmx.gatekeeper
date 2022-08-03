@@ -44,11 +44,21 @@ namespace DMX.Gatekeeper.Api.Services.Foundations.LabCommands
             }
             catch (HttpResponseBadRequestException httpResponseBadRequestException)
             {
-                var invalidLabCommandException = new InvalidLabCommandException(
-                    httpResponseBadRequestException,
-                    httpResponseBadRequestException.Data);
+                var invalidLabCommandException =
+                    new InvalidLabCommandException(
+                        httpResponseBadRequestException,
+                        httpResponseBadRequestException.Data);
 
                 throw CreateAndLogDependencyValidationException(invalidLabCommandException);
+            }
+            catch (HttpResponseConflictException httpResponseConflictException)
+            {
+                var alreadyExistsLabCommandException =
+                    new AlreadyExistsLabCommandException(
+                        httpResponseConflictException,
+                        httpResponseConflictException.Data);
+
+                throw CreateAndLogDependencyValidationException(alreadyExistsLabCommandException);
             }
             catch (HttpResponseException httpResponseException)
             {
@@ -70,7 +80,7 @@ namespace DMX.Gatekeeper.Api.Services.Foundations.LabCommands
             }
         }
 
-        private LabCommandDependencyValidationException CreateAndLogDependencyValidationException(InvalidLabCommandException invalidLabCommandException)
+        private LabCommandDependencyValidationException CreateAndLogDependencyValidationException(Xeption invalidLabCommandException)
         {
             var labCommandDependencyValidationException = 
                 new LabCommandDependencyValidationException(invalidLabCommandException);
