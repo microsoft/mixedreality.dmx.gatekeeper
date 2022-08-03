@@ -42,10 +42,27 @@ namespace DMX.Gatekeeper.Api.Services.Foundations.LabCommands
 
                 throw CreateAndLogCriticalDependencyException(faliedLabCommandDependencyException);
             }
+            catch (HttpResponseException httpResponseException)
+            {
+                var failedLabCommandDependencyException =
+                    new FailedLabCommandDependencyException(httpResponseException);
+
+                throw CreateAndLogDependencyExcepton(failedLabCommandDependencyException);
+            }
             catch (NullLabCommandException nullLabCommandException)
             {
                 throw CreateAndLogValidationException(nullLabCommandException);
             }
+        }
+
+        private LabCommandDependencyException CreateAndLogDependencyExcepton(FailedLabCommandDependencyException failedLabCommandDependencyException)
+        {
+            var labCommandDependencyException =
+                new LabCommandDependencyException(failedLabCommandDependencyException);
+
+            this.loggingBroker.LogError(labCommandDependencyException);
+
+            return labCommandDependencyException;
         }
 
         private LabCommandDependencyException CreateAndLogCriticalDependencyException(Xeption exception)
