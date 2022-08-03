@@ -65,7 +65,7 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.LabCommands
         public async Task ShouldThrowDependencyExceptionOnAddIfErrorOccursAndLogItAsync()
         {
             // given
-            LabCommand randomLabCommand = CreateRandomLabCommand();
+            LabCommand someLabCommand = CreateRandomLabCommand();
             string randomMessage = GetRandomString();
             var httpMessage = new HttpResponseMessage();
 
@@ -84,7 +84,7 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.LabCommands
 
             // when
             ValueTask<LabCommand> addLabCommandTask =
-                this.labCommandService.AddLabCommandAsync(randomLabCommand);
+                this.labCommandService.AddLabCommandAsync(someLabCommand);
 
             LabCommandDependencyException actualLabCommandDependencyException =
                 await Assert.ThrowsAsync<LabCommandDependencyException>(
@@ -111,7 +111,7 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.LabCommands
         public async Task ShouldThrowDependencyValidationExceptionOnAddIfBadRequestErrorOccursAndLogItAsync()
         {
             // given
-            LabCommand randomLabCommand = CreateRandomLabCommand();
+            LabCommand someLabCommand = CreateRandomLabCommand();
             string randomMessage = GetRandomString();
             var httpMessage = new HttpResponseMessage();
 
@@ -139,7 +139,7 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.LabCommands
 
             // when
             ValueTask<LabCommand> postLabCommandTask =
-                this.labCommandService.AddLabCommandAsync(randomLabCommand);
+                this.labCommandService.AddLabCommandAsync(someLabCommand);
 
             LabCommandDependencyValidationException actualLabCommandDependencyValidationException =
                 await Assert.ThrowsAsync<LabCommandDependencyValidationException>(
