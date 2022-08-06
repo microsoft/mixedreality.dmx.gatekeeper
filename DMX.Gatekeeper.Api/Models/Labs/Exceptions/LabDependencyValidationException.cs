@@ -9,9 +9,8 @@ namespace DMX.Gatekeeper.Api.Models.Labs.Exceptions
     public class LabDependencyValidationException : Xeption
     {
         public LabDependencyValidationException(Xeption innerException)
-            : base(message: "Lab dependency error occurred, Please try again",
+            : base(message: "Lab dependency validation error occurred. Please fix and try again.",
                   innerException)
-        {
-        }
+        { }
     }
 }

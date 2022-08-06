@@ -167,13 +167,13 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.Labs
 
             httpBadRequestException.AddData(randomDictionary);
 
-            var invalidPostEception =
+            var invalidPostException =
                 new InvalidLabException(
                     httpBadRequestException,
                     randomDictionary);
 
             var expectedPostValidationDependencyException =
-                new LabDependencyValidationException(invalidPostEception);
+                new LabDependencyValidationException(invalidPostException);
 
             this.dmxApiBrokerMock.Setup(brokers =>
                 brokers.PostLabAsync(It.IsAny<Lab>()))
