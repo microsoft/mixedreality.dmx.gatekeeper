@@ -21,9 +21,11 @@ namespace DMX.Gatekeeper.Api.Infrastructure.Provision.Brokers.Clouds
         private readonly string dmxGatekeeperCallbackPath;
         private readonly string dmxGatekeeperScopesGetAllLabs;
         private readonly string dmxGatekeeperScopesPostLab;
+        private readonly string dmxGatekeeperScopesPostLabCommand;
         private readonly string dmxCoreAppIdUri;
         private readonly string dmxCoreAppScopesGetAllLabs;
         private readonly string dmxCoreAppScopesPostLab;
+        private readonly string dmxCoreAppScopesPostLabCommand;
         private readonly string provisionClientId;
         private readonly string provisionClientSecret;
         private readonly string configurationDmxCoreApiUrl;
@@ -39,9 +41,11 @@ namespace DMX.Gatekeeper.Api.Infrastructure.Provision.Brokers.Clouds
             this.dmxGatekeeperCallbackPath = Environment.GetEnvironmentVariable("AzureAdAppDmxGatekeeperCallbackPath");
             this.dmxGatekeeperScopesGetAllLabs = Environment.GetEnvironmentVariable("AzureAdAppDmxGatekeeperScopesGetAllLabs");
             this.dmxGatekeeperScopesPostLab = Environment.GetEnvironmentVariable("AzureAdAppDmxGatekeeperScopesPostLab");
+            this.dmxGatekeeperScopesPostLabCommand = Environment.GetEnvironmentVariable("AzureAdAppDmxGatekeeperScopesPostLabCommand");
             this.dmxCoreAppIdUri = Environment.GetEnvironmentVariable("AzureAdAppDmxCoreAppIdUri");
             this.dmxCoreAppScopesGetAllLabs = Environment.GetEnvironmentVariable("AzureAdAppDmxCoreAppScopesGetAllLabs");
             this.dmxCoreAppScopesPostLab = Environment.GetEnvironmentVariable("AzureAdAppDmxCoreAppScopesGetAllLabs");
+            this.dmxCoreAppScopesPostLabCommand = Environment.GetEnvironmentVariable("AzureAdAppDmxCoreAppScopesPostLabCommand");
             this.provisionClientId = Environment.GetEnvironmentVariable("AzureAdAppProvisionClientId");
             this.provisionClientSecret = Environment.GetEnvironmentVariable("AzureAdAppProvisionClientSecret");
             this.configurationDmxCoreApiUrl = Environment.GetEnvironmentVariable("AzureAppServiceDmxCoreApiUrl");

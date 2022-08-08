@@ -123,9 +123,11 @@ namespace DMX.Gatekeeper.Api.Infrastructure.Build.Services.ScriptGenerations
                             { "AzureAdAppDmxGatekeeperCallbackPath", "${{ secrets.AZURE_ADAPP_DMXGATEKEEPER_CALLBACKPATH }}" },
                             { "AzureAdAppDmxGatekeeperScopesGetAllLabs", "${{ secrets.AZURE_ADAPP_DMXGATEKEEPER_SCOPES_GETALLLABS }}" },
                             { "AzureAdAppDmxGatekeeperScopesPostLab", "${{ secrets.AZURE_ADAPP_DMXGATEKEEPER_SCOPES_POSTLAB }}" },
+                            { "AzureAdAppDmxGatekeeperScopesPostLabCommand", "${{ secrets.AZURE_ADAPP_DMXGATEKEEPER_SCOPES_POSTLABCOMMAND }}" },
                             { "AzureAdAppDmxCoreAppIdUri", "${{ secrets.AZURE_ADAPP_DMXCORE_APPIDURI }}" },
                             { "AzureAdAppDmxCoreAppScopesGetAllLabs", "${{ secrets.AZURE_ADAPP_DMXCORE_APPSCOPES_GETALLLABS }}" },
                             { "AzureAdAppDmxCoreAppScopesPostLab", "${{ secrets.AZURE_ADAPP_DMXCORE_APPSCOPES_POSTLAB }}" },
+                            { "AzureAdAppDmxCoreAppScopesPostLabCommand", "${{ secrets.AZURE_ADAPP_DMXCORE_APPSCOPES_POSTLABCOMMAND }}" },
                             { "AzureAppServiceDmxCoreApiUrl", "${{ secrets.AZURE_APPSERVICE_DMXCOREAPI_URL }}" },
                         },
 
