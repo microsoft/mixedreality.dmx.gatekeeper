@@ -5,6 +5,7 @@
 using System.Text.Json.Serialization;
 using DMX.Gatekeeper.Api.Brokers.DmxApis;
 using DMX.Gatekeeper.Api.Brokers.Loggings;
+using DMX.Gatekeeper.Api.Services.Foundations.LabCommands;
 using DMX.Gatekeeper.Api.Services.Foundations.Labs;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -76,8 +77,11 @@ namespace DMX.Gatekeeper.Api
             services.AddTransient<IDmxApiBroker, DmxApiBroker>();
         }
 
-        private static void AddServices(IServiceCollection services) =>
+        private static void AddServices(IServiceCollection services)
+        {
             services.AddTransient<ILabService, LabService>();
+            services.AddTransient<ILabCommandService, LabCommandService>();
+        }
 
         private static void AddAuthentication(
             IServiceCollection services, IConfiguration configuration)
