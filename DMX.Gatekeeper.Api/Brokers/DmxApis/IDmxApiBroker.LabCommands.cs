@@ -11,6 +11,6 @@ namespace DMX.Gatekeeper.Api.Brokers.DmxApis
     public partial interface IDmxApiBroker
     {
         ValueTask<LabCommand> PostLabCommandAsync(LabCommand labCommand);
-        ValueTask<LabCommand> GetLabCommandAsync(Guid id);
+        ValueTask<LabCommand> GetLabCommandByIdAsync(Guid id);
     }
 }
