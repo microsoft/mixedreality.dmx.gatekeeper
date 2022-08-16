@@ -2,6 +2,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // ---------------------------------------------------------------
 
+using System;
 using System.Threading.Tasks;
 using DMX.Gatekeeper.Api.Models.LabCommands;
 
@@ -16,5 +17,8 @@ namespace DMX.Gatekeeper.Api.Brokers.DmxApis
         
         public async ValueTask<LabCommand> UpdateLabCommandAsync(LabCommand labCommand) =>
             await UpdateAsync(LabCommandsRelativeUrl, labCommand);
+        
+        public async ValueTask<LabCommand> DeleteLabCommandAsync(Guid id) =>
+            await DeleteAsync<LabCommand>($"{LabCommandsRelativeUrl}\\{id}");
     }
 }
