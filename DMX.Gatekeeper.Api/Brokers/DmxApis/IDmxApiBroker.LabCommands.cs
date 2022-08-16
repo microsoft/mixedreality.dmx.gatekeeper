@@ -12,5 +12,6 @@ namespace DMX.Gatekeeper.Api.Brokers.DmxApis
     {
         ValueTask<LabCommand> PostLabCommandAsync(LabCommand labCommand);
         ValueTask<LabCommand> GetLabCommandByIdAsync(Guid id);
+        ValueTask<LabCommand> UpdateLabCommandAsync(LabCommand labCommand);
     }
 }
