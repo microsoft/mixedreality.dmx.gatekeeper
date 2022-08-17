@@ -82,7 +82,7 @@ namespace DMX.Gatekeeper.Api.Services.Foundations.LabCommands
 
         private LabCommandDependencyValidationException CreateAndLogDependencyValidationException(Xeption exception)
         {
-            var labCommandDependencyValidationException = 
+            var labCommandDependencyValidationException =
                 new LabCommandDependencyValidationException(exception);
 
             this.loggingBroker.LogError(labCommandDependencyValidationException);
