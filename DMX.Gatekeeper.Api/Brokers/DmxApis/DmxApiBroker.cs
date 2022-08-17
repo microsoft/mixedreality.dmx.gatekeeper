@@ -40,9 +40,12 @@ namespace DMX.Gatekeeper.Api.Brokers.DmxApis
 
         private async ValueTask<T> GetAsync<T>(string relativeUrl) =>
             await this.apiClient.GetContentAsync<T>(relativeUrl);
-        
+
         private async ValueTask<T> UpdateAsync<T>(string relativeUrl, T content) =>
             await this.apiClient.PutContentAsync<T>(relativeUrl, content);
+
+        private async ValueTask<T> DeleteAsync<T>(string relativeUrl) =>
+            await this.apiClient.DeleteContentAsync<T>(relativeUrl);
 
         private IRESTFulApiFactoryClient GetApiClient(IConfiguration configuration)
         {

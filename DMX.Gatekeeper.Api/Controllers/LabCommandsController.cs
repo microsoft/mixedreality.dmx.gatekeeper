@@ -25,7 +25,7 @@ namespace DMX.Gatekeeper.Api.Controllers
 
         public LabCommandsController(ILabCommandService labCommandService) =>
             this.labCommandService = labCommandService;
-        
+
         [HttpPost]
 #if RELEASE
     [RequiredScope(RequiredScopesConfigurationKey = "AzureAd:Scopes:PostLabCommand")]
