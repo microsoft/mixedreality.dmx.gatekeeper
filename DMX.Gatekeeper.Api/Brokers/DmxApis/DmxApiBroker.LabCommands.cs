@@ -16,7 +16,7 @@ namespace DMX.Gatekeeper.Api.Brokers.DmxApis
             await PostAsync(LabCommandsRelativeUrl, labCommand);
         
         public async ValueTask<LabCommand> GetLabCommandByIdAsync(Guid id) =>
-            await GetAsync<LabCommand>($"{LabCommandsRelativeUrl}\\{id}");
+            await GetAsync<LabCommand>($"{LabCommandsRelativeUrl}/{id}");
 
         public async ValueTask<LabCommand> UpdateLabCommandAsync(LabCommand labCommand) =>
             await UpdateAsync(LabCommandsRelativeUrl, labCommand);
