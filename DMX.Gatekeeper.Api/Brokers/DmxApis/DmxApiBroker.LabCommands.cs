@@ -19,6 +19,6 @@ namespace DMX.Gatekeeper.Api.Brokers.DmxApis
             await UpdateAsync(LabCommandsRelativeUrl, labCommand);
         
         public async ValueTask<LabCommand> DeleteLabCommandAsync(Guid id) =>
-            await DeleteAsync<LabCommand>($"{LabCommandsRelativeUrl}\\{id}");
+            await DeleteAsync<LabCommand>($"{LabCommandsRelativeUrl}/{id}");
     }
 }
