@@ -37,8 +37,8 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.LabCommands
             ValueTask<LabCommand> retrieveLabCommandByIdTask =
                 this.labCommandService.RetrieveLabCommandByIdAsync(someLabCommandId);
 
-            LabDependencyException actualLabCommandDependencyException =
-                await Assert.ThrowsAsync<LabDependencyException>(async () =>
+            LabCommandDependencyException actualLabCommandDependencyException =
+                await Assert.ThrowsAsync<LabCommandDependencyException>(async () =>
                     await retrieveLabCommandByIdTask);
 
             // then
