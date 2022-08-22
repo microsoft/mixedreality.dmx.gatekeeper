@@ -34,6 +34,8 @@ namespace DMX.Gatekeeper.Api.Services.Foundations.LabCommands
         public ValueTask<LabCommand> RetrieveLabCommandByIdAsync(Guid labCommandId) =>
         TryCatch(async () =>
         {
+            ValidateLabCommandId(labCommandId);
+
             return await this.dmxApiBroker.GetLabCommandByIdAsync(labCommandId);
         });
     }

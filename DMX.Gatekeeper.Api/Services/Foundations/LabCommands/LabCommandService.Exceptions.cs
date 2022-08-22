@@ -71,6 +71,10 @@ namespace DMX.Gatekeeper.Api.Services.Foundations.LabCommands
             {
                 throw CreateAndLogValidationException(nullLabCommandException);
             }
+            catch (InvalidLabCommandException invalidLabCommandException)
+            {
+                throw CreateAndLogValidationException(invalidLabCommandException);
+            }
             catch (Exception exception)
             {
                 var failedLabCommandServiceException =
