@@ -2,6 +2,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // ---------------------------------------------------------------
 
+using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -252,6 +253,48 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.LabCommands
             this.loggingBrokerMock.Verify(broker =>
                 broker.LogError(It.Is(SameExceptionAs(
                     expectedLabCommandDependencyValidationException))),
+                        Times.Once);
+
+            this.dmxApiBrokerMock.VerifyNoOtherCalls();
+            this.loggingBrokerMock.VerifyNoOtherCalls();
+        }
+
+        [Fact]
+        public async Task ShouldThrowServiceExceptionOnModifyIfErrorOccursAndLogItAsync()
+        {
+            // given
+            LabCommand someLabCommand = CreateRandomLabCommand();
+            var serviceException = new Exception();
+
+            var failedLabCommandServiceException =
+                new FailedLabCommandServiceException(serviceException);
+
+            var expectedLabCommandServiceException =
+                new LabCommandServiceException(failedLabCommandServiceException);
+
+            this.dmxApiBrokerMock.Setup(broker =>
+                broker.UpdateLabCommandAsync(It.IsAny<LabCommand>()))
+                    .ThrowsAsync(serviceException);
+
+            // when
+            ValueTask<LabCommand> modifyLabCommandTask =
+                this.labCommandService.ModifyLabCommandAsync(someLabCommand);
+
+            LabCommandServiceException actualLabCommandServiceException =
+                await Assert.ThrowsAsync<LabCommandServiceException>(
+                    modifyLabCommandTask.AsTask);
+
+            // then
+            actualLabCommandServiceException.Should().BeEquivalentTo(
+                expectedLabCommandServiceException);
+
+            this.dmxApiBrokerMock.Verify(broker =>
+                broker.UpdateLabCommandAsync(It.IsAny<LabCommand>()),
+                    Times.Once);
+
+            this.loggingBrokerMock.Verify(broker =>
+                broker.LogError(It.Is(SameExceptionAs(
+                    expectedLabCommandServiceException))),
                         Times.Once);
 
             this.dmxApiBrokerMock.VerifyNoOtherCalls();
