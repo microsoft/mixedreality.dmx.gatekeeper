@@ -168,7 +168,6 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.LabCommands
             // given
             LabCommand someLabCommand = CreateRandomLabCommand();
             string randomMessage = GetRandomString();
-
             var httpResponseMessage = new HttpResponseMessage();
 
             var httpResponseNotFoundException =

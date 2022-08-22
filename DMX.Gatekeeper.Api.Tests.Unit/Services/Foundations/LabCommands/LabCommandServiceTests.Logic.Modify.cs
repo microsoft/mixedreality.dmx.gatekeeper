@@ -19,12 +19,12 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.LabCommands
             // given
             LabCommand randomLabCommand = CreateRandomLabCommand();
             LabCommand inputLabCommand = randomLabCommand;
-            LabCommand postedLabCommand = inputLabCommand;
-            LabCommand expectedLabCommand = postedLabCommand.DeepClone();
+            LabCommand updatedLabCommand = inputLabCommand;
+            LabCommand expectedLabCommand = updatedLabCommand.DeepClone();
 
             this.dmxApiBrokerMock.Setup(broker =>
                 broker.UpdateLabCommandAsync(inputLabCommand))
-                    .ReturnsAsync(postedLabCommand);
+                    .ReturnsAsync(updatedLabCommand);
 
             // when
             LabCommand actualLabCommand =
