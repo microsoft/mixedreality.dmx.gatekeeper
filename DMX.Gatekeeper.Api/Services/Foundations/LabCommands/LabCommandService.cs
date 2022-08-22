@@ -31,7 +31,12 @@ namespace DMX.Gatekeeper.Api.Services.Foundations.LabCommands
             return await this.dmxApiBroker.PostLabCommandAsync(labCommand);
         });
 
-        public async ValueTask<LabCommand> ModifyLabCommandAsync(LabCommand labCommand) =>
-            await this.dmxApiBroker.UpdateLabCommandAsync(labCommand);
+        public ValueTask<LabCommand> ModifyLabCommandAsync(LabCommand labCommand) =>
+        TryCatch(async () =>
+        {
+            ValidateLabCommand(labCommand);
+
+            return await this.dmxApiBroker.UpdateLabCommandAsync(labCommand);
+        }); 
     }
 }
