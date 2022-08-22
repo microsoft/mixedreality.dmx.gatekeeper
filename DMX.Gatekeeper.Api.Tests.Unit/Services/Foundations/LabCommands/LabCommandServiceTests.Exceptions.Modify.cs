@@ -50,7 +50,7 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.LabCommands
             this.dmxApiBrokerMock.Verify(broker =>
                 broker.UpdateLabCommandAsync(It.IsAny<LabCommand>()),
                     Times.Once);
-            
+
             this.loggingBrokerMock.Verify(broker =>
                 broker.LogCritical(It.Is(SameExceptionAs(
                     expectedLabCommandDependencyException))),
@@ -96,7 +96,7 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.LabCommands
             this.dmxApiBrokerMock.Verify(broker =>
                 broker.UpdateLabCommandAsync(It.IsAny<LabCommand>()),
                     Times.Once);
-            
+
             this.loggingBrokerMock.Verify(broker =>
                 broker.LogError(It.Is(
                     SameExceptionAs(expectedLabCommandDependencyException))),
@@ -151,6 +151,55 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.LabCommands
             this.dmxApiBrokerMock.Verify(broker =>
                 broker.UpdateLabCommandAsync(It.IsAny<LabCommand>()),
                     Times.Once);
+
+            this.loggingBrokerMock.Verify(broker =>
+                broker.LogError(It.Is(SameExceptionAs(
+                    expectedLabCommandDependencyValidationException))),
+                        Times.Once);
+
+            this.dmxApiBrokerMock.VerifyNoOtherCalls();
+            this.loggingBrokerMock.VerifyNoOtherCalls();
+        }
+
+        [Fact]
+        public async Task ShouldThrowDependencyValidationExceptionOnModifyIfLabCommandNotFoundOccursAndLogItAsync()
+        {
+            // given
+            LabCommand someLabCommand = CreateRandomLabCommand();
+            string randomMessage = GetRandomString();
+
+            var httpResponseMessage = new HttpResponseMessage();
+
+            var httpResponseNotFoundException =
+                new HttpResponseNotFoundException(
+                    httpResponseMessage,
+                    randomMessage);
+
+            var notFoundLabCommandException =
+                new NotFoundLabCommandException(httpResponseNotFoundException);
+
+            var expectedLabCommandDependencyValidationException =
+                new LabCommandDependencyValidationException(notFoundLabCommandException);
+
+            this.dmxApiBrokerMock.Setup(broker =>
+                broker.UpdateLabCommandAsync(It.IsAny<LabCommand>()))
+                    .ThrowsAsync(httpResponseNotFoundException);
+
+            // when
+            ValueTask<LabCommand> modifyLabCommandTask =
+                this.labCommandService.ModifyLabCommandAsync(someLabCommand);
+
+            LabCommandDependencyValidationException actualLabCommandDependencyValidationException =
+                await Assert.ThrowsAsync<LabCommandDependencyValidationException>(
+                    modifyLabCommandTask.AsTask);
+
+            // then
+            actualLabCommandDependencyValidationException.Should().BeEquivalentTo(
+                expectedLabCommandDependencyValidationException);
+
+            this.dmxApiBrokerMock.Verify(broker =>
+                broker.UpdateLabCommandAsync(It.IsAny<LabCommand>()),
+                   Times.Once);
 
             this.loggingBrokerMock.Verify(broker =>
                 broker.LogError(It.Is(SameExceptionAs(
