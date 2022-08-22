@@ -3,10 +3,12 @@
 // ---------------------------------------------------------------
 
 using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using DMX.Gatekeeper.Api.Models.LabCommands;
 using DMX.Gatekeeper.Api.Models.LabCommands.Exceptions;
+using DMX.Gatekeeper.Api.Models.Labs.Exceptions;
 using FluentAssertions;
 using Moq;
 using RESTFulSense.Exceptions;
@@ -142,6 +144,62 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.LabCommands
             this.loggingBrokerMock.Verify(broker =>
                 broker.LogError(It.Is(SameExceptionAs(
                     expectedLabCommandServiceException))),
+                        Times.Once);
+
+            this.dmxApiBrokerMock.VerifyNoOtherCalls();
+            this.loggingBrokerMock.VerifyNoOtherCalls();
+        }
+
+        [Fact]
+        public async Task ShouldThrowDependencyValidationExceptionOnRetrieveIfBadRequestOccursAndLogItAsync()
+        {
+            // given
+            Guid someLabCommandId = Guid.NewGuid();
+            string randomMessage = GetRandomString();
+            var httpMessage = new HttpResponseMessage();
+
+            Dictionary<string, List<string>> randomDictionary =
+                CreateRandomDictionary();
+
+            var httpBadRequestException =
+                new HttpResponseBadRequestException(
+                    httpMessage,
+                    randomMessage);
+
+            httpBadRequestException.AddData(randomDictionary);
+
+            var invalidLabCommandException =
+                new InvalidLabCommandException(
+                    httpBadRequestException,
+                    randomDictionary);
+
+            var expectedLabCommandDependencyValidationException =
+                new LabCommandDependencyValidationException(invalidLabCommandException);
+
+            this.dmxApiBrokerMock.Setup(broker =>
+                broker.GetLabCommandByIdAsync(It.IsAny<Guid>()))
+                    .ThrowsAsync(httpBadRequestException);
+
+            // when
+            ValueTask<LabCommand> retrieveLabCommandByIdTask =
+                this.labCommandService.RetrieveLabCommandByIdAsync(someLabCommandId);
+
+            LabCommandDependencyValidationException
+                actualLabCommandDependencyValidationException =
+                    await Assert.ThrowsAsync<LabCommandDependencyValidationException>(
+                        retrieveLabCommandByIdTask.AsTask);
+
+            // then
+            actualLabCommandDependencyValidationException.Should().BeEquivalentTo(
+                expectedLabCommandDependencyValidationException);
+
+            this.dmxApiBrokerMock.Verify(broker =>
+                broker.GetLabCommandByIdAsync(someLabCommandId),
+                    Times.Once);
+
+            this.loggingBrokerMock.Verify(broker =>
+                broker.LogError(It.Is(SameExceptionAs(
+                    expectedLabCommandDependencyValidationException))),
                         Times.Once);
 
             this.dmxApiBrokerMock.VerifyNoOtherCalls();
