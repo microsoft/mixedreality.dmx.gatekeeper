@@ -1,4 +1,8 @@
-﻿using System;
+﻿// ---------------------------------------------------------------
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// ---------------------------------------------------------------
+
+using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 using DMX.Gatekeeper.Api.Models.LabCommands;
@@ -36,8 +40,8 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.LabCommands
                 this.labCommandService.RetrieveLabCommandByIdAsync(someLabCommandId);
 
             LabCommandDependencyException actualLabCommandDependencyException =
-                await Assert.ThrowsAsync<LabCommandDependencyException>(async () =>
-                    await retrieveLabCommandByIdTask);
+                await Assert.ThrowsAsync<LabCommandDependencyException>(
+                    retrieveLabCommandByIdTask.AsTask);
 
             // then
             actualLabCommandDependencyException.Should().BeEquivalentTo(
@@ -82,8 +86,8 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.LabCommands
                 this.labCommandService.RetrieveLabCommandByIdAsync(someLabCommandId);
 
             LabCommandDependencyException actualLabCommandDependencyException =
-                await Assert.ThrowsAsync<LabCommandDependencyException>(async () =>
-                    await retrieveLabCommandByIdTask);
+                await Assert.ThrowsAsync<LabCommandDependencyException>(
+                    retrieveLabCommandByIdTask.AsTask);
 
             // then
             actualLabCommandDependencyException.Should().BeEquivalentTo(
