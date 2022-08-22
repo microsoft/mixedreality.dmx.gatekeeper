@@ -10,5 +10,6 @@ namespace DMX.Gatekeeper.Api.Services.Foundations.LabCommands
     public interface ILabCommandService
     {
         ValueTask<LabCommand> AddLabCommandAsync(LabCommand labCommand);
+        ValueTask<LabCommand> ModifyLabCommandAsync(LabCommand labCommand);
     }
 }
