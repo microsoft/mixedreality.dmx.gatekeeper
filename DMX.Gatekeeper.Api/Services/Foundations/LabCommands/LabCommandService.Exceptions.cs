@@ -59,6 +59,13 @@ namespace DMX.Gatekeeper.Api.Services.Foundations.LabCommands
 
                 throw CreateAndLogDependencyValidationException(invalidLabCommandException);
             }
+            catch (HttpResponseNotFoundException httpResponseNotFoundException)
+            {
+                var notFoundLabCommandException =
+                    new NotFoundLabCommandException(httpResponseNotFoundException);
+
+                throw CreateAndLogDependencyValidationException(notFoundLabCommandException);
+            }
             catch (HttpResponseConflictException httpResponseConflictException)
             {
                 var alreadyExistsLabCommandException =

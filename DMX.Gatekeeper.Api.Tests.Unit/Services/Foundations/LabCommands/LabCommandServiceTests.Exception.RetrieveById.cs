@@ -219,7 +219,8 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.LabCommands
                     httpResponseMessage,
                     randomString);
 
-            var notFoundLabCommandException = new NotFoundLabCommandException(someLabCommandId);
+            var notFoundLabCommandException = 
+                new NotFoundLabCommandException(httpResponseNotFoundException);
 
             var expectedLabCommandDependencyValidationException =
                 new LabCommandDependencyValidationException(notFoundLabCommandException);
