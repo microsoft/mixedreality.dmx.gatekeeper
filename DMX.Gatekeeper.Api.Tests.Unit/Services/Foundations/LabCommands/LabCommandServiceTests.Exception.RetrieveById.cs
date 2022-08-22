@@ -113,11 +113,11 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.LabCommands
             var someLabCommandId = Guid.NewGuid();
             var serviceException = new Exception();
 
-            var failedLabServiceException =
+            var failedLabCommandServiceException =
                 new FailedLabCommandServiceException(serviceException);
 
             var expectedLabCommandServiceException =
-                new LabCommandServiceException(failedLabServiceException);
+                new LabCommandServiceException(failedLabCommandServiceException);
 
             this.dmxApiBrokerMock.Setup(broker =>
                 broker.GetLabCommandByIdAsync(It.IsAny<Guid>()))
