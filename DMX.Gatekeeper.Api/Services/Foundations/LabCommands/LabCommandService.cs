@@ -36,6 +36,6 @@ namespace DMX.Gatekeeper.Api.Services.Foundations.LabCommands
             ValidateLabCommand(labCommand);
 
             return await this.dmxApiBroker.UpdateLabCommandAsync(labCommand);
-        }); 
+        });
     }
 }
