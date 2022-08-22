@@ -23,7 +23,7 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.LabCommands
             Xeption criticalDependencyException)
         {
             // given
-            var someLabCommandId = Guid.NewGuid();
+            Guid someLabCommandId = Guid.NewGuid();
 
             var failedLabCommandDependencyException =
                 new FailedLabCommandDependencyException(criticalDependencyException);
@@ -64,8 +64,8 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.LabCommands
         public async Task ShouldThrowDependencyExceptionOnRetrieveIfErrorOccursAndLogItAsync()
         {
             // given
-            var someLabCommandId = Guid.NewGuid();
-            var randomString = GetRandomString();
+            Guid someLabCommandId = Guid.NewGuid();
+            string randomString = GetRandomString();
             var randomResponseMessage = new HttpResponseMessage();
 
             var httpResponseException =
@@ -110,7 +110,7 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.LabCommands
         public async Task ShouldThrowServiceExceptionOnRetrieveIfErrorOccursAndLogItAsync()
         {
             // given
-            var someLabCommandId = Guid.NewGuid();
+            Guid someLabCommandId = Guid.NewGuid();
             var serviceException = new Exception();
 
             var failedLabCommandServiceException =
