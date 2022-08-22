@@ -50,10 +50,10 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.LabCommands
             this.loggingBrokerMock.Verify(broker =>
                 broker.LogCritical(It.Is(SameExceptionAs(
                     expectedLabCommandDependencyException))),
-                    Times.Once);
+                        Times.Once);
 
             this.dmxApiBrokerMock.VerifyNoOtherCalls();
-            this.dmxApiBrokerMock.VerifyNoOtherCalls();
+            this.loggingBrokerMock.VerifyNoOtherCalls();
         }
 
         [Fact]
@@ -96,10 +96,10 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.LabCommands
             this.loggingBrokerMock.Verify(broker =>
                 broker.LogError(It.Is(SameExceptionAs(
                     expectedLabCommandDependencyException))),
-                    Times.Once);
+                        Times.Once);
 
             this.dmxApiBrokerMock.VerifyNoOtherCalls();
-            this.dmxApiBrokerMock.VerifyNoOtherCalls();
+            this.loggingBrokerMock.VerifyNoOtherCalls();
         }
 
         [Fact]
