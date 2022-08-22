@@ -20,5 +20,9 @@ namespace DMX.Gatekeeper.Api.Models.LabCommands.Exceptions
                   innerException,
                   data)
         { }
+
+        public InvalidLabCommandException()
+            : base(message: "Invalid lab command exception occured. Please fix and try again.")
+        { }
     }
 }
