@@ -62,26 +62,23 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.LabCommands
             this.loggingBrokerMock.VerifyNoOtherCalls();
         }
 
-        [Fact]
-        public async Task ShouldThrowDependencyExceptionOnRetrieveIfErrorOccursAndLogItAsync()
+        [Theory]
+        [MemberData(nameof(DependencyException))]
+        public async Task ShouldThrowDependencyExceptionOnRetrieveIfErrorOccursAndLogItAsync(
+            Exception dependencyException)
         {
             // given
             Guid someLabCommandId = Guid.NewGuid();
-            string randomString = GetRandomString();
-            var randomResponseMessage = new HttpResponseMessage();
-
-            var httpResponseException =
-                new HttpResponseException(randomResponseMessage, randomString);
 
             var failedLabCommandDependencyException =
-                new FailedLabCommandDependencyException(httpResponseException);
+                new FailedLabCommandDependencyException(dependencyException);
 
             var expectedLabCommandDependencyException =
                 new LabCommandDependencyException(failedLabCommandDependencyException);
 
             this.dmxApiBrokerMock.Setup(broker =>
                 broker.GetLabCommandByIdAsync(It.IsAny<Guid>()))
-                    .ThrowsAsync(httpResponseException);
+                    .ThrowsAsync(dependencyException);
 
             // when 
             ValueTask<LabCommand> retrieveLabCommandByIdTask =
