@@ -54,7 +54,7 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.LabCommands
 
             var httpResponseException =
                 new HttpResponseException(
-                    someResponseMessage, 
+                    someResponseMessage,
                     someMessage);
 
             var httpResponseInternalServerErrorException =

@@ -30,7 +30,7 @@ namespace DMX.Gatekeeper.Api.Services.Foundations.LabCommands
             Message = "Id is required"
         };
 
-        private static void Validate(params (dynamic Rule ,string Parameter)[] validations)
+        private static void Validate(params (dynamic Rule, string Parameter)[] validations)
         {
             var invalidLabCommandException = new InvalidLabCommandException();
 

@@ -210,12 +210,12 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.LabCommands
             var httpResponseMessage = new HttpResponseMessage();
             string randomString = GetRandomString();
 
-            var httpResponseNotFoundException = 
+            var httpResponseNotFoundException =
                 new HttpResponseNotFoundException(
                     httpResponseMessage,
                     randomString);
 
-            var notFoundLabCommandException = 
+            var notFoundLabCommandException =
                 new NotFoundLabCommandException(httpResponseNotFoundException);
 
             var expectedLabCommandDependencyValidationException =
