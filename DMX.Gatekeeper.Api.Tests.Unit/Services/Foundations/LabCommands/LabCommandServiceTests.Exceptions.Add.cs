@@ -168,11 +168,10 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.LabCommands
             // given
             LabCommand randomCommand = CreateRandomLabCommand();
             string randomString = GetRandomString();
+            var httpResponseMessage = new HttpResponseMessage();
 
             Dictionary<string, List<string>> randomDictionary =
                 CreateRandomDictionary();
-
-            HttpResponseMessage httpResponseMessage = new HttpResponseMessage();
 
             var httpResponseConflictException = new HttpResponseConflictException(
                 httpResponseMessage,

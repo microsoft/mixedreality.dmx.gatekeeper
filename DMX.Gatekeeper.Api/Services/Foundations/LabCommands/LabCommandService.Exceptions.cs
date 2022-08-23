@@ -29,6 +29,10 @@ namespace DMX.Gatekeeper.Api.Services.Foundations.LabCommands
             {
                 throw CreateAndLogValidationException(invalidLabCommandException);
             }
+            catch (NullLabCommandException nullLabCommandException)
+            {
+                throw CreateAndLogValidationException(nullLabCommandException);
+            }
             catch (HttpResponseUrlNotFoundException httpResponseUrlNotFoundException)
             {
                 var faliedLabCommandDependencyException =
@@ -74,6 +78,20 @@ namespace DMX.Gatekeeper.Api.Services.Foundations.LabCommands
                         httpResponseConflictException.Data);
 
                 throw CreateAndLogDependencyValidationException(alreadyExistsLabCommandException);
+            }
+            catch (HttpResponseNotFoundException httpResponseNotFoundException)
+            {
+                var notFoundLabCommandException =
+                    new NotFoundLabCommandException(httpResponseNotFoundException);
+
+                throw CreateAndLogDependencyValidationException(notFoundLabCommandException);
+            }
+            catch (HttpResponseLockedException httpResponseLockedException)
+            {
+                var lockedLabCommandException =
+                    new LockedLabCommandException(httpResponseLockedException);
+
+                throw CreateAndLogDependencyValidationException(lockedLabCommandException);
             }
             catch (HttpResponseException httpResponseException)
             {
