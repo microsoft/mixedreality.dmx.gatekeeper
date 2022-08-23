@@ -22,7 +22,7 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.LabCommands
             Guid inputLabCommandId = randomLabCommandId;
             LabCommand randomLabCommand = CreateRandomLabCommand();
             LabCommand retrievedLabCommand = randomLabCommand.DeepClone();
-            LabCommand expectedLabCommand = retrievedLabCommand;
+            LabCommand expectedLabCommand = retrievedLabCommand.DeepClone();
 
             this.dmxApiBrokerMock.Setup(broker =>
                 broker.GetLabCommandByIdAsync(inputLabCommandId))

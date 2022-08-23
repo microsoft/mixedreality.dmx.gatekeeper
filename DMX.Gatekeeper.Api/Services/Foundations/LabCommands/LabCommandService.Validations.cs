@@ -20,17 +20,31 @@ namespace DMX.Gatekeeper.Api.Services.Foundations.LabCommands
 
         private static void ValidateLabCommandId(Guid labCommandId)
         {
-            if (labCommandId == Guid.Empty)
+            Validate(
+                (Rule: IsInvalid(labCommandId), Parameter: (nameof(LabCommand.Id))));
+        }
+
+        private static dynamic IsInvalid(Guid id) => new
+        {
+            Condition = id == Guid.Empty,
+            Message = "Id is required"
+        };
+
+        private static void Validate(params (dynamic Rule ,string Parameter)[] validations)
+        {
+            var invalidLabCommandException = new InvalidLabCommandException();
+
+            foreach (var (rule, parameter) in validations)
             {
-                var invalidLabCommandException =
-                    new InvalidLabCommandException();
-
-                invalidLabCommandException.AddData(
-                    key: nameof(LabCommand.Id),
-                    values: "Id is required");
-
-                throw invalidLabCommandException;
+                if (rule.Condition)
+                {
+                    invalidLabCommandException.AddData(
+                        key: parameter,
+                        values: rule.Message);
+                }
             }
+
+            invalidLabCommandException.ThrowIfContainsErrors();
         }
     }
 }
