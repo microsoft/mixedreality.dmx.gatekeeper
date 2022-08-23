@@ -2,6 +2,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // ---------------------------------------------------------------
 
+using System;
 using Xeptions;
 
 namespace DMX.Gatekeeper.Api.Models.LabCommands.Exceptions
