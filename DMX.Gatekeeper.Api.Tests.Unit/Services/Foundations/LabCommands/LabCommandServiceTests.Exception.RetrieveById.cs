@@ -50,7 +50,7 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.LabCommands
                 expectedLabCommandDependencyException);
 
             this.dmxApiBrokerMock.Verify(broker =>
-                broker.GetLabCommandByIdAsync(someLabCommandId),
+                broker.GetLabCommandByIdAsync(It.IsAny<Guid>()),
                     Times.Once);
 
             this.loggingBrokerMock.Verify(broker =>
@@ -93,7 +93,7 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.LabCommands
                 expectedLabCommandDependencyException);
 
             this.dmxApiBrokerMock.Verify(broker =>
-                broker.GetLabCommandByIdAsync(someLabCommandId),
+                broker.GetLabCommandByIdAsync(It.IsAny<Guid>()),
                     Times.Once);
 
             this.loggingBrokerMock.Verify(broker =>
@@ -135,7 +135,7 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.LabCommands
                 expectedLabCommandServiceException);
 
             this.dmxApiBrokerMock.Verify(broker =>
-                broker.GetLabCommandByIdAsync(someLabCommandId),
+                broker.GetLabCommandByIdAsync(It.IsAny<Guid>()),
                     Times.Once);
 
             this.loggingBrokerMock.Verify(broker =>
@@ -191,7 +191,7 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.LabCommands
                 expectedLabCommandDependencyValidationException);
 
             this.dmxApiBrokerMock.Verify(broker =>
-                broker.GetLabCommandByIdAsync(someLabCommandId),
+                broker.GetLabCommandByIdAsync(It.IsAny<Guid>()),
                     Times.Once);
 
             this.loggingBrokerMock.Verify(broker =>
@@ -209,7 +209,7 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.LabCommands
             // given
             Guid someLabCommandId = Guid.NewGuid();
             var httpResponseMessage = new HttpResponseMessage();
-            var randomString = GetRandomString();
+            string randomString = GetRandomString();
 
             var httpResponseNotFoundException = 
                 new HttpResponseNotFoundException(
@@ -240,7 +240,7 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.LabCommands
                 expectedLabCommandDependencyValidationException);
 
             this.dmxApiBrokerMock.Verify(broker =>
-                broker.GetLabCommandByIdAsync(someLabCommandId),
+                broker.GetLabCommandByIdAsync(It.IsAny<Guid>()),
                     Times.Once);
 
             this.loggingBrokerMock.Verify(broker =>
