@@ -81,9 +81,9 @@ namespace DMX.Gatekeeper.Api.Controllers
                 return BadRequest(labCommandValidationException.InnerException);
             }
             catch (LabCommandDependencyValidationException labCommandDependencyValidationException)
-                when (labCommandDependencyValidationException.InnerException is AlreadyExistsLabCommandException)
+                when (labCommandDependencyValidationException.InnerException is LockedLabCommandException)
             {
-                return Conflict(labCommandDependencyValidationException.InnerException);
+                return Locked(labCommandDependencyValidationException.InnerException);
             }
             catch (LabCommandDependencyException labCommandDependencyException)
             {
