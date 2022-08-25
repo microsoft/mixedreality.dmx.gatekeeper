@@ -1,7 +1,8 @@
-﻿// ---------------------------------------------------------------
+// ---------------------------------------------------------------
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // ---------------------------------------------------------------
 
+using System;
 using System.Threading.Tasks;
 using DMX.Gatekeeper.Api.Models.LabCommands;
 using DMX.Gatekeeper.Api.Models.LabCommands.Exceptions;
@@ -55,6 +56,42 @@ namespace DMX.Gatekeeper.Api.Controllers
             catch (LabServiceException labServiceException)
             {
                 return InternalServerError(labServiceException);
+            }
+        }
+
+        [HttpGet("{labCommandId}")]
+#if RELEASE
+        [RequiredScope(RequiredScopesConfigurationKey = "AzureAd:Scopes:GetLabCommand")]
+#endif
+        public async ValueTask<ActionResult<LabCommand>> GetLabCommandByIdAsync(Guid labCommandId)
+        {
+            try
+            {
+                LabCommand labCommand =
+                    await this.labCommandService.RetrieveLabCommandByIdAsync(labCommandId);
+
+                return Ok(labCommand);
+            }
+            catch (LabCommandValidationException labCommandValidationException)
+                when (labCommandValidationException.InnerException is NotFoundLabCommandException)
+            {
+                return NotFound(labCommandValidationException.InnerException);
+            }
+            catch (LabCommandValidationException labCommandValidationException)
+            {
+                return BadRequest(labCommandValidationException.InnerException);
+            }
+            catch (LabCommandDependencyValidationException labCommandDependencyValidationException)
+            {
+                return BadRequest(labCommandDependencyValidationException.InnerException);
+            }
+            catch (LabCommandDependencyException labCommandDependencyException)
+            {
+                return InternalServerError(labCommandDependencyException);
+            }
+            catch (LabCommandServiceException labCommandServiceException)
+            {
+                return InternalServerError(labCommandServiceException);
             }
         }
 
