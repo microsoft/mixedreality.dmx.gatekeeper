@@ -35,6 +35,7 @@ namespace DMX.Gatekeeper.Api.Brokers.DmxApis
             this.env = env;
             this.apiClient = GetApiClient(configuration);
         }
+
         private async ValueTask<T> PostAsync<T>(string relativeUrl, T content) =>
             await this.apiClient.PostContentAsync<T>(relativeUrl, content);
 
