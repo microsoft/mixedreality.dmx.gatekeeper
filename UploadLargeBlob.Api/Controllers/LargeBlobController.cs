@@ -9,6 +9,8 @@ using UploadLargeBlob.Api.Services;
 
 namespace UploadLargeBlob.Api.Controllers
 {
+    [ApiController]
+    [Route("api/[controller]")]
     public class LargeBlobController : RESTFulController
     {
         private ILargeBlobService largeBlobService;
