@@ -66,11 +66,9 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.Labs
         {
             // given
             Lab randomLab = CreateRandomLab();
-            string randomMessage = GetRandomString();
-            var httpMessage = new HttpResponseMessage();
 
             var httpResponseException =
-                new HttpResponseException(httpMessage, randomMessage);
+                new HttpResponseException();
 
             var failedLabDependencyException =
                 new FailedLabDependencyException(httpResponseException);
@@ -209,24 +207,12 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.Labs
         {
             // given
             Lab randomLab = CreateRandomLab();
-            string randomString = GetRandomString();
-
-            Dictionary<string, List<string>> randomDictionary =
-                CreateRandomDictionary();
-
-            var httpResponseMessage = new HttpResponseMessage();
-
+            
             var httpResponseConflictException =
-                new HttpResponseConflictException(
-                    httpResponseMessage,
-                    randomString);
-
-            httpResponseConflictException.AddData(randomDictionary);
+                new HttpResponseConflictException();
 
             var alreadyExistsLabException =
-                new AlreadyExistsLabException(
-                    httpResponseConflictException,
-                    randomDictionary);
+                new AlreadyExistsLabException(httpResponseConflictException);
 
             var expectedLabDependencyValidationException =
                 new LabDependencyValidationException(alreadyExistsLabException);

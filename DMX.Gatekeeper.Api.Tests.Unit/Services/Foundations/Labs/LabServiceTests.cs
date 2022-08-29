@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Net.Http;
 using DMX.Gatekeeper.Api.Brokers.DmxApis;
 using DMX.Gatekeeper.Api.Brokers.Loggings;
 using DMX.Gatekeeper.Api.Models.Labs;
@@ -37,14 +36,11 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.Labs
 
         public static TheoryData CriticalDependencyException()
         {
-            string someMessage = GetRandomString();
-            var someResponseMessage = new HttpResponseMessage();
-
             return new TheoryData<Xeption>()
             {
-                new HttpResponseUrlNotFoundException(someResponseMessage, someMessage),
-                new HttpResponseUnauthorizedException(someResponseMessage, someMessage),
-                new HttpResponseForbiddenException(someResponseMessage, someMessage),
+                new HttpResponseUrlNotFoundException(),
+                new HttpResponseUnauthorizedException(),
+                new HttpResponseForbiddenException(),
             };
         }
 
