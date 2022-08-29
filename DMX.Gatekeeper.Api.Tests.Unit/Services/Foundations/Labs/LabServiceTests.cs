@@ -37,14 +37,11 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.Labs
 
         public static TheoryData CriticalDependencyException()
         {
-            string someMessage = GetRandomString();
-            var someResponseMessage = new HttpResponseMessage();
-
             return new TheoryData<Xeption>()
             {
-                new HttpResponseUrlNotFoundException(someResponseMessage, someMessage),
-                new HttpResponseUnauthorizedException(someResponseMessage, someMessage),
-                new HttpResponseForbiddenException(someResponseMessage, someMessage),
+                new HttpResponseUrlNotFoundException(),
+                new HttpResponseUnauthorizedException(),
+                new HttpResponseForbiddenException(),
             };
         }
 
