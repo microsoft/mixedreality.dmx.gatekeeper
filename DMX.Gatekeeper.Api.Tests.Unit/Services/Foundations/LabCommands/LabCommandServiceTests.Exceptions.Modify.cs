@@ -66,11 +66,8 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.LabCommands
         {
             // given
             LabCommand someLabCommand = CreateRandomLabCommand();
-            string randomMessage = GetRandomString();
-            var httpResponseMessage = new HttpResponseMessage();
 
-            var httpResponseException =
-                new HttpResponseException(httpResponseMessage, randomMessage);
+            var httpResponseException = new HttpResponseException();
 
             var failedLabCommandDependencyException =
                 new FailedLabCommandDependencyException(httpResponseException);
@@ -112,16 +109,11 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.LabCommands
         {
             // given
             LabCommand somelabCommand = CreateRandomLabCommand();
-            string randomMessage = GetRandomString();
-            var httpMessage = new HttpResponseMessage();
 
             Dictionary<string, List<string>> randomDictionary =
                 CreateRandomDictionary();
 
-            var httpResponseBadRequestException =
-                new HttpResponseBadRequestException(
-                    httpMessage,
-                    randomMessage);
+            var httpResponseBadRequestException = new HttpResponseBadRequestException();
 
             httpResponseBadRequestException.AddData(randomDictionary);
 
@@ -167,13 +159,8 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.LabCommands
         {
             // given
             LabCommand someLabCommand = CreateRandomLabCommand();
-            string randomMessage = GetRandomString();
-            var httpResponseMessage = new HttpResponseMessage();
 
-            var httpResponseNotFoundException =
-                new HttpResponseNotFoundException(
-                    httpResponseMessage,
-                    randomMessage);
+            var httpResponseNotFoundException = new HttpResponseNotFoundException();
 
             var notFoundLabCommandException =
                 new NotFoundLabCommandException(httpResponseNotFoundException);
@@ -215,13 +202,8 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.LabCommands
         {
             // given
             LabCommand someLabCommand = CreateRandomLabCommand();
-            var httpResponseMessage = new HttpResponseMessage();
-            string randomMessage = GetRandomString();
 
-            var httpResponseLockedException =
-                new HttpResponseLockedException(
-                    httpResponseMessage,
-                    randomMessage);
+            var httpResponseLockedException = new HttpResponseLockedException();
 
             var lockedLabCommandException =
                 new LockedLabCommandException(httpResponseLockedException);

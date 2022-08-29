@@ -36,36 +36,20 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.LabCommands
 
         public static TheoryData CriticalDependencyException()
         {
-            string someMessage = GetRandomString();
-            var someResponseMessage = new HttpResponseMessage();
-
             return new TheoryData<Xeption>()
             {
-                new HttpResponseUrlNotFoundException(someResponseMessage, someMessage),
-                new HttpResponseUnauthorizedException(someResponseMessage, someMessage),
-                new HttpResponseForbiddenException(someResponseMessage, someMessage),
+                new HttpResponseUrlNotFoundException(),
+                new HttpResponseUnauthorizedException(),
+                new HttpResponseForbiddenException(),
             };
         }
 
         public static TheoryData DependencyException()
         {
-            var someMessage = GetRandomString();
-            var someResponseMessage = new HttpResponseMessage();
-
-            var httpResponseException =
-                new HttpResponseException(
-                    someResponseMessage,
-                    someMessage);
-
-            var httpResponseInternalServerErrorException =
-                new HttpResponseInternalServerErrorException(
-                    someResponseMessage,
-                    someMessage);
-
             return new TheoryData<Exception>
             {
-                httpResponseException,
-                httpResponseInternalServerErrorException
+                new HttpResponseException(),
+                new HttpResponseInternalServerErrorException(),
             };
         }
 
