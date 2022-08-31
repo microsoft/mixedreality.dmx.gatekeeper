@@ -13,7 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DMX.Gatekeeper.Api.Tests.Ac
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DMX.Gatekeeper.Api.Infrastructure.Provision", "DMX.Gatekeeper.Api.Infrastructure.Provision\DMX.Gatekeeper.Api.Infrastructure.Provision.csproj", "{89AA929E-3A35-4DE4-9853-2B70FB592127}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UploadLargeBlob.Api", "UploadLargeBlob.Api\UploadLargeBlob.Api.csproj", "{E71F9B48-1572-48C0-9A32-0D9B669FAA03}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UploadLargeBlob.Api", "UploadLargeBlob.Api\UploadLargeBlob.Api.csproj", "{E71F9B48-1572-48C0-9A32-0D9B669FAA03}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp1", "ConsoleApp1\ConsoleApp1.csproj", "{B68201EC-71E1-4114-8BDB-CB799FDC291D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{E71F9B48-1572-48C0-9A32-0D9B669FAA03}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E71F9B48-1572-48C0-9A32-0D9B669FAA03}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E71F9B48-1572-48C0-9A32-0D9B669FAA03}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B68201EC-71E1-4114-8BDB-CB799FDC291D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B68201EC-71E1-4114-8BDB-CB799FDC291D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B68201EC-71E1-4114-8BDB-CB799FDC291D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B68201EC-71E1-4114-8BDB-CB799FDC291D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

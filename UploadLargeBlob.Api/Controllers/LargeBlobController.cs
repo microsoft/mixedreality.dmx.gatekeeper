@@ -23,10 +23,10 @@ namespace UploadLargeBlob.Api.Controllers
         [HttpPost("files"), DisableRequestSizeLimit]
         public async ValueTask<ActionResult<LargeBlob>> PostLargeBlobAsync()
         {
-            //var fileStream = Request.Form.Files[0].OpenReadStream();
-            var fileStream = Request.Body;
+            var fileName = Request.Form.Files[0].FileName;
+            var fileStream = Request.Form.Files[0].OpenReadStream();
             await this.largeBlobService.AddLargeBlob(fileStream);
-            return Ok("yay!");
+            return Ok(fileName);
         }
     }
 }

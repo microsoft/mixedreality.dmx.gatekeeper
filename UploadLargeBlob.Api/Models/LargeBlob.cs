@@ -6,5 +6,7 @@ namespace UploadLargeBlob.Api.Models
 {
     public class LargeBlob
     {
+        IFormFile testname;
+        string CurrentDateTime;
     }
 }
