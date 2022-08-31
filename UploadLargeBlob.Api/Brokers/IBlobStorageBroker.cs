@@ -8,6 +8,6 @@ namespace UploadLargeBlob.Api.Brokers
 {
     public interface IBlobStorageBroker
     {
-        ValueTask<string?> UploadLargeBlobAsync(BinaryData largeBlob);
+        ValueTask<string?> UploadLargeBlobAsync(Stream fileStream);
     }
 }

@@ -3,6 +3,7 @@
 // ---------------------------------------------------------------
 
 using System.Text.Json.Serialization;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.OpenApi.Models;
 using UploadLargeBlob.Api.Brokers;
 using UploadLargeBlob.Api.Services;
@@ -22,6 +23,8 @@ namespace UploadLargeBlob.Api
                 options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
 
             services.AddHttpClient();
+
+            services.Configure<FormOptions>(options => options.MultipartBodyLengthLimit = long.MaxValue);
 
             AddBrokers(services);
             AddServices(services);

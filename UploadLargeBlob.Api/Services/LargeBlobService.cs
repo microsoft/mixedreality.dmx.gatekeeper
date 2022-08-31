@@ -1,9 +1,9 @@
-﻿using UploadLargeBlob.Api.Brokers;
-using UploadLargeBlob.Api.Models;
-
-// ---------------------------------------------------------------
+﻿// ---------------------------------------------------------------
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // ---------------------------------------------------------------
+
+using RESTFulSense.Exceptions;
+using UploadLargeBlob.Api.Brokers;
 
 namespace UploadLargeBlob.Api.Services
 {
@@ -14,11 +14,20 @@ namespace UploadLargeBlob.Api.Services
         public LargeBlobService(IBlobStorageBroker blobStorageBroker) =>
             this.blobStorageBroker = blobStorageBroker;
 
-        public ValueTask<string?> AddLargeBlob(byte[] largeBlobByteArray)
+        public ValueTask<string?> AddLargeBlob(Stream fileStream)
         {
-            var binaryData = new BinaryData(largeBlobByteArray);
-
-            return this.blobStorageBroker.UploadLargeBlobAsync(binaryData);
+            try
+            {
+                return this.blobStorageBroker.UploadLargeBlobAsync(fileStream);
+            }
+            catch (HttpResponseException httpResonseException)
+            {
+                throw httpResonseException;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
     }
 }

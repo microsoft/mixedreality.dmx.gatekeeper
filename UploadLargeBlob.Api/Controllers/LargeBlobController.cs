@@ -20,12 +20,13 @@ namespace UploadLargeBlob.Api.Controllers
             this.largeBlobService = largeBlobService;
         }
 
-        [HttpPost]
-        public async ValueTask<ActionResult<LargeBlob>> PostLargeBlobAsync(byte[] largeBlobByteArray)
+        [HttpPost("files"), DisableRequestSizeLimit]
+        public async ValueTask<ActionResult<LargeBlob>> PostLargeBlobAsync()
         {
-            string? addedLargeBlob = await largeBlobService.AddLargeBlob(largeBlobByteArray);
-
-            return Created(addedLargeBlob);
+            //var fileStream = Request.Form.Files[0].OpenReadStream();
+            var fileStream = Request.Body;
+            await this.largeBlobService.AddLargeBlob(fileStream);
+            return Ok("yay!");
         }
     }
 }

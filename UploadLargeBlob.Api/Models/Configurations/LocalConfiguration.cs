@@ -6,6 +6,6 @@ namespace UploadLargeBlob.Api.Models.Configurations
 {
     public class LocalConfiguration
     {
-        public ApiConfiguration ApiConfiguration { get; set; }
+        public StorageConfiguration StorageConfiguration { get; set; }
     }
 }

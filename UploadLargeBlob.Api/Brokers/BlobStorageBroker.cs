@@ -3,6 +3,7 @@
 // ---------------------------------------------------------------
 
 using Azure.Storage.Blobs;
+using UploadLargeBlob.Api.Models.Configurations;
 
 namespace UploadLargeBlob.Api.Brokers
 {
@@ -11,22 +12,44 @@ namespace UploadLargeBlob.Api.Brokers
         private BlobServiceClient blobServiceClient;
         private BlobContainerClient blobContainerClient;
         private BlobClient blobClient;
+        private readonly IConfiguration configuration;
+        private string connectionString;
 
-        public BlobStorageBroker()
+        public BlobStorageBroker(IConfiguration configuration)
         {
-            string connectionString = "";
-            string containerName = "testContainer";
-            string fileName = "testFile";
+            string containerName = "testcontainer";
+            string fileName = "mediumfile.txt";
+
+            this.configuration = configuration;
+            this.connectionString = GetStorageConnectionString(this.configuration);
 
             this.blobServiceClient = new BlobServiceClient(connectionString);
             this.blobContainerClient = this.blobServiceClient.GetBlobContainerClient(containerName);
             this.blobClient = this.blobContainerClient.GetBlobClient(fileName);
         }
 
-        public async ValueTask<string?> UploadLargeBlobAsync(BinaryData largeBlob)
+        public async ValueTask<string?> UploadLargeBlobAsync(Stream fileStream)
         {
-            var response = await blobClient.UploadAsync(largeBlob);
-            return response.Value.ToString();
+            try
+            {
+                await blobClient.UploadAsync(fileStream, false);
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+
+            fileStream.Close();
+            return "blah";
+        }
+
+        private string GetStorageConnectionString(IConfiguration configuration)
+        {
+            LocalConfiguration localConfigurations =
+                configuration.Get<LocalConfiguration>();
+
+            return localConfigurations.StorageConfiguration.ConnectionString;
+
         }
     }
 }

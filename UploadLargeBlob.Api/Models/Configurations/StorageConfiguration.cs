@@ -4,8 +4,8 @@
 
 namespace UploadLargeBlob.Api.Models.Configurations
 {
-    public class ApiConfiguration
+    public class StorageConfiguration
     {
-        public string Url { get; set; }
+        public string ConnectionString { get; set; }
     }
 }

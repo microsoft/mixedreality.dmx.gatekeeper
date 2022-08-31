@@ -7,6 +7,6 @@ namespace UploadLargeBlob.Api.Services
 {
     public interface ILargeBlobService
     {
-        ValueTask<string?> AddLargeBlob(byte[] largeBlobByteArray);
+        ValueTask<string?> AddLargeBlob(Stream fileStream);
     }
 }
