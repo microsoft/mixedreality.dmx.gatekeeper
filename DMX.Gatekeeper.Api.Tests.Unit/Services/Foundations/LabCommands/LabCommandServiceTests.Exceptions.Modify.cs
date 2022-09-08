@@ -114,7 +114,6 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.LabCommands
                 CreateRandomDictionary();
 
             var httpResponseBadRequestException = new HttpResponseBadRequestException();
-
             httpResponseBadRequestException.AddData(randomDictionary);
 
             var invalidPutException =

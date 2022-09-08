@@ -163,7 +163,6 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.LabCommands
                 CreateRandomDictionary();
 
             var httpResponseConflictException = new HttpResponseConflictException();
-
             httpResponseConflictException.AddData(randomDictionary);
 
             var alreadyExistsLabCommandException =
