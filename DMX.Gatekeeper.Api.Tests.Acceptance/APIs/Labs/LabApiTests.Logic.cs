@@ -71,9 +71,6 @@ namespace DMX.Gatekeeper.Api.Tests.Acceptance.APIs.Labs
             actualLabs.Should().BeEquivalentTo(expectedLabs);
         }
 
-        public void Dispose()
-        {
-            this.wireMockServer.Stop();
-        }
+        public void Dispose() => this.wireMockServer.Stop();
     }
 }
