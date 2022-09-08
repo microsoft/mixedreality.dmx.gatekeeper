@@ -66,11 +66,7 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.Labs
         {
             // given
             Lab randomLab = CreateRandomLab();
-            string randomMessage = GetRandomString();
-            var httpMessage = new HttpResponseMessage();
-
-            var httpResponseException =
-                new HttpResponseException(httpMessage, randomMessage);
+            var httpResponseException = new HttpResponseException();
 
             var failedLabDependencyException =
                 new FailedLabDependencyException(httpResponseException);

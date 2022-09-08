@@ -63,14 +63,7 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.Labs
         public async Task ShouldThrowDependencyExceptionOnRetrieveIfErrorOccursAndLogItAsync()
         {
             // given
-            string someMessage = GetRandomString();
-
-            var someResponseMessage = new HttpResponseMessage();
-
-            var httpResponseException =
-                new HttpResponseException(
-                    someResponseMessage,
-                    someMessage);
+            var httpResponseException = new HttpResponseException(); 
 
             var failedLabDependencyException =
                 new FailedLabDependencyException(httpResponseException);
