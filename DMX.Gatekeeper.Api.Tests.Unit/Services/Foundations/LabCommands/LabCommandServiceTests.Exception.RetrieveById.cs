@@ -151,16 +151,11 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.LabCommands
         {
             // given
             Guid someLabCommandId = Guid.NewGuid();
-            string randomMessage = GetRandomString();
-            var httpMessage = new HttpResponseMessage();
 
             Dictionary<string, List<string>> randomDictionary =
                 CreateRandomDictionary();
 
-            var httpBadRequestException =
-                new HttpResponseBadRequestException(
-                    httpMessage,
-                    randomMessage);
+            var httpBadRequestException = new HttpResponseBadRequestException();
 
             httpBadRequestException.AddData(randomDictionary);
 
@@ -207,13 +202,7 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.LabCommands
         {
             // given
             Guid someLabCommandId = Guid.NewGuid();
-            var httpResponseMessage = new HttpResponseMessage();
-            string randomString = GetRandomString();
-
-            var httpResponseNotFoundException =
-                new HttpResponseNotFoundException(
-                    httpResponseMessage,
-                    randomString);
+            var httpResponseNotFoundException = new HttpResponseNotFoundException();
 
             var notFoundLabCommandException =
                 new NotFoundLabCommandException(httpResponseNotFoundException);
