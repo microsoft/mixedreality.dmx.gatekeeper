@@ -4,7 +4,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Net.Http;
 using System.Threading.Tasks;
 using DMX.Gatekeeper.Api.Models.Labs;
 using DMX.Gatekeeper.Api.Models.Labs.Exceptions;
@@ -63,7 +62,7 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.Labs
         public async Task ShouldThrowDependencyExceptionOnRetrieveIfErrorOccursAndLogItAsync()
         {
             // given
-            var httpResponseException = new HttpResponseException(); 
+            var httpResponseException = new HttpResponseException();
 
             var failedLabDependencyException =
                 new FailedLabDependencyException(httpResponseException);
