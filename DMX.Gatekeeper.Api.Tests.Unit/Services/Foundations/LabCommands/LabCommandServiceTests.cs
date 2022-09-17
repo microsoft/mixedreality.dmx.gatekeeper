@@ -5,7 +5,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Net.Http;
 using DMX.Gatekeeper.Api.Brokers.DmxApis;
 using DMX.Gatekeeper.Api.Brokers.Loggings;
 using DMX.Gatekeeper.Api.Models.LabCommands;
