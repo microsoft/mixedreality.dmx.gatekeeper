@@ -22,6 +22,10 @@ namespace DMX.Gatekeeper.Api.Services.Foundations.LabWorkflows
             {
                 return await returningLabWorkflowFunction();
             }
+            catch (InvalidLabWorkflowException invalidLabWorkflowException)
+            {
+                throw CreateAndLogValidationException(invalidLabWorkflowException);
+            }
             catch (HttpResponseUrlNotFoundException httpResponseUrlNotFoundException)
             {
                 var failedLabWorkflowDependencyException =
@@ -80,6 +84,15 @@ namespace DMX.Gatekeeper.Api.Services.Foundations.LabWorkflows
 
                 throw CreateAndLogServiceException(failedLabworkflowServiceException);
             }
+        }
+
+        private LabWorkflowValidationException CreateAndLogValidationException(Xeption innerException)
+        {
+            var labWorkflowValidationException =
+                new LabWorkflowValidationException(innerException);
+            this.loggingBroker.LogError(labWorkflowValidationException);
+
+            return labWorkflowValidationException;
         }
 
         private LabWorkflowDependencyException CreateAndLogCriticalDependencyException(
