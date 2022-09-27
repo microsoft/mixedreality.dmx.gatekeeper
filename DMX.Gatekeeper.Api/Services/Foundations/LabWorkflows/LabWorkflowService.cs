@@ -24,6 +24,9 @@ namespace DMX.Gatekeeper.Api.Services.Foundations.LabWorkflows
         }
 
         public ValueTask<LabWorkflow> RetrieveLabWorkflowByIdAsync(Guid labWorkflowId) =>
-            this.dmxApiBroker.GetLabWorkflowByIdAsync(labWorkflowId);
+            TryCatch(async () =>
+            {
+                return await this.dmxApiBroker.GetLabWorkflowByIdAsync(labWorkflowId);
+            });
     }
 }
