@@ -23,9 +23,7 @@ namespace DMX.Gatekeeper.Api.Services.Foundations.LabWorkflows
             this.loggingBroker = loggingBroker;
         }
 
-        public ValueTask<LabWorkflow> RetrieveLabWorkflowByIdAsync(Guid labWorkflowId)
-        {
-            throw new NotImplementedException();
-        }
+        public ValueTask<LabWorkflow> RetrieveLabWorkflowByIdAsync(Guid labWorkflowId) =>
+            this.dmxApiBroker.GetLabWorkflowByIdAsync(labWorkflowId);
     }
 }
