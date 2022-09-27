@@ -55,6 +55,15 @@ namespace DMX.Gatekeeper.Api.Services.Foundations.LabWorkflows
 
                 throw CreateAndLogDependencyValidationException(invalidLabWorkflowException);
             }
+            catch (HttpResponseConflictException httpResponseConflictException)
+            {
+                var invalidLabWorkflowException =
+                    new AlreadyExistsLabWorkflowException(
+                        httpResponseConflictException,
+                        httpResponseConflictException.Data);
+
+                throw CreateAndLogDependencyValidationException(invalidLabWorkflowException);
+            }
             catch (HttpResponseException httpResponseException)
             {
                 var failedLabWorkflowDependencyException =
