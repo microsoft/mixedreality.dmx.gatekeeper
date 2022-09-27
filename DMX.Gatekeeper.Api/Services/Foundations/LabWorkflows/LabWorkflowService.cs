@@ -22,7 +22,7 @@ namespace DMX.Gatekeeper.Api.Services.Foundations.LabWorkflows
             this.loggingBroker = loggingBroker;
         }
 
-        public ValueTask<LabWorkflow> AddLabWorkflowAsync(LabWorkflow labWorkflow) =>
-            throw new System.NotImplementedException();
+        public async ValueTask<LabWorkflow> AddLabWorkflowAsync(LabWorkflow labWorkflow) =>
+            await this.dmxApiBroker.PostLabWorkflowAsync(labWorkflow);
     }
 }
