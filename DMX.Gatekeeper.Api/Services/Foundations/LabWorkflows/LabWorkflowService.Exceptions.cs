@@ -2,6 +2,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // ---------------------------------------------------------------
 
+using System;
 using System.Threading.Tasks;
 using DMX.Gatekeeper.Api.Models.LabWorkflows;
 using DMX.Gatekeeper.Api.Models.LabWorkflows.Exeptions;
@@ -56,6 +57,13 @@ namespace DMX.Gatekeeper.Api.Services.Foundations.LabWorkflows
 
                 throw CreateAndLogDependencyException(failedLabWorkflowDependencyException);
             }
+            catch (Exception exception)
+            {
+                var failedLabworkflowServiceException =
+                    new FailedLabWorkflowServiceException(exception);
+
+                throw CreateAndLogServiceException(failedLabworkflowServiceException);
+            }
         }
 
         private LabWorkflowDependencyException CreateAndLogCriticalDependencyException(
@@ -74,6 +82,14 @@ namespace DMX.Gatekeeper.Api.Services.Foundations.LabWorkflows
             this.loggingBroker.LogError(labWorkflowDependencyException);
 
             return labWorkflowDependencyException;
+        }
+
+        private LabWorkflowServiceException CreateAndLogServiceException(Xeption exception)
+        {
+            var labWorkflowServiceException = new LabWorkflowServiceException(exception);
+            this.loggingBroker.LogError(labWorkflowServiceException);
+
+            return labWorkflowServiceException;
         }
     }
 }
