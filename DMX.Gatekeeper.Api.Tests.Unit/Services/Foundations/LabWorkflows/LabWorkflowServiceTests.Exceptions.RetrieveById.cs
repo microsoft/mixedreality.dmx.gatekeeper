@@ -6,7 +6,10 @@ using DMX.Gatekeeper.Api.Models.LabWorkflows;
 using DMX.Gatekeeper.Api.Models.LabWorkflows.Exeptions;
 using FluentAssertions;
 using Moq;
+using RESTFulSense.Exceptions;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xeptions;
 using Xunit;
@@ -141,6 +144,55 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.LabWorkflows
             this.loggingBrokerMock.Verify(broker =>
                 broker.LogError(It.Is(SameExceptionAs(
                     expectedLabWorkflowServiceException))),
+                        Times.Once);
+
+            this.dmxApiBrokerMock.VerifyNoOtherCalls();
+            this.loggingBrokerMock.VerifyNoOtherCalls();
+        }
+
+        [Fact]
+        public async Task ShouldThrowDependencyValidationExceptionOnRetrieveIfBadRequestOccursAndLogItAsync()
+        {
+            // given
+            Guid randomId = Guid.NewGuid();
+            Guid someWorkflowId = randomId;
+            Dictionary<string, List<string>> randomDictionary = CreateRandomDictionary();
+
+            var httpResponseBadRequestException =
+                new HttpResponseBadRequestException();
+
+            httpResponseBadRequestException.AddData(randomDictionary);
+
+            var invalidLabWorkflowException = new InvalidLabWorkflowException(
+                httpResponseBadRequestException,
+                randomDictionary);
+
+            var expectedLabWorkflowDependencyValidationException =
+                new LabWorkflowDependencyValidationException(invalidLabWorkflowException);
+
+            this.dmxApiBrokerMock.Setup(broker =>
+                broker.GetLabWorkflowByIdAsync(It.IsAny<Guid>()))
+                    .ThrowsAsync(httpResponseBadRequestException);
+
+            // when
+            ValueTask<LabWorkflow> retrieveByIdTask =
+                this.labWorkflowService.RetrieveLabWorkflowByIdAsync(someWorkflowId);
+
+            LabWorkflowDependencyValidationException actualLabWorkflowDependencyValidationException =
+                await Assert.ThrowsAsync<LabWorkflowDependencyValidationException>(
+                    retrieveByIdTask.AsTask);
+
+            // then
+            actualLabWorkflowDependencyValidationException.Should().BeEquivalentTo(
+                expectedLabWorkflowDependencyValidationException);
+
+            this.dmxApiBrokerMock.Verify(broker =>
+                broker.GetLabWorkflowByIdAsync(It.IsAny<Guid>()),
+                    Times.Once());
+
+            this.loggingBrokerMock.Verify(broker =>
+                broker.LogError(It.Is(SameExceptionAs(
+                    expectedLabWorkflowDependencyValidationException))),
                         Times.Once);
 
             this.dmxApiBrokerMock.VerifyNoOtherCalls();
