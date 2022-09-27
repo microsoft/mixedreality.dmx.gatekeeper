@@ -11,24 +11,41 @@ using DMX.Gatekeeper.Api.Services.Foundations.LabWorkflows;
 using Moq;
 using Tynamix.ObjectFiller;
 using DMX.Gatekeeper.Api.Models.LabWorkflows;
+using Xunit;
+using Xeptions;
+using RESTFulSense.Exceptions;
+using System.Linq.Expressions;
 
 namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.LabWorkflows
 {
     public partial class LabWorkflowServiceTests
     {
-        private readonly Mock<IDmxApiBroker> dmxApiBroker;
-        private readonly Mock<ILoggingBroker> loggingBroker;
+        private readonly Mock<IDmxApiBroker> dmxApiBrokerMock;
+        private readonly Mock<ILoggingBroker> loggingBrokerMock;
         private readonly ILabWorkflowService labWorkflowService;
 
         public LabWorkflowServiceTests()
         {
-            this.dmxApiBroker = new Mock<IDmxApiBroker>();
-            this.loggingBroker = new Mock<ILoggingBroker>();
+            this.dmxApiBrokerMock = new Mock<IDmxApiBroker>();
+            this.loggingBrokerMock = new Mock<ILoggingBroker>();
 
             this.labWorkflowService = new LabWorkflowService(
-                this.dmxApiBroker.Object,
-                this.loggingBroker.Object);
+                this.dmxApiBrokerMock.Object,
+                this.loggingBrokerMock.Object);
         }
+
+        public static TheoryData<Xeption> CriticalDependencyExceptions()
+        {
+            return new TheoryData<Xeption>
+            {
+                new HttpResponseUrlNotFoundException(),
+                new HttpResponseUnauthorizedException(),
+                new HttpResponseForbiddenException(),
+            };
+        }
+
+        private static Expression<Func<Xeption, bool>> SameExceptionAs(Xeption expectedException) =>
+            actualException => actualException.SameExceptionAs(expectedException);
 
         private static string GetRandomString() =>
             new MnemonicString().GetValue();

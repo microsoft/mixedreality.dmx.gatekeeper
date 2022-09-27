@@ -24,7 +24,7 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.LabWorkflows
             LabWorkflow retrievedLabWorkflow = randomLabWorkflow.DeepClone();
             LabWorkflow expectedLabWorkflow = retrievedLabWorkflow.DeepClone();
 
-            this.dmxApiBroker.Setup(broker =>
+            this.dmxApiBrokerMock.Setup(broker =>
                 broker.GetLabWorkflowByIdAsync(inputId))
                     .ReturnsAsync(retrievedLabWorkflow);
 
@@ -35,12 +35,12 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.LabWorkflows
             // then
             actualLabWorkflow.Should().BeEquivalentTo(expectedLabWorkflow);
 
-            this.dmxApiBroker.Verify(broker =>
+            this.dmxApiBrokerMock.Verify(broker =>
                 broker.GetLabWorkflowByIdAsync(inputId),
                     Times.Once);
 
-            this.dmxApiBroker.VerifyNoOtherCalls();
-            this.loggingBroker.VerifyNoOtherCalls();
+            this.dmxApiBrokerMock.VerifyNoOtherCalls();
+            this.loggingBrokerMock.VerifyNoOtherCalls();
         }
     }
 }
