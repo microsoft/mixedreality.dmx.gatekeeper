@@ -156,6 +156,48 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.LabWorkflows
         }
 
         [Fact]
+        public async Task ShouldThrowDependencyValidationExceptionOnRetrieveIfNotFoundErrorOccurAndLogItAsync()
+        {
+            // given
+            Guid someLabWorkflowId = Guid.NewGuid();
+            var httpResponseNotFoundException = new HttpResponseNotFoundException();
+
+            var notFoundLabWorkflowException = 
+                new NotFoundLabWorkflowException(httpResponseNotFoundException);
+
+            var expectedLabWorkflowDependencyValidationException =
+                new LabWorkflowDependencyValidationException(notFoundLabWorkflowException);
+
+            this.dmxApiBrokerMock.Setup(broker =>
+                broker.GetLabWorkflowByIdAsync(It.IsAny<Guid>()))
+                    .ThrowsAsync(httpResponseNotFoundException);
+
+            // when
+            ValueTask<LabWorkflow> retrieveLabWorkflowById =
+                this.labWorkflowService.RetrieveLabWorkflowByIdAsync(someLabWorkflowId);
+
+            LabWorkflowDependencyValidationException actualLabWorkflowDependencyValidationException =
+                await Assert.ThrowsAsync<LabWorkflowDependencyValidationException>(
+                    retrieveLabWorkflowById.AsTask);
+
+            // then
+            actualLabWorkflowDependencyValidationException.Should().BeEquivalentTo(
+                expectedLabWorkflowDependencyValidationException);
+
+            this.dmxApiBrokerMock.Verify(broker =>
+                broker.GetLabWorkflowByIdAsync(It.IsAny<Guid>()),
+                    Times.Once);
+
+            this.loggingBrokerMock.Verify(broker =>
+                broker.LogError(It.Is(SameExceptionAs(
+                    expectedLabWorkflowDependencyValidationException))),
+                        Times.Once);
+
+            this.dmxApiBrokerMock.VerifyNoOtherCalls();
+            this.loggingBrokerMock.VerifyNoOtherCalls();
+        }
+
+        [Fact]
         public async Task ShouldThrowServiceExceptionOnRetrieveIfErrorOccursAndLogItAsync()
         {
             // given
