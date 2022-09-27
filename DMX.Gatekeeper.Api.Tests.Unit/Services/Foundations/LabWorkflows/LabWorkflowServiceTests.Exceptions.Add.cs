@@ -149,6 +149,7 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.LabWorkflows
         {
             // given
             LabWorkflow randomLabWorkflow = CreateRandomLabWorkflow();
+            string randomMessage = GetRandomString();
             var badRequestException = new HttpResponseBadRequestException();
 
             var invalidLabWorkflowException =
