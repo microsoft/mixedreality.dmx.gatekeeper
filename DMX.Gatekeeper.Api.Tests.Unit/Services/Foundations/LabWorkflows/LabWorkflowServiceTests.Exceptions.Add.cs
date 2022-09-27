@@ -143,5 +143,47 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.LabWorkflows
             this.dmxApiBrokerMock.VerifyNoOtherCalls();
             this.loggingBrokerMock.VerifyNoOtherCalls();
         }
+
+        [Fact]
+        public async Task ShouldThrowDependencyValidationExceptionOnAddIfBadRequestErrorOccursAndLogItAsync()
+        {
+            // given
+            LabWorkflow randomLabWorkflow = CreateRandomLabWorkflow();
+            var badRequestException = new HttpResponseBadRequestException();
+
+            var invalidLabWorkflowException =
+                new InvalidLabWorkflowException(badRequestException);
+
+            var expectedDependencyValidationException =
+                new LabWorkflowDependencyValidationException(invalidLabWorkflowException);
+
+            this.dmxApiBrokerMock.Setup(broker =>
+                broker.PostLabWorkflowAsync(It.IsAny<LabWorkflow>()))
+                    .ThrowsAsync(badRequestException);
+
+            // when
+            ValueTask<LabWorkflow> addLabWorkflowTask =
+                this.labWorkflowService.AddLabWorkflowAsync(randomLabWorkflow);
+
+            LabWorkflowDependencyValidationException actualDependencyValidationException =
+                await Assert.ThrowsAsync<LabWorkflowDependencyValidationException>(
+                    addLabWorkflowTask.AsTask);
+
+            // then
+            actualDependencyValidationException.Should()
+                .BeEquivalentTo(expectedDependencyValidationException);
+
+            this.dmxApiBrokerMock.Verify(broker =>
+                broker.PostLabWorkflowAsync(It.IsAny<LabWorkflow>()),
+                    Times.Once);
+
+            this.loggingBrokerMock.Verify(broker =>
+                broker.LogError(It.Is(SameExceptionAs(
+                    expectedDependencyValidationException))),
+                        Times.Once);
+
+            this.dmxApiBrokerMock.VerifyNoOtherCalls();
+            this.loggingBrokerMock.VerifyNoOtherCalls();
+        }
     }
 }
