@@ -12,8 +12,10 @@ using DMX.Gatekeeper.Api.Models.LabCommands;
 using DMX.Gatekeeper.Api.Models.LabWorkflows;
 using DMX.Gatekeeper.Api.Services.Foundations.LabWorkflows;
 using Moq;
+using RESTFulSense.Exceptions;
 using Tynamix.ObjectFiller;
 using Xeptions;
+using Xunit;
 
 namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.LabWorkflows
 {
@@ -31,6 +33,16 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.LabWorkflows
             this.labWorkflowService = new LabWorkflowService(
                 dmxApiBroker: this.dmxApiBrokerMock.Object,
                 loggingBroker: this.loggingBrokerMock.Object);
+        }
+
+        public static TheoryData CriticalDependencyException()
+        {
+            return new TheoryData<Xeption>()
+            {
+                new HttpResponseUrlNotFoundException(),
+                new HttpResponseUnauthorizedException(),
+                new HttpResponseForbiddenException()
+            };
         }
 
         private static LabWorkflow CreateRandomLabWorkflow() =>
