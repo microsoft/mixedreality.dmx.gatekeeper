@@ -45,6 +45,13 @@ namespace DMX.Gatekeeper.Api.Services.Foundations.LabWorkflows
 
                 throw CreateAndLogCriticalDependencyException(failedLabWorkflowDependencyException);
             }
+            catch (HttpResponseException httpResponseException)
+            {
+                var failedLabWorkflowDependencyException =
+                    new FailedLabWorkflowDependencyException(httpResponseException);
+
+                throw CreateAndLogDependencyException(failedLabWorkflowDependencyException);
+            }
 
         }
 
@@ -62,6 +69,16 @@ namespace DMX.Gatekeeper.Api.Services.Foundations.LabWorkflows
                 new LabWorkflowDependencyException(exception);
 
             this.loggingBroker.LogCritical(labWorkflowDependencyException);
+
+            return labWorkflowDependencyException;
+        }
+
+        private LabWorkflowDependencyException CreateAndLogDependencyException(Xeption exception)
+        {
+            var labWorkflowDependencyException =
+                new LabWorkflowDependencyException(exception);
+
+            this.loggingBroker.LogError(labWorkflowDependencyException);
 
             return labWorkflowDependencyException;
         }
