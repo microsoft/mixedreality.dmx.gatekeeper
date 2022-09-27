@@ -20,12 +20,12 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.LabWorkflows
     {
         [Theory]
         [MemberData(nameof(CriticalDependencyExceptions))]
-        public async ValueTask ShouldThrowCriticalDependencyExceptionOnRetrieveByIdIfCriticalErrorOccursAndLogItAsync(
+        public async Task ShouldThrowCriticalDependencyExceptionOnRetrieveByIdIfCriticalErrorOccursAndLogItAsync(
             Xeption criticalDependencyException)
         {
             // given
             Guid randomGuid = Guid.NewGuid();
-            Guid inputGuid = randomGuid;
+            Guid someLabWorkflowId = randomGuid;
 
             var failedLabWorkflowDependencyException =
                 new FailedLabWorkflowDependencyException(criticalDependencyException);
@@ -38,12 +38,12 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.LabWorkflows
                     .ThrowsAsync(criticalDependencyException);
 
             // when
-            ValueTask<LabWorkflow> labWorkflowTask =
-                this.labWorkflowService.RetrieveLabWorkflowByIdAsync(inputGuid);
+            ValueTask<LabWorkflow> retrieveLabWorkflowTask =
+                this.labWorkflowService.RetrieveLabWorkflowByIdAsync(someLabWorkflowId);
 
             LabWorkflowDependencyException actualLabWorkflowDependencyException =
                 await Assert.ThrowsAsync<LabWorkflowDependencyException>(
-                    labWorkflowTask.AsTask);
+                    retrieveLabWorkflowTask.AsTask);
 
             // then
             actualLabWorkflowDependencyException.Should()
