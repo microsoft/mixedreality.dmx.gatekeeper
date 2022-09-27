@@ -15,6 +15,7 @@ using Xunit;
 using Xeptions;
 using RESTFulSense.Exceptions;
 using System.Linq.Expressions;
+using Microsoft.Identity.Client;
 
 namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.LabWorkflows
 {
@@ -41,6 +42,15 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.LabWorkflows
                 new HttpResponseUrlNotFoundException(),
                 new HttpResponseUnauthorizedException(),
                 new HttpResponseForbiddenException(),
+            };
+        }
+
+        public static TheoryData DependencyException()
+        {
+            return new TheoryData<Xeption>
+            {
+                new HttpResponseException(),
+                new HttpResponseInternalServerErrorException(),
             };
         }
 

@@ -58,5 +58,49 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.LabWorkflows
             this.dmxApiBrokerMock.VerifyNoOtherCalls();
             this.loggingBrokerMock.VerifyNoOtherCalls();
         }
+
+        [Theory]
+        [MemberData(nameof(DependencyException))]
+        public async Task ShouldThrowDependencyExceptionWhenDependencyErrorOccursOnRetrieveByIdAndLogItAsync(
+            Exception dependencyException)
+        {
+            // given
+            Guid randomId = Guid.NewGuid();
+            Guid someLabWorkflowId = randomId;
+
+            var failedLabWorkflowDependencyException =
+                new FailedLabWorkflowDependencyException(dependencyException);
+
+            var expectedLabWorkflowDependencyException =
+                new LabWorkflowDependencyException(failedLabWorkflowDependencyException);
+
+            this.dmxApiBrokerMock.Setup( broker =>
+                broker.GetLabWorkflowByIdAsync(It.IsAny<Guid>()))
+                    .ThrowsAsync(dependencyException);
+
+            // when
+            ValueTask<LabWorkflow> retrieveLbWorkflowByIdTask =
+                this.labWorkflowService.RetrieveLabWorkflowByIdAsync(someLabWorkflowId);
+
+            LabWorkflowDependencyException actualLabWorkflowDependencyException =
+                await Assert.ThrowsAsync<LabWorkflowDependencyException>(
+                    retrieveLbWorkflowByIdTask.AsTask);
+
+            // then
+            actualLabWorkflowDependencyException.Should().BeEquivalentTo(
+                expectedLabWorkflowDependencyException);
+
+            this.dmxApiBrokerMock.Verify(broker =>
+                broker.GetLabWorkflowByIdAsync(It.IsAny<Guid>()),
+                    Times.Once);
+
+            this.loggingBrokerMock.Verify(broker =>
+                broker.LogError(It.Is(SameExceptionAs(
+                    expectedLabWorkflowDependencyException))),
+                        Times.Once);
+
+            this.dmxApiBrokerMock.VerifyNoOtherCalls();
+            this.loggingBrokerMock.VerifyNoOtherCalls();
+        }
     }
 }
