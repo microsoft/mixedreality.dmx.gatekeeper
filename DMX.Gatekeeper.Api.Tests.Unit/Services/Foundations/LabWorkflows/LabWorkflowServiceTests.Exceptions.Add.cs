@@ -4,11 +4,9 @@
 
 using System;
 using System.Threading.Tasks;
-using DMX.Gatekeeper.Api.Models.Labs.Exceptions;
 using DMX.Gatekeeper.Api.Models.LabWorkflows;
 using DMX.Gatekeeper.Api.Models.LabWorkflows.Exceptions;
 using FluentAssertions;
-using Microsoft.Identity.Client;
 using Moq;
 using RESTFulSense.Exceptions;
 using Xeptions;
