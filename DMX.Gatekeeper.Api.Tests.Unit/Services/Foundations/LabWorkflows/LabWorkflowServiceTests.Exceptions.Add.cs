@@ -4,6 +4,7 @@
 
 using System;
 using System.Threading.Tasks;
+using DMX.Gatekeeper.Api.Models.Labs.Exceptions;
 using DMX.Gatekeeper.Api.Models.LabWorkflows;
 using DMX.Gatekeeper.Api.Models.LabWorkflows.Exceptions;
 using FluentAssertions;
@@ -149,7 +150,6 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.LabWorkflows
         {
             // given
             LabWorkflow randomLabWorkflow = CreateRandomLabWorkflow();
-            string randomMessage = GetRandomString();
             var badRequestException = new HttpResponseBadRequestException();
 
             var invalidLabWorkflowException =
@@ -175,8 +175,52 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.LabWorkflows
                 .BeEquivalentTo(expectedDependencyValidationException);
 
             this.dmxApiBrokerMock.Verify(broker =>
-                broker.PostLabWorkflowAsync(It.IsAny<LabWorkflow>()),
-                    Times.Once);
+                broker.PostLabWorkflowAsync(
+                    It.IsAny<LabWorkflow>()),
+                        Times.Once);
+
+            this.loggingBrokerMock.Verify(broker =>
+                broker.LogError(It.Is(SameExceptionAs(
+                    expectedDependencyValidationException))),
+                        Times.Once);
+
+            this.dmxApiBrokerMock.VerifyNoOtherCalls();
+            this.loggingBrokerMock.VerifyNoOtherCalls();
+        }
+
+        [Fact]
+        public async Task ShouldThrowDependencyValidationExceptionOnAddIfLabWorkflowAlreadyExistsErrorOccursAndLogItAsync()
+        {
+            // given
+            LabWorkflow randomLabWorkflow = CreateRandomLabWorkflow();
+            var httpResponseConflictException = new HttpResponseConflictException();
+
+            var alreadyExistsLabWorkflowException =
+                new AlreadyExistsLabWorkflowException(httpResponseConflictException);
+
+            var expectedDependencyValidationException =
+                new LabWorkflowDependencyValidationException(alreadyExistsLabWorkflowException);
+
+            this.dmxApiBrokerMock.Setup(broker =>
+                broker.PostLabWorkflowAsync(It.IsAny<LabWorkflow>()))
+                    .ThrowsAsync(httpResponseConflictException);
+
+            // when
+            ValueTask<LabWorkflow> addLabWorkflowTask =
+                this.labWorkflowService.AddLabWorkflowAsync(randomLabWorkflow);
+
+            LabWorkflowDependencyValidationException actualDependencyValidationException =
+                await Assert.ThrowsAsync<LabWorkflowDependencyValidationException>(
+                    addLabWorkflowTask.AsTask);
+
+            // then
+            actualDependencyValidationException.Should()
+                .BeEquivalentTo(expectedDependencyValidationException);
+
+            this.dmxApiBrokerMock.Verify(broker =>
+                broker.PostLabWorkflowAsync(
+                    It.IsAny<LabWorkflow>()),
+                        Times.Once);
 
             this.loggingBrokerMock.Verify(broker =>
                 broker.LogError(It.Is(SameExceptionAs(
