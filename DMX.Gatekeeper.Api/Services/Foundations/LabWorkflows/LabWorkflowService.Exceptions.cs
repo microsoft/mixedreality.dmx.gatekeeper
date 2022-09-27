@@ -59,6 +59,13 @@ namespace DMX.Gatekeeper.Api.Services.Foundations.LabWorkflows
 
                 throw CreateAndLogDependencyException(failedLabWorkflowDependencyException);
             }
+            catch (HttpResponseNotFoundException httpResponseNotFoundException)
+            {
+                var notFoundLabWorkflowException =
+                    new NotFoundLabWorkflowException(httpResponseNotFoundException);
+
+                throw CreateAndLogDependencyValidationException(notFoundLabWorkflowException);
+            }
             catch (HttpResponseException httpResponseException)
             {
                 var failedLabWorkflowDependencyException =
