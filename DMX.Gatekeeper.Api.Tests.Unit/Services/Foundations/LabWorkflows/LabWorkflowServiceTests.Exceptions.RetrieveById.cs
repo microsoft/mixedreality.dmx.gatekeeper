@@ -102,5 +102,49 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.LabWorkflows
             this.dmxApiBrokerMock.VerifyNoOtherCalls();
             this.loggingBrokerMock.VerifyNoOtherCalls();
         }
+
+        [Fact]
+        public async Task ShouldThrowServiceExceptionOnRetrieveIfErrorOccursAndLogItAsync()
+        {
+            // given
+            Guid randomGuid = Guid.NewGuid();
+            Guid someGuid = randomGuid;
+
+            var serviceException = new Exception();
+
+            var failedLabWorkflowServiceException =
+                new FailedLabWorkflowServiceException(serviceException);
+
+            var expectedLabWorkflowServiceException =
+                new LabWorkflowServiceException(failedLabWorkflowServiceException);
+
+            this.dmxApiBrokerMock.Setup(broker =>
+                broker.GetLabWorkflowByIdAsync(It.IsAny<Guid>()))
+                    .ThrowsAsync(serviceException);
+
+            // when
+            ValueTask<LabWorkflow> retrieveLabWorkflowByIdTask =
+                this.labWorkflowService.RetrieveLabWorkflowByIdAsync(someGuid);
+
+            LabWorkflowServiceException actualLabWorkflowServiceException =
+                await Assert.ThrowsAsync<LabWorkflowServiceException>(
+                    retrieveLabWorkflowByIdTask.AsTask);
+
+            // then
+            actualLabWorkflowServiceException.Should().BeEquivalentTo(
+                expectedLabWorkflowServiceException);
+
+            this.dmxApiBrokerMock.Verify(broker =>
+                broker.GetLabWorkflowByIdAsync(It.IsAny<Guid>()),
+                    Times.Once);
+
+            this.loggingBrokerMock.Verify(broker =>
+                broker.LogError(It.Is(SameExceptionAs(
+                    expectedLabWorkflowServiceException))),
+                        Times.Once);
+
+            this.dmxApiBrokerMock.VerifyNoOtherCalls();
+            this.loggingBrokerMock.VerifyNoOtherCalls();
+        }
     }
 }
