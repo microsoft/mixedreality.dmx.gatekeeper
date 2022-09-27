@@ -5,6 +5,7 @@
 using System.Threading.Tasks;
 using DMX.Gatekeeper.Api.Models.LabWorkflows;
 using DMX.Gatekeeper.Api.Models.LabWorkflows.Exceptions;
+using RESTFulSense.Exceptions;
 using Xeptions;
 
 namespace DMX.Gatekeeper.Api.Services.Foundations.LabWorkflows
@@ -23,6 +24,27 @@ namespace DMX.Gatekeeper.Api.Services.Foundations.LabWorkflows
             {
                 throw CreateAndLogValidationException(nullLabWorkflowException);
             }
+            catch (HttpResponseUrlNotFoundException httpResponseUrlNotFoundException)
+            {
+                var failedLabWorkflowDependencyException = 
+                    new FailedLabWorkflowDependencyException(httpResponseUrlNotFoundException);
+
+                throw CreateAndLogCriticalDependencyException(failedLabWorkflowDependencyException);
+            }
+            catch (HttpResponseUnauthorizedException httpResponseUnauthorizedException)
+            {
+                var failedLabWorkflowDependencyException = 
+                    new FailedLabWorkflowDependencyException(httpResponseUnauthorizedException);
+
+                throw CreateAndLogCriticalDependencyException(failedLabWorkflowDependencyException);
+            }
+            catch (HttpResponseForbiddenException httpResponseForbiddenException)
+            {
+                var failedLabWorkflowDependencyException =
+                    new FailedLabWorkflowDependencyException(httpResponseForbiddenException);
+
+                throw CreateAndLogCriticalDependencyException(failedLabWorkflowDependencyException);
+            }
 
         }
 
@@ -32,6 +54,16 @@ namespace DMX.Gatekeeper.Api.Services.Foundations.LabWorkflows
             this.loggingBroker.LogError(labWorkflowValidationException);
 
             return labWorkflowValidationException;
+        }
+
+        private LabWorkflowDependencyException CreateAndLogCriticalDependencyException(Xeption exception)
+        {
+            var labWorkflowDependencyException = 
+                new LabWorkflowDependencyException(exception);
+
+            this.loggingBroker.LogCritical(labWorkflowDependencyException);
+
+            return labWorkflowDependencyException;
         }
     }
 }
