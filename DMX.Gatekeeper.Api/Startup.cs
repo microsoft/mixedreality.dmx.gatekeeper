@@ -7,6 +7,7 @@ using DMX.Gatekeeper.Api.Brokers.DmxApis;
 using DMX.Gatekeeper.Api.Brokers.Loggings;
 using DMX.Gatekeeper.Api.Services.Foundations.LabCommands;
 using DMX.Gatekeeper.Api.Services.Foundations.Labs;
+using DMX.Gatekeeper.Api.Services.Foundations.LabWorkflows;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -81,6 +82,7 @@ namespace DMX.Gatekeeper.Api
         {
             services.AddTransient<ILabService, LabService>();
             services.AddTransient<ILabCommandService, LabCommandService>();
+            services.AddTransient<ILabWorkflowService, LabWorkflowService>();
         }
 
         private static void AddAuthentication(

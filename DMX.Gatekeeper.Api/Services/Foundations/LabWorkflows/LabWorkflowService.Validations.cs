@@ -24,19 +24,21 @@ namespace DMX.Gatekeeper.Api.Services.Foundations.LabWorkflows
             Message = "Id is required"
         };
 
+        private void ValidateLabWorkflow(LabWorkflow labWorkflow)
+        {
+            if (labWorkflow is null)
+                throw new NullLabWorkflowException();
+            }
         private static void Validate(params (dynamic Rule, string Parameter)[] validations)
         {
             var invalidLabWorkflowException = new InvalidLabWorkflowException();
 
             foreach(var (rule, parameter) in validations)
-            {
                 if (rule.Condition)
-                {
                     invalidLabWorkflowException.AddData(
                         key: parameter,
                         values: rule.Message);
                 }
-            }
 
             invalidLabWorkflowException.ThrowIfContainsErrors();
         }

@@ -10,6 +10,7 @@ namespace DMX.Gatekeeper.Api.Services.Foundations.LabWorkflows
 {
     public interface ILabWorkflowService
     {
+        ValueTask<LabWorkflow> AddLabWorkflowAsync(LabWorkflow labWorkflow);
         ValueTask<LabWorkflow> RetrieveLabWorkflowByIdAsync(Guid labWorkflowId);
     }
 }
