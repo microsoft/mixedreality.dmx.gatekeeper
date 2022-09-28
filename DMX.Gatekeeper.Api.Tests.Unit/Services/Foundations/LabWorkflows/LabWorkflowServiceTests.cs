@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System;
 using DMX.Gatekeeper.Api.Brokers.DmxApis;
 using DMX.Gatekeeper.Api.Brokers.Loggings;
-using DMX.Gatekeeper.Api.Models.LabCommands;
 using DMX.Gatekeeper.Api.Services.Foundations.LabWorkflows;
 using Moq;
 using Tynamix.ObjectFiller;
@@ -15,7 +14,6 @@ using Xunit;
 using Xeptions;
 using RESTFulSense.Exceptions;
 using System.Linq.Expressions;
-using Microsoft.Identity.Client;
 
 namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.LabWorkflows
 {
@@ -31,8 +29,8 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.LabWorkflows
             this.loggingBrokerMock = new Mock<ILoggingBroker>();
 
             this.labWorkflowService = new LabWorkflowService(
-                this.dmxApiBrokerMock.Object,
-                this.loggingBrokerMock.Object);
+                dmxApiBroker: this.dmxApiBrokerMock.Object,
+                loggingBroker: this.loggingBrokerMock.Object);
         }
 
         public static TheoryData<Xeption> CriticalDependencyExceptions()

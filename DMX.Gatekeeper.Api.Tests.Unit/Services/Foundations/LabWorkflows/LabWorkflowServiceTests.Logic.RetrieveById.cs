@@ -21,7 +21,7 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.LabWorkflows
             Guid randomId = Guid.NewGuid();
             Guid inputId = randomId;
             LabWorkflow randomLabWorkflow = CreateRandomLabWorkflow();
-            LabWorkflow retrievedLabWorkflow = randomLabWorkflow.DeepClone();
+            LabWorkflow retrievedLabWorkflow = randomLabWorkflow;
             LabWorkflow expectedLabWorkflow = retrievedLabWorkflow.DeepClone();
 
             this.dmxApiBrokerMock.Setup(broker =>

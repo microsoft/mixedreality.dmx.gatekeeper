@@ -203,7 +203,6 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.LabWorkflows
             // given
             Guid randomGuid = Guid.NewGuid();
             Guid someGuid = randomGuid;
-
             var serviceException = new Exception();
 
             var failedLabWorkflowServiceException =
