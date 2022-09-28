@@ -16,9 +16,6 @@ using RESTFulSense.Exceptions;
 using Tynamix.ObjectFiller;
 using Xeptions;
 using Xunit;
-using Xeptions;
-using RESTFulSense.Exceptions;
-using System.Linq.Expressions;
 
 namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.LabWorkflows
 {
@@ -71,6 +68,7 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.LabWorkflows
 
         private static LabWorkflow CreateRandomLabWorkflow() =>
             CreateLabWorkflowFiller().Create();
+
         private static int GetRandomNumber() =>
             new IntRange(min: 2, max: 10).GetValue();
 
