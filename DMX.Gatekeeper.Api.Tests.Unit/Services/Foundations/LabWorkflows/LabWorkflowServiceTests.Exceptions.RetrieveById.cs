@@ -3,7 +3,7 @@
 // ---------------------------------------------------------------
 
 using DMX.Gatekeeper.Api.Models.LabWorkflows;
-using DMX.Gatekeeper.Api.Models.LabWorkflows.Exeptions;
+using DMX.Gatekeeper.Api.Models.LabWorkflows.Exceptions;
 using FluentAssertions;
 using Moq;
 using RESTFulSense.Exceptions;
@@ -19,7 +19,7 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.LabWorkflows
     public partial class LabWorkflowServiceTests
     {
         [Theory]
-        [MemberData(nameof(CriticalDependencyExceptions))]
+        [MemberData(nameof(CriticalDependencyException))]
         public async Task ShouldThrowCriticalDependencyExceptionOnRetrieveByIdIfCriticalErrorOccursAndLogItAsync(
             Xeption criticalDependencyException)
         {

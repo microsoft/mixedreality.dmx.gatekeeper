@@ -5,7 +5,7 @@
 using System;
 using System.Threading.Tasks;
 using DMX.Gatekeeper.Api.Models.LabWorkflows;
-using DMX.Gatekeeper.Api.Models.LabWorkflows.Exeptions;
+using DMX.Gatekeeper.Api.Models.LabWorkflows.Exceptions;
 using RESTFulSense.Exceptions;
 using Xeptions;
 

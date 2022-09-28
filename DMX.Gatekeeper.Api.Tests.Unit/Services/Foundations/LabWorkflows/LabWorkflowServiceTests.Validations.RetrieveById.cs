@@ -5,11 +5,9 @@
 using System;
 using System.Threading.Tasks;
 using DMX.Gatekeeper.Api.Models.LabWorkflows;
-using DMX.Gatekeeper.Api.Models.LabWorkflows.Exeptions;
+using DMX.Gatekeeper.Api.Models.LabWorkflows.Exceptions;
 using FluentAssertions;
-using Force.DeepCloner;
 using Moq;
-using NuGet.Frameworks;
 using Xunit;
 
 namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.LabWorkflows

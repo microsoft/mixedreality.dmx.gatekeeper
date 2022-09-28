@@ -59,6 +59,7 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.LabWorkflows
 
         private static Expression<Func<Xeption, bool>> SameExceptionAs(Xeption expectedException) =>
             actualException => actualException.SameExceptionAs(expectedException);
+
         private static List<LabWorkflow> CreateRandomLabWorkflows() =>
             CreateLabWorkflowFiller().Create(count: GetRandomNumber()).ToList();
 
@@ -102,7 +103,5 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.LabWorkflows
 
         private static Dictionary<string, List<string>> CreateRandomDictionary() =>
             CreateDictionaryFiller().Create();
-        private static Expression<Func<Xeption, bool>> SameExceptionAs(Xeption expectedException) =>
-            actualException => actualException.SameExceptionAs(expectedException);
     }
 }
