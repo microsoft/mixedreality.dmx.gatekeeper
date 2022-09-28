@@ -102,7 +102,7 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.LabWorkflows
         }
 
         [Fact]
-        public async Task ShouldThrowServiceExceptionOnRetrieveIfErrorOccursAndLogItAsync()
+        public async Task ShouldThrowServiceExceptionOnAddIfErrorOccursAndLogItAsync()
         {
             // given
             LabWorkflow randomLabWorkflow = CreateRandomLabWorkflow();
