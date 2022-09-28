@@ -2,15 +2,14 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // ---------------------------------------------------------------
 
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using DMX.Gatekeeper.Api.Models.LabWorkflows;
 using DMX.Gatekeeper.Api.Models.LabWorkflows.Exceptions;
 using FluentAssertions;
 using Moq;
 using RESTFulSense.Exceptions;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using Xeptions;
 using Xunit;
 
@@ -77,7 +76,7 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.LabWorkflows
             var expectedLabWorkflowDependencyException =
                 new LabWorkflowDependencyException(failedLabWorkflowDependencyException);
 
-            this.dmxApiBrokerMock.Setup( broker =>
+            this.dmxApiBrokerMock.Setup(broker =>
                 broker.GetLabWorkflowByIdAsync(It.IsAny<Guid>()))
                     .ThrowsAsync(dependencyException);
 
@@ -162,7 +161,7 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.LabWorkflows
             Guid someLabWorkflowId = Guid.NewGuid();
             var httpResponseNotFoundException = new HttpResponseNotFoundException();
 
-            var notFoundLabWorkflowException = 
+            var notFoundLabWorkflowException =
                 new NotFoundLabWorkflowException(httpResponseNotFoundException);
 
             var expectedLabWorkflowDependencyValidationException =
