@@ -63,7 +63,7 @@ namespace DMX.Gatekeeper.Api.Controllers
             }
         }
 
-        [HttpGet("{labWorkflowId")]
+        [HttpGet("{labWorkflowId}")]
 #if RELEASE
         [RequiredScope(RequiredScopesConfigurationKey = "AzureAd:Scopes:GetLabWorkflow")]
 #endif
