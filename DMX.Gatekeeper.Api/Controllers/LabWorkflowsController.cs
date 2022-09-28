@@ -2,6 +2,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // ---------------------------------------------------------------
 
+using System;
 using System.Threading.Tasks;
 using DMX.Gatekeeper.Api.Models.LabWorkflows;
 using DMX.Gatekeeper.Api.Models.LabWorkflows.Exceptions;
@@ -55,6 +56,42 @@ namespace DMX.Gatekeeper.Api.Controllers
             catch (LabWorkflowDependencyValidationException labWorkflowDependencyValidationException)
             {
                 return BadRequest(labWorkflowDependencyValidationException.InnerException);
+            }
+            catch (LabWorkflowServiceException labWorkflowServiceException)
+            {
+                return InternalServerError(labWorkflowServiceException);
+            }
+        }
+
+        [HttpGet("{labWorkflowId}")]
+#if RELEASE
+        [RequiredScope(RequiredScopesConfigurationKey = "AzureAd:Scopes:GetLabWorkflow")]
+#endif
+        public async ValueTask<ActionResult<LabWorkflow>> GetLabWorkflowByIdAsync(Guid labWorkflowId)
+        {
+            try
+            {
+                LabWorkflow retrievedLabWorkflow =
+                    await this.labWorkflowService.RetrieveLabWorkflowByIdAsync(labWorkflowId);
+
+                return Ok(retrievedLabWorkflow);
+            }
+            catch (LabWorkflowValidationException labWorkflowValidationException)
+                when (labWorkflowValidationException.InnerException is NotFoundLabWorkflowException)
+            {
+                return NotFound(labWorkflowValidationException.InnerException);
+            }
+            catch (LabWorkflowValidationException labWorkflowValidationException)
+            {
+                return BadRequest(labWorkflowValidationException.InnerException);
+            }
+            catch (LabWorkflowDependencyValidationException labWorkflowDependencyValidationException)
+            {
+                return BadRequest(labWorkflowDependencyValidationException.InnerException);
+            }
+            catch (LabWorkflowDependencyException labWorkflowDependencyException)
+            {
+                return InternalServerError(labWorkflowDependencyException);
             }
             catch (LabWorkflowServiceException labWorkflowServiceException)
             {
