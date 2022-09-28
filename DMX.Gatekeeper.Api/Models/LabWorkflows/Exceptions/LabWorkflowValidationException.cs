@@ -9,7 +9,7 @@ namespace DMX.Gatekeeper.Api.Models.LabWorkflows.Exceptions
     public class LabWorkflowValidationException : Xeption
     {
         public LabWorkflowValidationException(Xeption innerException)
-            : base(message: "LabWorkflow validation error occurred, fix errors and try again",
+            : base(message: "Lab workflow validation error occurred, fix errors and try again.",
                    innerException)
         { }
     }
