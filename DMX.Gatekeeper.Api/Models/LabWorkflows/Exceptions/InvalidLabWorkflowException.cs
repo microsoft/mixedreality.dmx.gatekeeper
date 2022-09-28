@@ -10,6 +10,10 @@ namespace DMX.Gatekeeper.Api.Models.LabWorkflows.Exceptions
 {
     public class InvalidLabWorkflowException : Xeption
     {
+        public InvalidLabWorkflowException()
+            : base(message: "Invalid lab workflow. Please fix errors and try again")
+        { }
+
         public InvalidLabWorkflowException(Xeption innerException)
             : base(message: "Invalid lab workflow. Please fix errors and try again",
                   innerException)

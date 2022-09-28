@@ -45,8 +45,17 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.LabWorkflows
             };
         }
 
-        private static LabWorkflow CreateRandomLabWorkflow() =>
-            CreateLabWorkflowFiller().Create();
+        public static TheoryData DependencyException()
+        {
+            return new TheoryData<Xeption>
+            {
+                new HttpResponseException(),
+                new HttpResponseInternalServerErrorException(),
+            };
+        }
+
+        private static Expression<Func<Xeption, bool>> SameExceptionAs(Xeption expectedException) =>
+            actualException => actualException.SameExceptionAs(expectedException);
 
         private static List<LabWorkflow> CreateRandomLabWorkflows() =>
             CreateLabWorkflowFiller().Create(count: GetRandomNumber()).ToList();
@@ -56,6 +65,9 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.LabWorkflows
 
         private static string GetRandomString() =>
             new MnemonicString().GetValue();
+
+        private static LabWorkflow CreateRandomLabWorkflow() =>
+            CreateLabWorkflowFiller().Create();
 
         private static int GetRandomNumber() =>
             new IntRange(min: 2, max: 10).GetValue();
@@ -84,7 +96,10 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.LabWorkflows
             return filler;
         }
 
-        private static Expression<Func<Xeption, bool>> SameExceptionAs(Xeption expectedException) =>
-            actualException => actualException.SameExceptionAs(expectedException);
+        private static Filler<Dictionary<string, List<string>>> CreateDictionaryFiller() =>
+            new Filler<Dictionary<string, List<string>>>();
+
+        private static Dictionary<string, List<string>> CreateRandomDictionary() =>
+            CreateDictionaryFiller().Create();
     }
 }
