@@ -11,11 +11,11 @@ namespace DMX.Gatekeeper.Api.Models.LabWorkflows
     public class LabWorkflow
     {
         public Guid Id { get; set; }
+        public Guid? LabWorkflowExecutionId { get; set; }
         public string Name { get; set; }
         public string Owner { get; set; }
         public List<LabCommand> Commands { get; set; }
         public IDictionary<string, string> Variables { get; set; }
-        public IDictionary<string, string> DeviceSettings { get; set; }
         public WorkflowStatus Status { get; set; }
         public string Notes { get; set; }
         public ulong CreatedBy { get; set; }
