@@ -2,6 +2,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // ---------------------------------------------------------------
 
+using System;
 using System.Threading.Tasks;
 using DMX.Gatekeeper.Api.Tests.Acceptance.Models.LabWorkflows;
 
@@ -16,6 +17,12 @@ namespace DMX.Gatekeeper.Api.Tests.Acceptance.Brokers
             return await this.apiFactoryClient.PostContentAsync<LabWorkflow>(
                 relativeUrl: $"{LabWorkflowsApiRelativeUrl}",
                 content: labWorkflow);
+        }
+
+        public async ValueTask<LabWorkflow> GetLabWorkflowById(Guid id)
+        {
+            return await this.apiFactoryClient.GetContentAsync<LabWorkflow>(
+                relativeUrl: $"{LabWorkflowsApiRelativeUrl}/{id}");
         }
     }
 }
