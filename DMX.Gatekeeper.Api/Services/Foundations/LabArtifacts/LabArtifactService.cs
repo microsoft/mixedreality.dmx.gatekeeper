@@ -24,6 +24,6 @@ namespace DMX.Gatekeeper.Api.Services.Foundations.LabArtifacts
         }
 
         public async ValueTask<LabArtifact> AddArtifactAsync(LabArtifact labArtifact) =>
-            throw new NotImplementedException();
+            await this.dmxApiBroker.PostLabArtifactAsync(labArtifact);
     }
 }

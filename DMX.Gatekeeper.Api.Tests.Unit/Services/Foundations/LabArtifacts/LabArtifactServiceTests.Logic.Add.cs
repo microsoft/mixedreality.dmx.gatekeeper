@@ -31,8 +31,7 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.LabArtifacts
                 await this.labArtifactService.AddArtifactAsync(inputLabArtifact);
 
             // then
-            actualLabArtifact.Should().BeEquivalentTo(
-                expectedLabArtifact);
+            Assert.True(SameLabArtifactAs(actualLabArtifact, expectedLabArtifact));
 
             this.dmxApiBrokerMock.Verify(broker =>
                 broker.PostLabArtifactAsync(inputLabArtifact),
