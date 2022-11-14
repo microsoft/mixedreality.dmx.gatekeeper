@@ -5,6 +5,7 @@
 using System.Text.Json.Serialization;
 using DMX.Gatekeeper.Api.Brokers.DmxApis;
 using DMX.Gatekeeper.Api.Brokers.Loggings;
+using DMX.Gatekeeper.Api.Services.Foundations.LabArtifacts;
 using DMX.Gatekeeper.Api.Services.Foundations.LabCommands;
 using DMX.Gatekeeper.Api.Services.Foundations.Labs;
 using DMX.Gatekeeper.Api.Services.Foundations.LabWorkflows;
@@ -83,6 +84,7 @@ namespace DMX.Gatekeeper.Api
             services.AddTransient<ILabService, LabService>();
             services.AddTransient<ILabCommandService, LabCommandService>();
             services.AddTransient<ILabWorkflowService, LabWorkflowService>();
+            services.AddTransient<ILabArtifactService, LabArtifactService>();
         }
 
         private static void AddAuthentication(
