@@ -56,5 +56,48 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.LabArtifacts
             this.dmxApiBrokerMock.VerifyNoOtherCalls();
             this.loggingBrokerMock.VerifyNoOtherCalls();
         }
+
+        [Theory]
+        [MemberData(nameof(DependencyException))]
+        public async Task ShouldThrowDependencyExceptionOnAddIfDependencyErrorOccursAndLogItAsync(
+            Xeption dependencyException)
+        {
+            // given
+            LabArtifact randomLabArtifact = CreateRandomLabArtifact();
+
+            var failedLabArtifactDependencyException =
+                new FailedLabArtifactDependencyException(dependencyException);
+
+            var expectedLabArtifactDependencyException =
+                new LabArtifactDependencyException(failedLabArtifactDependencyException);
+
+            this.dmxApiBrokerMock.Setup(broker =>
+                broker.PostLabArtifactAsync(It.IsAny<LabArtifact>()))
+                    .ThrowsAsync(dependencyException);
+
+            // when
+            ValueTask<LabArtifact> addLabArtifactTask =
+                this.labArtifactService.AddArtifactAsync(randomLabArtifact);
+
+            LabArtifactDependencyException actualLabArtifactDependencyException =
+                await Assert.ThrowsAsync<LabArtifactDependencyException>(
+                    addLabArtifactTask.AsTask);
+
+            // then
+            actualLabArtifactDependencyException.Should().BeEquivalentTo(
+                expectedLabArtifactDependencyException);
+
+            this.dmxApiBrokerMock.Verify(broker =>
+                broker.PostLabArtifactAsync(It.IsAny<LabArtifact>()),
+                    Times.Once);
+
+            this.loggingBrokerMock.Verify(broker =>
+                broker.LogError(It.Is(SameExceptionAs(
+                    expectedLabArtifactDependencyException))),
+                        Times.Once);
+
+            this.dmxApiBrokerMock.VerifyNoOtherCalls();
+            this.loggingBrokerMock.VerifyNoOtherCalls();
+        }
     }
 }

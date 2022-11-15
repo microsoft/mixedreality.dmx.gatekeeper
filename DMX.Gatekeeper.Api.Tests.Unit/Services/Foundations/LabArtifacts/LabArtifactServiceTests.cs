@@ -47,6 +47,15 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.LabArtifacts
             };
         }
 
+        public static TheoryData DependencyException()
+        {
+            return new TheoryData<Exception>
+            {
+                new HttpResponseException(),
+                new HttpResponseInternalServerErrorException(),
+            };
+        }
+
         public static Expression<Func<Exception, bool>> SameExceptionAs(Xeption expectedException) =>
             actualException => actualException.SameExceptionAs(expectedException);
 
