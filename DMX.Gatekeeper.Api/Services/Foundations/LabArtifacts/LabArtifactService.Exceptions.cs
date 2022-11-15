@@ -2,9 +2,11 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // ---------------------------------------------------------------
 
+using System;
 using System.Threading.Tasks;
 using DMX.Gatekeeper.Api.Models.LabArtifacts;
 using DMX.Gatekeeper.Api.Models.LabArtifacts.Exceptions;
+using RESTFulSense.Exceptions;
 using Xeptions;
 
 namespace DMX.Gatekeeper.Api.Services.Foundations.LabArtifacts
@@ -23,6 +25,33 @@ namespace DMX.Gatekeeper.Api.Services.Foundations.LabArtifacts
             {
                 throw CreateAndLogValidationException(nullLabArtifactException);
             }
+            catch (HttpResponseUrlNotFoundException httpResponseUrlNotFoundException)
+            {
+                var failedLabArtifactDependencyException =
+                    new FailedLabArtifactDependencyException(
+                        httpResponseUrlNotFoundException);
+
+                throw CreateAndLogCriticalDependencyException(
+                    failedLabArtifactDependencyException);
+            }
+            catch (HttpResponseUnauthorizedException httpResponseUnauthorizedException)
+            {
+                var failedLabArtifactDependencyException =
+                    new FailedLabArtifactDependencyException(
+                        httpResponseUnauthorizedException);
+
+                throw CreateAndLogCriticalDependencyException(
+                    failedLabArtifactDependencyException);
+            }
+            catch (HttpResponseForbiddenException httpResponseForbiddenException)
+            {
+                var failedLabArtifactDependencyException =
+                    new FailedLabArtifactDependencyException(
+                        httpResponseForbiddenException);
+
+                throw CreateAndLogCriticalDependencyException(
+                    failedLabArtifactDependencyException);
+            }
         }
 
         private LabArtifactValidationException CreateAndLogValidationException(Xeption exception)
@@ -31,6 +60,14 @@ namespace DMX.Gatekeeper.Api.Services.Foundations.LabArtifacts
             this.loggingBroker.LogError(labArtifactValidationException);
 
             return labArtifactValidationException;
+        }
+
+        private LabArtifactDependencyException CreateAndLogCriticalDependencyException(Xeption exception)
+        {
+            var labArtifactDependencyException = new LabArtifactDependencyException(exception);
+            this.loggingBroker.LogCritical(labArtifactDependencyException);
+
+            return labArtifactDependencyException;
         }
     }
 }
