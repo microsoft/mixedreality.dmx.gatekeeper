@@ -2,15 +2,14 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // ---------------------------------------------------------------
 
+using System.Threading.Tasks;
 using DMX.Gatekeeper.Api.Brokers.DmxApis;
 using DMX.Gatekeeper.Api.Brokers.Loggings;
 using DMX.Gatekeeper.Api.Models.LabArtifacts;
-using System;
-using System.Threading.Tasks;
 
 namespace DMX.Gatekeeper.Api.Services.Foundations.LabArtifacts
 {
-    public class LabArtifactService : ILabArtifactService
+    public partial class LabArtifactService : ILabArtifactService
     {
         private readonly IDmxApiBroker dmxApiBroker;
         private readonly ILoggingBroker loggingBroker;
@@ -23,7 +22,12 @@ namespace DMX.Gatekeeper.Api.Services.Foundations.LabArtifacts
             this.loggingBroker = loggingBroker;
         }
 
-        public async ValueTask<LabArtifact> AddArtifactAsync(LabArtifact labArtifact) =>
-            await this.dmxApiBroker.PostLabArtifactAsync(labArtifact);
+        public ValueTask<LabArtifact> AddArtifactAsync(LabArtifact labArtifact) =>
+        TryCatch(async () =>
+        {
+            ValidateLabArtifact(labArtifact);
+            
+            return await this.dmxApiBroker.PostLabArtifactAsync(labArtifact);
+        });
     }
 }
