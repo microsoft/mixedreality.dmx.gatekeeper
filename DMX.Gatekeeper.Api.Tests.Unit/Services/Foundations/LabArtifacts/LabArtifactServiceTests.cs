@@ -8,9 +8,12 @@ using DMX.Gatekeeper.Api.Models.LabArtifacts;
 using DMX.Gatekeeper.Api.Services.Foundations.LabArtifacts;
 using KellermanSoftware.CompareNetObjects;
 using Moq;
+using System;
 using System.IO;
+using System.Linq.Expressions;
 using System.Text;
 using Tynamix.ObjectFiller;
+using Xeptions;
 
 namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.LabArtifacts
 {
@@ -31,6 +34,9 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.LabArtifacts
                 dmxApiBroker: this.dmxApiBrokerMock.Object,
                 loggingBroker: this.loggingBrokerMock.Object);
         }
+
+        public static Expression<Func<Exception, bool>> SameExceptionAs(Xeption expectedException) =>
+            actualException => actualException.SameExceptionAs(expectedException);
 
         private static string GetRandomString() =>
             new MnemonicString().GetValue();
