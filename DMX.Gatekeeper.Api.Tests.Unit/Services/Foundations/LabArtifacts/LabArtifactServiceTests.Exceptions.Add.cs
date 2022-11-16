@@ -3,13 +3,15 @@
 // ---------------------------------------------------------------
 
 using System;
+using System.Collections.Generic;
+using System.Net.Http;
 using System.Threading.Tasks;
 using DMX.Gatekeeper.Api.Models.LabArtifacts;
 using DMX.Gatekeeper.Api.Models.LabArtifacts.Exceptions;
-using DMX.Gatekeeper.Api.Models.LabArtifacts.Exceptions;
-using DMX.Gatekeeper.Api.Models.LabArtifacts;
+using DMX.Gatekeeper.Api.Models.Labs.Exceptions;
 using FluentAssertions;
 using Moq;
+using RESTFulSense.Exceptions;
 using Xeptions;
 using Xunit;
 
@@ -139,6 +141,62 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.LabArtifacts
             this.loggingBrokerMock.Verify(broker =>
                 broker.LogError(It.Is(SameExceptionAs(
                     expectedLabArtifactServiceException))),
+                        Times.Once);
+
+            this.dmxApiBrokerMock.VerifyNoOtherCalls();
+            this.loggingBrokerMock.VerifyNoOtherCalls();
+        }
+
+        [Fact]
+        public async Task ShouldThrowDependencyValidationExceptionOnAddIfBadRequestErrorOccursAndLogItAsync()
+        {
+            // given
+            LabArtifact randomLabArtifact = CreateRandomLabArtifact();
+            string randomMessage = GetRandomString();
+            var httpMessage = new HttpResponseMessage();
+
+            Dictionary<string, List<string>> randomDictionary =
+                CreateRandomDictionary();
+
+            var httpBadRequestException =
+                new HttpResponseBadRequestException(
+                    httpMessage,
+                    randomMessage);
+
+            httpBadRequestException.AddData(randomDictionary);
+
+            var invalidLabArtifactException =
+                new InvalidLabArtifactException(
+                    httpBadRequestException,
+                    randomDictionary);
+
+            var expectedLabArtifactDependencyValidationException =
+                new LabArtifactDependencyValidationException(invalidLabArtifactException);
+
+            this.dmxApiBrokerMock.Setup(brokers =>
+                brokers.PostLabArtifactAsync(It.IsAny<LabArtifact>()))
+                    .ThrowsAsync(httpBadRequestException);
+
+            // when
+            ValueTask<LabArtifact> addLabArtifactTask =
+                this.labArtifactService.AddArtifactAsync(randomLabArtifact);
+
+            LabArtifactDependencyValidationException actualLabArtifactDependencyValidationException =
+                await Assert.ThrowsAsync<LabArtifactDependencyValidationException>(
+                    addLabArtifactTask.AsTask);
+
+            // then
+            actualLabArtifactDependencyValidationException.Should()
+                .BeEquivalentTo(expectedLabArtifactDependencyValidationException);
+
+            this.dmxApiBrokerMock.Verify(broker =>
+                broker.PostLabArtifactAsync(
+                    It.IsAny<LabArtifact>()),
+                        Times.Once());
+
+            this.loggingBrokerMock.Verify(broker =>
+                broker.LogError(It.Is(SameExceptionAs(
+                    expectedLabArtifactDependencyValidationException))),
                         Times.Once);
 
             this.dmxApiBrokerMock.VerifyNoOtherCalls();

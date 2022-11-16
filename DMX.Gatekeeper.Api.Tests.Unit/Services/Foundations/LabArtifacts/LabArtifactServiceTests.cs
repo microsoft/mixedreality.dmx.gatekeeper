@@ -3,6 +3,7 @@
 // ---------------------------------------------------------------
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq.Expressions;
 using System.Text;
@@ -62,6 +63,20 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.LabArtifacts
         private static string GetRandomString() =>
             new MnemonicString().GetValue();
 
+        private static Dictionary<string, List<string>> CreateRandomDictionary() =>
+            CreateDictionaryFiller().Create();
+
+        private static LabArtifact CreateRandomLabArtifact() =>
+            CreateLabArtifactFiller().Create();
+
+        private bool SameLabArtifactAs(
+            LabArtifact actualLabArtifact,
+            LabArtifact expectedLabArtifact) =>
+                this.compareLogic.Compare(expectedLabArtifact, actualLabArtifact).AreEqual;
+
+        private static Filler<Dictionary<string, List<string>>> CreateDictionaryFiller() =>
+            new Filler<Dictionary<string, List<string>>>();
+
         private static Filler<LabArtifact> CreateLabArtifactFiller()
         {
             var filler = new Filler<LabArtifact>();
@@ -73,13 +88,5 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.LabArtifacts
 
             return filler;
         }
-
-        private static LabArtifact CreateRandomLabArtifact() =>
-            CreateLabArtifactFiller().Create();
-
-        private bool SameLabArtifactAs(
-            LabArtifact actualLabArtifact,
-            LabArtifact expectedLabArtifact) =>
-                this.compareLogic.Compare(expectedLabArtifact, actualLabArtifact).AreEqual;
     }
 }
