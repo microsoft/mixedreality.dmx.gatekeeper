@@ -55,16 +55,29 @@ namespace DMX.Gatekeeper.Api.Services.Foundations.LabArtifacts
             catch (HttpResponseInternalServerErrorException httpResponseInternalServerErrorException)
             {
                 var failedLabArtifactDependencyException =
-                    new FailedLabArtifactDependencyException(httpResponseInternalServerErrorException);
+                    new FailedLabArtifactDependencyException(
+                        httpResponseInternalServerErrorException);
 
-                throw CreateAndLogDependencyException(failedLabArtifactDependencyException);
+                throw CreateAndLogDependencyException(
+                    failedLabArtifactDependencyException);
             }
             catch (HttpResponseException httpResponseException)
             {
                 var failedLabArtifactDependencyException =
-                    new FailedLabArtifactDependencyException(httpResponseException);
+                    new FailedLabArtifactDependencyException(
+                        httpResponseException);
 
-                throw CreateAndLogDependencyException(failedLabArtifactDependencyException);
+                throw CreateAndLogDependencyException(
+                    failedLabArtifactDependencyException);
+            }
+            catch (Exception exception)
+            {
+                var failedLabArtifactServiceException =
+                    new FailedLabArtifactServiceException(
+                        exception);
+
+                throw CreateAndLogServiceException(
+                    failedLabArtifactServiceException);
             }
         }
 
@@ -90,6 +103,14 @@ namespace DMX.Gatekeeper.Api.Services.Foundations.LabArtifacts
             this.loggingBroker.LogError(labArtifactDependencyException);
 
             return labArtifactDependencyException;
+        }
+
+        private LabArtifactServiceException CreateAndLogServiceException(Xeption exception)
+        {
+            var labArtifactServiceException = new LabArtifactServiceException(exception);
+            this.loggingBroker.LogError(labArtifactServiceException);
+
+            return labArtifactServiceException;
         }
     }
 }
