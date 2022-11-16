@@ -61,6 +61,14 @@ namespace DMX.Gatekeeper.Api.Services.Foundations.LabArtifacts
                 throw CreateAndLogDependencyException(
                     failedLabArtifactDependencyException);
             }
+            catch(HttpResponseBadRequestException httpResponseBadRequestException)
+            {
+                var invalidLabArtifactException = new InvalidLabArtifactException(
+                    httpResponseBadRequestException,
+                    httpResponseBadRequestException.Data);
+
+                throw CreateAndLogDependencyValidationException(invalidLabArtifactException);
+            }
             catch (HttpResponseException httpResponseException)
             {
                 var failedLabArtifactDependencyException =
@@ -79,6 +87,17 @@ namespace DMX.Gatekeeper.Api.Services.Foundations.LabArtifacts
                 throw CreateAndLogServiceException(
                     failedLabArtifactServiceException);
             }
+        }
+
+        private LabArtifactDependencyValidationException CreateAndLogDependencyValidationException(
+            Xeption exception)
+        {
+            var labArtifactDependencyValidationException =
+                new LabArtifactDependencyValidationException(exception);
+
+            this.loggingBroker.LogError(labArtifactDependencyValidationException);
+
+            return labArtifactDependencyValidationException;
         }
 
         private LabArtifactValidationException CreateAndLogValidationException(Xeption exception)
