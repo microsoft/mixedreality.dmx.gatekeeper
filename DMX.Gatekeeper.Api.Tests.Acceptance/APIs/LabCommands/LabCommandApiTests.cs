@@ -3,8 +3,6 @@
 // ---------------------------------------------------------------
 
 using System;
-using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
 using DMX.Gatekeeper.Api.Tests.Acceptance.Brokers;
 using DMX.Gatekeeper.Api.Tests.Acceptance.Models.LabCommands;
 using Tynamix.ObjectFiller;

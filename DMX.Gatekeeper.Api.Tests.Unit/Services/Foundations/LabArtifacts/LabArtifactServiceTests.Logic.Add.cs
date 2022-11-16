@@ -2,11 +2,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // ---------------------------------------------------------------
 
+using System.Threading.Tasks;
 using DMX.Gatekeeper.Api.Models.LabArtifacts;
-using FluentAssertions;
 using Force.DeepCloner;
 using Moq;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.LabArtifacts

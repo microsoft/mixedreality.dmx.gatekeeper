@@ -26,7 +26,7 @@ namespace DMX.Gatekeeper.Api.Services.Foundations.LabArtifacts
         TryCatch(async () =>
         {
             ValidateLabArtifact(labArtifact);
-            
+
             return await this.dmxApiBroker.PostLabArtifactAsync(labArtifact);
         });
     }

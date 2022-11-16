@@ -2,14 +2,11 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // ---------------------------------------------------------------
 
+using System.Threading.Tasks;
 using DMX.Gatekeeper.Api.Models.LabArtifacts;
 using DMX.Gatekeeper.Api.Models.LabArtifacts.Exceptions;
 using FluentAssertions;
 using Moq;
-using System;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
-using Xeptions;
 using Xunit;
 
 namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.LabArtifacts
@@ -25,7 +22,7 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.LabArtifacts
             var nullLabArtifactException =
                 new NullLabArtifactException();
 
-            var expectedLabArtifactValidationException = 
+            var expectedLabArtifactValidationException =
                 new LabArtifactValidationException(nullLabArtifactException);
 
             // when
