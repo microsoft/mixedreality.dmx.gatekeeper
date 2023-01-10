@@ -54,8 +54,7 @@ namespace DMX.Gatekeeper.Api.Infrastructure.Build.Services.ScriptGenerations
 
                         TargetDotNetVersion = new TargetDotNetVersion
                         {
-                            DotNetVersion = "7.0.100-preview.4.22252.9",
-                            IncludePrerelease = true
+                            DotNetVersion = "7.0.101"
                         }
                     },
 
@@ -144,8 +143,7 @@ namespace DMX.Gatekeeper.Api.Infrastructure.Build.Services.ScriptGenerations
 
                                 TargetDotNetVersion = new TargetDotNetVersion
                                 {
-                                    DotNetVersion = "7.0.100-preview.1.22110.4",
-                                    IncludePrerelease = true
+                                    DotNetVersion = "7.0.101"
                                 }
                             },
 
