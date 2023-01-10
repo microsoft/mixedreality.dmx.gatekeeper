@@ -21,9 +21,11 @@ jobs:
       AzureAdAppDmxGatekeeperCallbackPath: ${{ secrets.AZURE_ADAPP_DMXGATEKEEPER_CALLBACKPATH }}
       AzureAdAppDmxGatekeeperScopesGetAllLabs: ${{ secrets.AZURE_ADAPP_DMXGATEKEEPER_SCOPES_GETALLLABS }}
       AzureAdAppDmxGatekeeperScopesPostLab: ${{ secrets.AZURE_ADAPP_DMXGATEKEEPER_SCOPES_POSTLAB }}
+      AzureAdAppDmxGatekeeperScopesPostLabCommand: ${{ secrets.AZURE_ADAPP_DMXGATEKEEPER_SCOPES_POSTLABCOMMAND }}
       AzureAdAppDmxCoreAppIdUri: ${{ secrets.AZURE_ADAPP_DMXCORE_APPIDURI }}
       AzureAdAppDmxCoreAppScopesGetAllLabs: ${{ secrets.AZURE_ADAPP_DMXCORE_APPSCOPES_GETALLLABS }}
       AzureAdAppDmxCoreAppScopesPostLab: ${{ secrets.AZURE_ADAPP_DMXCORE_APPSCOPES_POSTLAB }}
+      AzureAdAppDmxCoreAppScopesPostLabCommand: ${{ secrets.AZURE_ADAPP_DMXCORE_APPSCOPES_POSTLABCOMMAND }}
       AzureAppServiceDmxCoreApiUrl: ${{ secrets.AZURE_APPSERVICE_DMXCOREAPI_URL }}
     steps:
     - name: Check Out
@@ -31,8 +33,8 @@ jobs:
     - name: Setup Dot Net Version
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: 7.0.100-preview.1.22110.4
-        include-prerelease: true
+        dotnet-version: 7.0.101
+        include-prerelease: false
     - name: Restore
       run: dotnet restore
     - name: Build
