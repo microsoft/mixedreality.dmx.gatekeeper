@@ -1,4 +1,4 @@
-﻿// ---------------------------------------------------------------
+// ---------------------------------------------------------------
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // ---------------------------------------------------------------
 
@@ -44,6 +44,34 @@ namespace DMX.Gatekeeper.Api.Tests.Acceptance.APIs.LabWorkflows
             // then
             actualLabWorkflows.Should().BeEquivalentTo(expectedLabWorkflow);
         }
+
+        [Fact]
+        public async Task ShouldRetrieveLabWorkflowByIdAsync()
+        {
+            // given
+            Guid randomId = Guid.NewGuid();
+            LabWorkflow randomLabWorkflow = CreateRandomLabWorkflow();
+            LabWorkflow expectedLabWorkflow = randomLabWorkflow.DeepClone();
+
+            string randomLabWorkflowBody =
+                JsonConvert.SerializeObject(randomLabWorkflow);
+
+            this.wireMockServer
+                .Given(Request.Create()
+                    .WithPath($"/api/labworkflows/{randomId}")
+                    .UsingGet())
+                .RespondWith(Response.Create()
+                    .WithStatusCode(HttpStatusCode.OK)
+                    .WithBody(randomLabWorkflowBody));
+
+            // when
+            LabWorkflow actualLabWorkflows =
+                await this.dmxGatekeeperApiBroker.GetLabWorkflowById(randomId);
+
+            // then
+            actualLabWorkflows.Should().BeEquivalentTo(expectedLabWorkflow);
+        }
+
         public void Dispose() => this.wireMockServer.Stop();
     }
 }
