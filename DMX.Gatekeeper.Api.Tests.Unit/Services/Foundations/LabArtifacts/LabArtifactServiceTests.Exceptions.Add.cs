@@ -178,7 +178,7 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.LabArtifacts
 
             // when
             ValueTask<LabArtifact> addLabArtifactTask =
-                this.labArtifactService.AddArtifactAsync(randomLabArtifact);
+                this.labArtifactService.AddLabArtifactAsync(randomLabArtifact);
 
             LabArtifactDependencyValidationException actualLabArtifactDependencyValidationException =
                 await Assert.ThrowsAsync<LabArtifactDependencyValidationException>(
@@ -196,6 +196,49 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.LabArtifacts
             this.loggingBrokerMock.Verify(broker =>
                 broker.LogError(It.Is(SameExceptionAs(
                     expectedLabArtifactDependencyValidationException))),
+                        Times.Once);
+
+            this.dmxApiBrokerMock.VerifyNoOtherCalls();
+            this.loggingBrokerMock.VerifyNoOtherCalls();
+        }
+
+        [Fact]
+        public async Task ShouldThrowDependencyValidationExceptionOnAddIfLabArtifactAlreadyExistsErrorOccursAndLogItAsync()
+        {
+            // given
+            LabArtifact randomLabArtifact = CreateRandomLabArtifact();
+            var httpResponseConflictException = new HttpResponseConflictException();
+
+            var alreadyExistsLabArtifactException =
+                new AlreadyExistsLabArtifactException(httpResponseConflictException);
+
+            var expectedDependencyValidationException =
+                new LabArtifactDependencyValidationException(alreadyExistsLabArtifactException);
+
+            this.dmxApiBrokerMock.Setup(broker =>
+                broker.PostLabArtifactAsync(It.IsAny<LabArtifact>()))
+                    .ThrowsAsync(httpResponseConflictException);
+
+            // when
+            ValueTask<LabArtifact> addLabArtifactTask =
+                this.labArtifactService.AddLabArtifactAsync(randomLabArtifact);
+
+            LabArtifactDependencyValidationException actualDependencyValidationException =
+                await Assert.ThrowsAsync<LabArtifactDependencyValidationException>(
+                    addLabArtifactTask.AsTask);
+
+            // then
+            actualDependencyValidationException.Should()
+                .BeEquivalentTo(expectedDependencyValidationException);
+
+            this.dmxApiBrokerMock.Verify(broker =>
+                broker.PostLabArtifactAsync(
+                    It.IsAny<LabArtifact>()),
+                        Times.Once);
+
+            this.loggingBrokerMock.Verify(broker =>
+                broker.LogError(It.Is(SameExceptionAs(
+                    expectedDependencyValidationException))),
                         Times.Once);
 
             this.dmxApiBrokerMock.VerifyNoOtherCalls();
