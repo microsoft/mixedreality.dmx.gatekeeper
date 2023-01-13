@@ -22,12 +22,12 @@ namespace DMX.Gatekeeper.Api.Services.Foundations.LabArtifacts
             this.loggingBroker = loggingBroker;
         }
 
-        public ValueTask<LabArtifact> AddLabArtifactAsync(LabArtifact labArtifact) =>
+        public ValueTask AddLabArtifactAsync(LabArtifact labArtifact) =>
         TryCatch(async () =>
         {
             ValidateLabArtifact(labArtifact);
 
-            return await this.dmxApiBroker.PostLabArtifactAsync(labArtifact);
+            await this.dmxApiBroker.PostLabArtifactAsync(labArtifact);
         });
     }
 }

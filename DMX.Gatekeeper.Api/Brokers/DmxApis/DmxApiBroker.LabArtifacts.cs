@@ -12,10 +12,10 @@ namespace DMX.Gatekeeper.Api.Brokers.DmxApis
         private const string LabArtifactsRelativeUrl = "api/labartifacts";
         private const string LabArtifactsMediaType = "application/octet-stream";
 
-        public async ValueTask<LabArtifact> PostLabArtifactAsync(LabArtifact labArtifact) =>
+        public async ValueTask PostLabArtifactAsync(LabArtifact labArtifact) =>
             await PostAsync(
                 $"{LabArtifactsRelativeUrl}?streamName={labArtifact.Name}",
-                labArtifact,
+                labArtifact.Content,
                 LabArtifactsMediaType);
     }
 }

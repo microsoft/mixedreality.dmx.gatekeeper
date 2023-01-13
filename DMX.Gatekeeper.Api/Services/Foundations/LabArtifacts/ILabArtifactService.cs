@@ -9,6 +9,6 @@ namespace DMX.Gatekeeper.Api.Services.Foundations.LabArtifacts
 {
     public interface ILabArtifactService
     {
-        ValueTask<LabArtifact> AddLabArtifactAsync(LabArtifact labArtifact);
+        ValueTask AddLabArtifactAsync(LabArtifact labArtifact);
     }
 }

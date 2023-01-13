@@ -13,13 +13,13 @@ namespace DMX.Gatekeeper.Api.Services.Foundations.LabArtifacts
 {
     public partial class LabArtifactService : ILabArtifactService
     {
-        private delegate ValueTask<LabArtifact> ReturningLabArtifactFunction();
+        private delegate ValueTask ReturningLabArtifactFunction();
 
-        private async ValueTask<LabArtifact> TryCatch(ReturningLabArtifactFunction returningLabArtifactFunction)
+        private async ValueTask TryCatch(ReturningLabArtifactFunction returningLabArtifactFunction)
         {
             try
             {
-                return await returningLabArtifactFunction();
+                await returningLabArtifactFunction();
             }
             catch (NullLabArtifactException nullLabArtifactException)
             {
