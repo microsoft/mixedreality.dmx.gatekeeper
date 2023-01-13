@@ -22,7 +22,7 @@ namespace DMX.Gatekeeper.Api.Services.Foundations.LabArtifacts
             this.loggingBroker = loggingBroker;
         }
 
-        public ValueTask<LabArtifact> AddArtifactAsync(LabArtifact labArtifact) =>
+        public ValueTask<LabArtifact> AddLabArtifactAsync(LabArtifact labArtifact) =>
         TryCatch(async () =>
         {
             ValidateLabArtifact(labArtifact);

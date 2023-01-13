@@ -27,7 +27,7 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.LabArtifacts
 
             // when
             LabArtifact actualLabArtifact =
-                await this.labArtifactService.AddArtifactAsync(inputLabArtifact);
+                await this.labArtifactService.AddLabArtifactAsync(inputLabArtifact);
 
             // then
             Assert.True(SameLabArtifactAs(actualLabArtifact, expectedLabArtifact));

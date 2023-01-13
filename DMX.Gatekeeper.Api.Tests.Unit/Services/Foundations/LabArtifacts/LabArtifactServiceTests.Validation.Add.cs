@@ -27,7 +27,7 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.LabArtifacts
 
             // when
             ValueTask<LabArtifact> addLabArtifactTask =
-                this.labArtifactService.AddArtifactAsync(nullLabArtifact);
+                this.labArtifactService.AddLabArtifactAsync(nullLabArtifact);
 
             LabArtifactValidationException actualLabArtifactValidationException =
                 await Assert.ThrowsAsync<LabArtifactValidationException>(
