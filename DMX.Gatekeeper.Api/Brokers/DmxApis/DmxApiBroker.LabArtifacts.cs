@@ -14,7 +14,7 @@ namespace DMX.Gatekeeper.Api.Brokers.DmxApis
 
         public async ValueTask<LabArtifact> PostLabArtifactAsync(LabArtifact labArtifact) =>
             await PostAsync(
-                $"{LabArtifactsRelativeUrl}/{labArtifact.Name}",
+                $"{LabArtifactsRelativeUrl}?streamName={labArtifact.Name}",
                 labArtifact,
                 LabArtifactsMediaType);
     }
