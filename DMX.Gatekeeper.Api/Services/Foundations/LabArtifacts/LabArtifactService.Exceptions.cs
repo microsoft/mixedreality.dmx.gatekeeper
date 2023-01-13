@@ -61,13 +61,23 @@ namespace DMX.Gatekeeper.Api.Services.Foundations.LabArtifacts
                 throw CreateAndLogDependencyException(
                     failedLabArtifactDependencyException);
             }
-            catch(HttpResponseBadRequestException httpResponseBadRequestException)
+            catch (HttpResponseBadRequestException httpResponseBadRequestException)
             {
-                var invalidLabArtifactException = new InvalidLabArtifactException(
-                    httpResponseBadRequestException,
-                    httpResponseBadRequestException.Data);
+                var invalidLabArtifactException =
+                    new InvalidLabArtifactException(
+                        httpResponseBadRequestException,
+                        httpResponseBadRequestException.Data);
 
                 throw CreateAndLogDependencyValidationException(invalidLabArtifactException);
+            }
+            catch (HttpResponseConflictException httpResponseConflictException)
+            {
+                var alreadyExistsLabArtifactException =
+                    new AlreadyExistsLabArtifactException(
+                        httpResponseConflictException);
+
+                throw CreateAndLogDependencyValidationException(
+                    alreadyExistsLabArtifactException);
             }
             catch (HttpResponseException httpResponseException)
             {
