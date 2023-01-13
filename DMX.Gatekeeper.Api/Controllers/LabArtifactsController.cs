@@ -2,13 +2,17 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // ---------------------------------------------------------------
 
+using System.IO;
+using System.Threading.Tasks;
+using System.Web.Http;
 using DMX.Gatekeeper.Api.Models.LabArtifacts;
 using DMX.Gatekeeper.Api.Models.LabArtifacts.Exceptions;
 using DMX.Gatekeeper.Api.Services.Foundations.LabArtifacts;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RESTFulSense.Controllers;
-using System.Threading.Tasks;
+using AuthorizeAttribute = Microsoft.AspNetCore.Authorization.AuthorizeAttribute;
+using HttpPostAttribute = Microsoft.AspNetCore.Mvc.HttpPostAttribute;
+using RouteAttribute = Microsoft.AspNetCore.Mvc.RouteAttribute;
 
 #if RELEASE
 using Microsoft.Identity.Web.Resource;
@@ -30,14 +34,23 @@ namespace DMX.Gatekeeper.Api.Controllers
 #if RELEASE
         [RequiredScope(RequiredScopesConfigurationKey = "AzureAd:Scopes:PostLabArtifact")]
 #endif
-        public async ValueTask<ActionResult<LabArtifact>> PostLabArtifactAsync(LabArtifact labArtifact)
+        public async ValueTask<ActionResult<string>> PostLabArtifactAsync([FromUri] string streamName)
         {
             try
             {
-                LabArtifact addedLabArtifact =
-                    await this.labArtifactService.AddArtifactAsync(labArtifact);
+                var memoryStream = new MemoryStream();
+                await Request.Body.CopyToAsync(memoryStream);
+                memoryStream.Position = 0;
 
-                return Created(addedLabArtifact);
+                var labArtifact = new LabArtifact
+                {
+                    Name = streamName,
+                    Content = memoryStream
+                };
+
+                await this.labArtifactService.AddLabArtifactAsync(labArtifact);
+
+                return Created(labArtifact.Name);
             }
             catch (LabArtifactDependencyException labArtifactDependencyException)
             {
