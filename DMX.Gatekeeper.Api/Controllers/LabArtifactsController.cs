@@ -57,6 +57,11 @@ namespace DMX.Gatekeeper.Api.Controllers
                 return InternalServerError(labArtifactDependencyException);
             }
             catch (LabArtifactDependencyValidationException labArtifactDependencyValidationException)
+                when (labArtifactDependencyValidationException.InnerException is AlreadyExistsLabArtifactException)
+            {
+                return Conflict(labArtifactDependencyValidationException.InnerException);
+            }
+            catch (LabArtifactDependencyValidationException labArtifactDependencyValidationException)
             {
                 return BadRequest(labArtifactDependencyValidationException.InnerException);
             }
