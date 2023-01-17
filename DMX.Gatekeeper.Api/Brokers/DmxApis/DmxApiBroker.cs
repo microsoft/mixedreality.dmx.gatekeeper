@@ -39,8 +39,8 @@ namespace DMX.Gatekeeper.Api.Brokers.DmxApis
         private async ValueTask<T> PostAsync<T>(string relativeUrl, T content) =>
             await this.apiClient.PostContentAsync<T>(relativeUrl, content);
 
-        private async ValueTask<T> PostAsync<T>(string relativeUrl, T content, string mediaType) =>
-            await this.apiClient.PostContentAsync<T>(relativeUrl, content, mediaType);
+        private async ValueTask PostWithNoResponseAsync<T>(string relativeUrl, T content, string mediaType) =>
+            await this.apiClient.PostContentWithNoResponseAsync<T>(relativeUrl, content, mediaType);
 
         private async ValueTask<T> GetAsync<T>(string relativeUrl) =>
             await this.apiClient.GetContentAsync<T>(relativeUrl);

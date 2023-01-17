@@ -13,7 +13,7 @@ namespace DMX.Gatekeeper.Api.Brokers.DmxApis
         private const string LabArtifactsMediaType = "application/octet-stream";
 
         public async ValueTask PostLabArtifactAsync(LabArtifact labArtifact) =>
-            await PostAsync(
+            await PostWithNoResponseAsync(
                 $"{LabArtifactsRelativeUrl}?streamName={labArtifact.Name}",
                 labArtifact.Content,
                 LabArtifactsMediaType);
