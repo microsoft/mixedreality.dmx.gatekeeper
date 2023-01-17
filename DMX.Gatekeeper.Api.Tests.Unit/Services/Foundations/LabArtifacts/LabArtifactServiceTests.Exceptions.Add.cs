@@ -34,10 +34,10 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.LabArtifacts
 
             this.dmxApiBrokerMock.Setup(broker =>
                 broker.PostLabArtifactAsync(It.IsAny<LabArtifact>()))
-                    .ThrowsAsync(criticalDependencyException);
+                    .Throws(criticalDependencyException);
 
             // when
-            ValueTask<LabArtifact> addLabArtifactTask =
+            ValueTask addLabArtifactTask =
                 this.labArtifactService.AddLabArtifactAsync(randomLabArtifact);
 
             LabArtifactDependencyException actualLabArtifactDependencyException =
@@ -77,10 +77,10 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.LabArtifacts
 
             this.dmxApiBrokerMock.Setup(broker =>
                 broker.PostLabArtifactAsync(It.IsAny<LabArtifact>()))
-                    .ThrowsAsync(dependencyException);
+                    .Throws(dependencyException);
 
             // when
-            ValueTask<LabArtifact> addLabArtifactTask =
+            ValueTask addLabArtifactTask =
                 this.labArtifactService.AddLabArtifactAsync(randomLabArtifact);
 
             LabArtifactDependencyException actualLabArtifactDependencyException =
@@ -119,10 +119,10 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.LabArtifacts
 
             this.dmxApiBrokerMock.Setup(broker =>
                 broker.PostLabArtifactAsync(It.IsAny<LabArtifact>()))
-                    .ThrowsAsync(serviceException);
+                    .Throws(serviceException);
 
             // when
-            ValueTask<LabArtifact> addLabArtifactTask =
+            ValueTask addLabArtifactTask =
                 this.labArtifactService.AddLabArtifactAsync(randomLabArtifact);
 
             LabArtifactServiceException actualLabArtifactServiceException =
@@ -174,10 +174,10 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.LabArtifacts
 
             this.dmxApiBrokerMock.Setup(brokers =>
                 brokers.PostLabArtifactAsync(It.IsAny<LabArtifact>()))
-                    .ThrowsAsync(httpBadRequestException);
+                    .Throws(httpBadRequestException);
 
             // when
-            ValueTask<LabArtifact> addLabArtifactTask =
+            ValueTask addLabArtifactTask =
                 this.labArtifactService.AddLabArtifactAsync(randomLabArtifact);
 
             LabArtifactDependencyValidationException actualLabArtifactDependencyValidationException =
@@ -217,10 +217,10 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.LabArtifacts
 
             this.dmxApiBrokerMock.Setup(broker =>
                 broker.PostLabArtifactAsync(It.IsAny<LabArtifact>()))
-                    .ThrowsAsync(httpResponseConflictException);
+                    .Throws(httpResponseConflictException);
 
             // when
-            ValueTask<LabArtifact> addLabArtifactTask =
+            ValueTask addLabArtifactTask =
                 this.labArtifactService.AddLabArtifactAsync(randomLabArtifact);
 
             LabArtifactDependencyValidationException actualDependencyValidationException =
