@@ -30,11 +30,11 @@ namespace DMX.Gatekeeper.Api.Controllers
         public LabArtifactsController(ILabArtifactService labArtifactService) =>
             this.labArtifactService = labArtifactService;
 
-        [HttpPost]
+        [HttpPost("{streamName}")]
 #if RELEASE
         [RequiredScope(RequiredScopesConfigurationKey = "AzureAd:Scopes:PostLabArtifact")]
 #endif
-        public async ValueTask<ActionResult<string>> PostLabArtifactAsync([FromUri] string streamName)
+        public async ValueTask<ActionResult<string>> PostLabArtifactAsync(string streamName)
         {
             try
             {
@@ -50,7 +50,7 @@ namespace DMX.Gatekeeper.Api.Controllers
 
                 await this.labArtifactService.AddLabArtifactAsync(labArtifact);
 
-                return Created(labArtifact.Name);
+                return Accepted();
             }
             catch (LabArtifactDependencyException labArtifactDependencyException)
             {
