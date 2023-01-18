@@ -4,7 +4,6 @@
 
 using System;
 using System.Threading.Tasks;
-using DMX.Gatekeeper.Api.Models.LabArtifacts;
 using DMX.Gatekeeper.Api.Models.LabArtifacts.Exceptions;
 using RESTFulSense.Exceptions;
 using Xeptions;

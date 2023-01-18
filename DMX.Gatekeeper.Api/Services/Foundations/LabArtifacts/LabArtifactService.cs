@@ -27,13 +27,13 @@ namespace DMX.Gatekeeper.Api.Services.Foundations.LabArtifacts
         TryCatch(async () =>
         {
             ValidateLabArtifactPropertiesOnAdd(labArtifactName, labArtifactContent);
-            
+
             var labArtifact = new LabArtifact
             {
                 Name = labArtifactName,
                 Content = labArtifactContent
             };
-            
+
             await this.dmxApiBroker.PostLabArtifactAsync(labArtifact);
         });
     }

@@ -4,7 +4,6 @@
 
 using System.Threading.Tasks;
 using System.Web.Http;
-using DMX.Gatekeeper.Api.Models.LabArtifacts;
 using DMX.Gatekeeper.Api.Models.LabArtifacts.Exceptions;
 using DMX.Gatekeeper.Api.Services.Foundations.LabArtifacts;
 using Microsoft.AspNetCore.Mvc;

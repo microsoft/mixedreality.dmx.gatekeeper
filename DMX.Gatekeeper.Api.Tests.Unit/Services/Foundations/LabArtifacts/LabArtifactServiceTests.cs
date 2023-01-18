@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq.Expressions;
-using System.Text;
 using DMX.Gatekeeper.Api.Brokers.DmxApis;
 using DMX.Gatekeeper.Api.Brokers.Loggings;
 using DMX.Gatekeeper.Api.Models.LabArtifacts;
