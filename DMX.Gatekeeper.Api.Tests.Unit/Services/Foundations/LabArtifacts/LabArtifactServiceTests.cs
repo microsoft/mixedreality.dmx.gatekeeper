@@ -69,10 +69,13 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.LabArtifacts
         private static LabArtifact CreateRandomLabArtifact() =>
             CreateLabArtifactFiller().Create();
 
-        private bool SameLabArtifactAs(
-            LabArtifact actualLabArtifact,
-            LabArtifact expectedLabArtifact) =>
-                this.compareLogic.Compare(expectedLabArtifact, actualLabArtifact).AreEqual;
+        private Expression<Func<LabArtifact, bool>> SameLabArtifactAs(LabArtifact expectedLabArtifact)
+        {
+            return actualLabArtifact =>
+                this.compareLogic.Compare(
+                    expectedLabArtifact,
+                    actualLabArtifact).AreEqual;
+        }
 
         private static Filler<Dictionary<string, List<string>>> CreateDictionaryFiller() =>
             new Filler<Dictionary<string, List<string>>>();
@@ -81,10 +84,12 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.LabArtifacts
         {
             var filler = new Filler<LabArtifact>();
 
-            var memoryStream =
-                new MemoryStream(Encoding.ASCII.GetBytes(GetRandomString()));
+            Stream stream = new MemoryStream();
 
-            filler.Setup().OnType<MemoryStream>().Use(memoryStream);
+            filler
+                .Setup()
+                .OnType<Stream>()
+                .Use(stream);
 
             return filler;
         }

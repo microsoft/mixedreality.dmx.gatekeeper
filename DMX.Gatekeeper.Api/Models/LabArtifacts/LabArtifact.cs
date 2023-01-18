@@ -9,6 +9,6 @@ namespace DMX.Gatekeeper.Api.Models.LabArtifacts
     public class LabArtifact
     {
         public string Name { get; set; }
-        public MemoryStream Content { get; set; }
+        public Stream Content { get; set; }
     }
 }

@@ -2,6 +2,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // ---------------------------------------------------------------
 
+using System.IO;
 using System.Threading.Tasks;
 using DMX.Gatekeeper.Api.Models.LabArtifacts;
 using DMX.Gatekeeper.Api.Models.LabArtifacts.Exceptions;
@@ -13,38 +14,53 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.LabArtifacts
 {
     public partial class LabArtifactServiceTests
     {
-        [Fact]
-        public async Task ShouldThrowValidationExceptionOnAddIfLabArtifactIsNullAndLogItAsync()
+        [Theory]
+        [InlineData(null)]
+        [InlineData("")]
+        [InlineData(" ")]
+        public async Task ShouldThrowValidationExceptionOnAddIfArtifactIsInvalidAndLogItAsync(
+            string invalidString)
         {
             // given
-            LabArtifact nullLabArtifact = null;
+            string invalidLabArtifactName = invalidString;
+            Stream invalidLabArtifactContent = null;
 
-            var nullLabArtifactException =
-                new NullLabArtifactException();
+            var invalidArtifactException = new InvalidLabArtifactException();
 
-            var expectedLabArtifactValidationException =
-                new LabArtifactValidationException(nullLabArtifactException);
+            invalidArtifactException.AddData(
+                key: nameof(LabArtifact.Name),
+                values: "Text is required");
+
+            invalidArtifactException.AddData(
+                key: nameof(LabArtifact.Content),
+                values: "Content is required");
+
+            var expectedArtifactValidationException =
+                new LabArtifactValidationException(invalidArtifactException);
 
             // when
-            ValueTask addLabArtifactTask =
-                this.labArtifactService.AddLabArtifactAsync(nullLabArtifact);
+            ValueTask addArtifactTask =
+                this.labArtifactService.AddLabArtifactAsync(
+                    invalidLabArtifactName,
+                    invalidLabArtifactContent);
 
-            LabArtifactValidationException actualLabArtifactValidationException =
+            LabArtifactValidationException actualArtifactValidationException =
                 await Assert.ThrowsAsync<LabArtifactValidationException>(
-                    addLabArtifactTask.AsTask);
+                    addArtifactTask.AsTask);
 
             // then
-            actualLabArtifactValidationException.Should().BeEquivalentTo(
-                expectedLabArtifactValidationException);
+            actualArtifactValidationException.Should()
+                .BeEquivalentTo(expectedArtifactValidationException);
 
             this.loggingBrokerMock.Verify(broker =>
                 broker.LogError(It.Is(SameExceptionAs(
-                    expectedLabArtifactValidationException))),
+                    expectedArtifactValidationException))),
                         Times.Once);
 
             this.dmxApiBrokerMock.Verify(broker =>
-                broker.PostLabArtifactAsync(It.IsAny<LabArtifact>()),
-                    Times.Never);
+                broker.PostLabArtifactAsync(
+                    It.IsAny<LabArtifact>()),
+                        Times.Never);
 
             this.loggingBrokerMock.VerifyNoOtherCalls();
             this.dmxApiBrokerMock.VerifyNoOtherCalls();

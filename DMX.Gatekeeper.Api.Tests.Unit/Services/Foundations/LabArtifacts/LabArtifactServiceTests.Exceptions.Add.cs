@@ -38,7 +38,9 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.LabArtifacts
 
             // when
             ValueTask addLabArtifactTask =
-                this.labArtifactService.AddLabArtifactAsync(randomLabArtifact);
+                this.labArtifactService.AddLabArtifactAsync(
+                    labArtifactName: randomLabArtifact.Name,
+                    labArtifactContent: randomLabArtifact.Content);
 
             LabArtifactDependencyException actualLabArtifactDependencyException =
                 await Assert.ThrowsAsync<LabArtifactDependencyException>(
@@ -81,7 +83,9 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.LabArtifacts
 
             // when
             ValueTask addLabArtifactTask =
-                this.labArtifactService.AddLabArtifactAsync(randomLabArtifact);
+                this.labArtifactService.AddLabArtifactAsync(
+                    labArtifactName: randomLabArtifact.Name,
+                    labArtifactContent: randomLabArtifact.Content);
 
             LabArtifactDependencyException actualLabArtifactDependencyException =
                 await Assert.ThrowsAsync<LabArtifactDependencyException>(
@@ -123,7 +127,9 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.LabArtifacts
 
             // when
             ValueTask addLabArtifactTask =
-                this.labArtifactService.AddLabArtifactAsync(randomLabArtifact);
+                this.labArtifactService.AddLabArtifactAsync(
+                    labArtifactName: randomLabArtifact.Name,
+                    labArtifactContent: randomLabArtifact.Content);
 
             LabArtifactServiceException actualLabArtifactServiceException =
                 await Assert.ThrowsAsync<LabArtifactServiceException>(
@@ -178,7 +184,9 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.LabArtifacts
 
             // when
             ValueTask addLabArtifactTask =
-                this.labArtifactService.AddLabArtifactAsync(randomLabArtifact);
+                this.labArtifactService.AddLabArtifactAsync(
+                    labArtifactName: randomLabArtifact.Name,
+                    labArtifactContent: randomLabArtifact.Content);
 
             LabArtifactDependencyValidationException actualLabArtifactDependencyValidationException =
                 await Assert.ThrowsAsync<LabArtifactDependencyValidationException>(
@@ -221,7 +229,9 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.LabArtifacts
 
             // when
             ValueTask addLabArtifactTask =
-                this.labArtifactService.AddLabArtifactAsync(randomLabArtifact);
+                this.labArtifactService.AddLabArtifactAsync(
+                    labArtifactName: randomLabArtifact.Name,
+                    labArtifactContent: randomLabArtifact.Content);
 
             LabArtifactDependencyValidationException actualDependencyValidationException =
                 await Assert.ThrowsAsync<LabArtifactDependencyValidationException>(

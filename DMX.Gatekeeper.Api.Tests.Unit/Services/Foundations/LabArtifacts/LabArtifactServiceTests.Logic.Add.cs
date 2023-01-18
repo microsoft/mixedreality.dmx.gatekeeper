@@ -21,12 +21,15 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.LabArtifacts
             var expectedLabArtifact = inputLabArtifact.DeepClone();
 
             // when
-            await this.labArtifactService.AddLabArtifactAsync(inputLabArtifact);
+            await this.labArtifactService.AddLabArtifactAsync(
+                    labArtifactName: inputLabArtifact.Name,
+                    labArtifactContent: inputLabArtifact.Content);
 
             // then
             this.dmxApiBrokerMock.Verify(broker =>
-                broker.PostLabArtifactAsync(inputLabArtifact),
-                    Times.Once);
+                broker.PostLabArtifactAsync(
+                    It.Is(SameLabArtifactAs(inputLabArtifact))),
+                        Times.Once);
 
             this.dmxApiBrokerMock.VerifyNoOtherCalls();
             this.loggingBrokerMock.VerifyNoOtherCalls();

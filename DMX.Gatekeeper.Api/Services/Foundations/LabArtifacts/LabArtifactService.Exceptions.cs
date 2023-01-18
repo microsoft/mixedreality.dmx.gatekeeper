@@ -21,9 +21,9 @@ namespace DMX.Gatekeeper.Api.Services.Foundations.LabArtifacts
             {
                 await returningLabArtifactFunction();
             }
-            catch (NullLabArtifactException nullLabArtifactException)
+            catch (InvalidLabArtifactException invalidLabArtifactException)
             {
-                throw CreateAndLogValidationException(nullLabArtifactException);
+                throw CreateAndLogValidationException(invalidLabArtifactException);
             }
             catch (HttpResponseUrlNotFoundException httpResponseUrlNotFoundException)
             {
