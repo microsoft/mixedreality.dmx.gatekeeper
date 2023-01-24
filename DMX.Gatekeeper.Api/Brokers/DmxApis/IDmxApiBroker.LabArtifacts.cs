@@ -9,6 +9,6 @@ namespace DMX.Gatekeeper.Api.Brokers.DmxApis
 {
     public partial interface IDmxApiBroker
     {
-        ValueTask<LabArtifact> PostLabArtifactAsync(LabArtifact labArtifact);
+        ValueTask PostLabArtifactAsync(LabArtifact labArtifact);
     }
 }

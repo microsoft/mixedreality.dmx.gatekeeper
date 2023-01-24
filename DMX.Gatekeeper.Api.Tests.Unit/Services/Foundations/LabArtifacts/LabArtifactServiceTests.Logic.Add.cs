@@ -3,7 +3,6 @@
 // ---------------------------------------------------------------
 
 using System.Threading.Tasks;
-using DMX.Gatekeeper.Api.Models.LabArtifacts;
 using Force.DeepCloner;
 using Moq;
 using Xunit;
@@ -21,20 +20,16 @@ namespace DMX.Gatekeeper.Api.Tests.Unit.Services.Foundations.LabArtifacts
             var returnedLabArtifact = inputLabArtifact;
             var expectedLabArtifact = inputLabArtifact.DeepClone();
 
-            this.dmxApiBrokerMock.Setup(broker =>
-                broker.PostLabArtifactAsync(inputLabArtifact))
-                    .ReturnsAsync(returnedLabArtifact);
-
             // when
-            LabArtifact actualLabArtifact =
-                await this.labArtifactService.AddArtifactAsync(inputLabArtifact);
+            await this.labArtifactService.AddLabArtifactAsync(
+                    labArtifactName: inputLabArtifact.Name,
+                    labArtifactContent: inputLabArtifact.Content);
 
             // then
-            Assert.True(SameLabArtifactAs(actualLabArtifact, expectedLabArtifact));
-
             this.dmxApiBrokerMock.Verify(broker =>
-                broker.PostLabArtifactAsync(inputLabArtifact),
-                    Times.Once);
+                broker.PostLabArtifactAsync(
+                    It.Is(SameLabArtifactAs(inputLabArtifact))),
+                        Times.Once);
 
             this.dmxApiBrokerMock.VerifyNoOtherCalls();
             this.loggingBrokerMock.VerifyNoOtherCalls();

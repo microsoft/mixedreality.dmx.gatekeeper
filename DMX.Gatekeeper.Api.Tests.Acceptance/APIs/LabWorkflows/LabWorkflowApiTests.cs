@@ -2,9 +2,9 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // ---------------------------------------------------------------
 
+using System;
 using DMX.Gatekeeper.Api.Tests.Acceptance.Brokers;
 using DMX.Gatekeeper.Api.Tests.Acceptance.Models.LabWorkflows;
-using System;
 using Tynamix.ObjectFiller;
 using WireMock.Server;
 using Xunit;

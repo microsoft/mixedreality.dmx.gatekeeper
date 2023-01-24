@@ -4,7 +4,6 @@
 
 using System;
 using System.Threading.Tasks;
-using DMX.Gatekeeper.Api.Models.LabArtifacts;
 using DMX.Gatekeeper.Api.Models.LabArtifacts.Exceptions;
 using RESTFulSense.Exceptions;
 using Xeptions;
@@ -13,17 +12,17 @@ namespace DMX.Gatekeeper.Api.Services.Foundations.LabArtifacts
 {
     public partial class LabArtifactService : ILabArtifactService
     {
-        private delegate ValueTask<LabArtifact> ReturningLabArtifactFunction();
+        private delegate ValueTask ReturningLabArtifactFunction();
 
-        private async ValueTask<LabArtifact> TryCatch(ReturningLabArtifactFunction returningLabArtifactFunction)
+        private async ValueTask TryCatch(ReturningLabArtifactFunction returningLabArtifactFunction)
         {
             try
             {
-                return await returningLabArtifactFunction();
+                await returningLabArtifactFunction();
             }
-            catch (NullLabArtifactException nullLabArtifactException)
+            catch (InvalidLabArtifactException invalidLabArtifactException)
             {
-                throw CreateAndLogValidationException(nullLabArtifactException);
+                throw CreateAndLogValidationException(invalidLabArtifactException);
             }
             catch (HttpResponseUrlNotFoundException httpResponseUrlNotFoundException)
             {
@@ -61,13 +60,23 @@ namespace DMX.Gatekeeper.Api.Services.Foundations.LabArtifacts
                 throw CreateAndLogDependencyException(
                     failedLabArtifactDependencyException);
             }
-            catch(HttpResponseBadRequestException httpResponseBadRequestException)
+            catch (HttpResponseBadRequestException httpResponseBadRequestException)
             {
-                var invalidLabArtifactException = new InvalidLabArtifactException(
-                    httpResponseBadRequestException,
-                    httpResponseBadRequestException.Data);
+                var invalidLabArtifactException =
+                    new InvalidLabArtifactException(
+                        httpResponseBadRequestException,
+                        httpResponseBadRequestException.Data);
 
                 throw CreateAndLogDependencyValidationException(invalidLabArtifactException);
+            }
+            catch (HttpResponseConflictException httpResponseConflictException)
+            {
+                var alreadyExistsLabArtifactException =
+                    new AlreadyExistsLabArtifactException(
+                        httpResponseConflictException);
+
+                throw CreateAndLogDependencyValidationException(
+                    alreadyExistsLabArtifactException);
             }
             catch (HttpResponseException httpResponseException)
             {
