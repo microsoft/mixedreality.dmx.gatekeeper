@@ -11,6 +11,7 @@ namespace DMX.Gatekeeper.Api.Models.LabWorkflows
     public class LabWorkflow
     {
         public Guid Id { get; set; }
+        public Guid LabWorkflowExecutionId { get; set; }
         public string Name { get; set; }
         public string Owner { get; set; }
         public List<LabCommand> Commands { get; set; }
